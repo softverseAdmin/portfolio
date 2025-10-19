@@ -11,6 +11,7 @@ export default function Header() {
     { name: 'Cybersecurity', href: '/cybersecurity' },
     { name: 'Blog', href: '/blog' },
     { name: 'Resources', href: '/resources' },
+    { name: 'About', href: '/about' },
   ]
 
   return (
