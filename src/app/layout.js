@@ -37,6 +37,7 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#0F172A" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="canonical" href="https://www.devopsenginer.com" />
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5338006842623882" crossOrigin="anonymous"></script>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
