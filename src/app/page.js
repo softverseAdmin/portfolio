@@ -5,7 +5,7 @@ import Newsletter from '@/components/sections/Newsletter'
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-slate-900">
       <Hero />
       <TechNiches />
       <FeaturedContent />
