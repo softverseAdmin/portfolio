@@ -53,6 +53,12 @@ export default function Footer() {
               <a href="https://devopsenginer.com/contact" className="flex items-center text-warm-white/60 hover:text-gold transition-colors">
                 <span className="mr-2">🌐</span> devopsenginer.com/contact
               </a>
+              <a href="/sitemap.xml" target="_blank" rel="noopener noreferrer" className="flex items-center text-warm-white/60 hover:text-gold transition-colors">
+                <span className="mr-2">🗺️</span> Sitemap (XML)
+              </a>
+              <a href="/sitemap" className="flex items-center text-warm-white/60 hover:text-gold transition-colors">
+                <span className="mr-2">📄</span> Sitemap (Page)
+              </a>
             </div>
           </div>
 
