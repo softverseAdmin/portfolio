@@ -6,11 +6,11 @@ import AdSense from '@/components/ads/AdSense'
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-slate-900">
+    <main className="min-h-screen bg-gradient-dark">
       <Hero />
       
-      {/* Ad after Hero - High visibility */}
-      <div className="py-8 bg-slate-800/50">
+      {/* Ad after Hero - High visibility with elegant styling */}
+      <div className="py-8 bg-charcoal/30 backdrop-blur-sm border-y border-gold/10">
         <div className="max-w-7xl mx-auto px-4">
           <AdSense 
             adSlot="1234567890"
@@ -23,8 +23,8 @@ export default function Home() {
 
       <TechNiches />
       
-      {/* Ad between content sections */}
-      <div className="py-8 bg-slate-900">
+      {/* Ad between content sections with premium feel */}
+      <div className="py-8 bg-deep-black">
         <div className="max-w-7xl mx-auto px-4">
           <AdSense 
             adSlot="0987654321"

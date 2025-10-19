@@ -23,13 +23,13 @@ export default function FeaturedContent() {
   ]
 
   return (
-    <section className="py-20 px-4 bg-slate-800">
+    <section className="py-20 px-4 bg-gradient-to-br from-charcoal to-rich-black">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-slate-100 mb-4">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-gold via-amber to-soft-gold bg-clip-text text-transparent">
             Featured Content
           </h2>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto">
+          <p className="text-lg text-warm-white/70 max-w-2xl mx-auto">
             Expert-level tutorials and guides to accelerate your DevOps journey
           </p>
         </div>
@@ -39,22 +39,22 @@ export default function FeaturedContent() {
           <div className="lg:col-span-3">
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {articles.map((article, index) => (
-                <div key={index} className="bg-slate-700/50 border border-slate-600/50 p-6 rounded-lg shadow-sm hover:shadow-lg transition-all group hover:border-blue-500/30">
+                <div key={index} className="bg-gradient-to-br from-rich-black to-deep-black border border-gold/20 p-6 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-gold/20 transition-all group hover:border-gold/50 transform hover:-translate-y-1">
                   <div className="mb-4">
-                    <span className="inline-block px-3 py-1 bg-blue-500/20 text-blue-400 text-xs font-semibold rounded-full">
+                    <span className="inline-block px-3 py-1 bg-gold/20 text-gold text-xs font-semibold rounded-full">
                       {article.category}
                     </span>
                   </div>
-                  <h3 className="font-bold text-lg mb-3 text-slate-100 group-hover:text-blue-400 transition-colors">
+                  <h3 className="font-bold text-lg mb-3 text-warm-white group-hover:text-gold transition-colors">
                     {article.title}
                   </h3>
-                  <p className="text-slate-400 text-sm mb-4 leading-relaxed">
+                  <p className="text-warm-white/70 text-sm mb-4 leading-relaxed">
                     {article.excerpt}
                   </p>
                   <div className="flex items-center justify-between">
-                    <span className="text-xs text-slate-500">{article.readTime}</span>
-                    <button className="text-blue-400 text-sm font-semibold hover:text-blue-300 transition-colors">
-                      Read More →
+                    <span className="text-xs text-warm-white/50">{article.readTime}</span>
+                    <button className="text-gold text-sm font-semibold hover:text-amber transition-colors flex items-center gap-1">
+                      Read More <span className="group-hover:translate-x-1 transition-transform">→</span>
                     </button>
                   </div>
                 </div>
@@ -73,11 +73,12 @@ export default function FeaturedContent() {
               />
               
               {/* Popular Topics */}
-              <div className="bg-slate-700/50 border border-slate-600/50 rounded-lg p-6">
-                <h3 className="font-bold text-slate-100 mb-4">Popular Topics</h3>
-                <ul className="space-y-2">
+              <div className="bg-gradient-to-br from-rich-black to-charcoal border border-gold/20 rounded-xl p-6 hover:border-gold/40 transition-all">
+                <h3 className="font-bold text-gold mb-4 border-b border-gold/30 pb-2">Popular Topics</h3>
+                <ul className="space-y-3">
                   {['Docker Containers', 'Kubernetes Orchestration', 'AWS CloudFormation', 'CI/CD Pipelines', 'Infrastructure as Code'].map((topic) => (
-                    <li key={topic} className="text-slate-400 hover:text-blue-400 cursor-pointer text-sm transition-colors">
+                    <li key={topic} className="text-warm-white/70 hover:text-gold cursor-pointer text-sm transition-colors flex items-center group">
+                      <span className="w-0 h-px bg-gold group-hover:w-3 mr-0 group-hover:mr-2 transition-all"></span>
                       {topic}
                     </li>
                   ))}

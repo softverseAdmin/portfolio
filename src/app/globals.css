@@ -3,12 +3,14 @@
 @tailwind utilities;
 
 :root {
-  --navy-black: #0F172A;
-  --deep-gray: #1E293B;
-  --tech-blue: #3B82F6;
-  --soft-white: #F1F5F9;
-  --slate-600: #475569;
-  --slate-400: #94A3B8;
+  --deep-black: #0a0a0a;
+  --rich-black: #1a1a1a;
+  --charcoal: #2a2a2a;
+  --gold-accent: #d4af37;
+  --amber-glow: #f0c14b;
+  --soft-gold: #e6d5b8;
+  --warm-white: #f5f5f0;
+  --dark-gold: #b8923a;
 }
 
 * {
@@ -19,38 +21,68 @@
 
 body {
   font-family: 'Inter', 'Segoe UI', Roboto, sans-serif;
-  background-color: var(--navy-black);
-  color: var(--soft-white);
+  background-color: var(--deep-black);
+  color: var(--warm-white);
   line-height: 1.6;
 }
 
 /* Custom scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--deep-gray);
+  background: var(--rich-black);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--tech-blue);
-  border-radius: 4px;
+  background: linear-gradient(180deg, var(--gold-accent), var(--dark-gold));
+  border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #2563EB;
+  background: var(--amber-glow);
 }
 
 /* Smooth transitions */
 * {
-  transition: all 0.2s ease-in-out;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Focus styles */
 button:focus,
 input:focus,
 textarea:focus {
-  outline: 2px solid var(--tech-blue);
+  outline: 2px solid var(--gold-accent);
   outline-offset: 2px;
+}
+
+/* Elegant gradient backgrounds */
+.gradient-gold {
+  background: linear-gradient(135deg, var(--gold-accent), var(--amber-glow));
+}
+
+.gradient-dark {
+  background: linear-gradient(180deg, var(--deep-black), var(--rich-black));
+}
+
+/* Shimmer effect for premium feel */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.shimmer {
+  animation: shimmer 3s infinite;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(212, 175, 55, 0.1) 50%,
+    transparent 100%
+  );
+  background-size: 1000px 100%;
 }

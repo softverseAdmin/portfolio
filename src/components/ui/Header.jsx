@@ -15,15 +15,17 @@ export default function Header() {
   ]
 
   return (
-    <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-50">
+    <header className="bg-rich-black/95 backdrop-blur-md shadow-lg border-b border-gold/20 sticky top-0 z-50">
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0 flex items-center">
-              <div className="h-8 w-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-sm">TN</span>
+            <Link href="/" className="flex-shrink-0 flex items-center group">
+              <div className="h-10 w-10 bg-gradient-gold rounded-lg flex items-center justify-center shadow-lg shadow-gold/30 group-hover:shadow-gold/50 transition-all">
+                <span className="text-deep-black font-bold text-lg">DE</span>
               </div>
-              <span className="ml-2 text-xl font-bold text-gray-900">TechNiches</span>
+              <span className="ml-3 text-xl font-bold bg-gradient-to-r from-gold via-amber to-soft-gold bg-clip-text text-transparent">
+                DevOps Engineer
+              </span>
             </Link>
           </div>
 
@@ -32,14 +34,15 @@ export default function Header() {
               <Link
                 key={item.name}
                 href={item.href}
-                className="text-gray-700 hover:text-blue-600 px-3 py-2 text-sm font-medium transition-colors"
+                className="text-warm-white/80 hover:text-gold px-3 py-2 text-sm font-medium transition-colors relative group"
               >
                 {item.name}
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-gold group-hover:w-full transition-all duration-300"></span>
               </Link>
             ))}
             <Link
               href="/contact"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+              className="bg-gradient-gold hover:shadow-lg hover:shadow-gold/50 text-deep-black px-6 py-2.5 rounded-lg text-sm font-semibold transition-all transform hover:scale-105"
             >
               Contact
             </Link>
@@ -48,7 +51,7 @@ export default function Header() {
           <div className="md:hidden flex items-center">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-gray-700 hover:text-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 p-2"
+              className="text-warm-white hover:text-gold focus:outline-none focus:ring-2 focus:ring-gold p-2 rounded-lg"
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isMenuOpen ? (
@@ -63,12 +66,12 @@ export default function Header() {
 
         {isMenuOpen && (
           <div className="md:hidden">
-            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white border-t border-gray-200">
+            <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-charcoal/50 backdrop-blur-md border-t border-gold/20 rounded-b-lg">
               {navigation.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-gray-700 hover:text-blue-600 block px-3 py-2 text-base font-medium"
+                  className="text-warm-white/80 hover:text-gold hover:bg-gold/10 block px-3 py-2 rounded-lg text-base font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.name}
@@ -76,7 +79,7 @@ export default function Header() {
               ))}
               <Link
                 href="/contact"
-                className="bg-blue-600 hover:bg-blue-700 text-white block px-3 py-2 rounded-lg text-base font-medium mt-4"
+                className="bg-gradient-gold hover:shadow-lg hover:shadow-gold/50 text-deep-black block px-3 py-2.5 rounded-lg text-base font-semibold mt-4 text-center"
                 onClick={() => setIsMenuOpen(false)}
               >
                 Contact

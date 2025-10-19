@@ -2,6 +2,7 @@ import "./globals.css";
 import Header from '@/components/ui/Header'
 import Footer from '@/components/ui/Footer'
 import Script from 'next/script'
+import { Analytics } from "@vercel/analytics/next"
 
 export const metadata = {
   title: "DevOps Engineer - Master DevOps, Cloud & Cybersecurity",
@@ -35,7 +36,7 @@ export default function RootLayout({ children }) {
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="google-site-verification" content="google11d554c204b2b981" />
-        <meta name="theme-color" content="#0F172A" />
+        <meta name="theme-color" content="#0a0a0a" />
         <link rel="icon" href="/favicon.ico" />
         <link rel="canonical" href="https://www.devopsenginer.com" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5338006842623882" crossOrigin="anonymous"></script>
@@ -162,6 +163,7 @@ export default function RootLayout({ children }) {
         <Header />
         {children}
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
