@@ -40,9 +40,20 @@ export default function Footer() {
                 DevOps Engineer
               </span>
             </Link>
-            <p className="text-warm-white/70 text-sm leading-relaxed">
+            <p className="text-warm-white/70 text-sm leading-relaxed mb-4">
               Empowering engineers with expert knowledge in DevOps, Cloud Computing, and Cybersecurity.
             </p>
+            <div className="space-y-2 text-sm">
+              <a href="mailto:softverse4@gmail.com" className="flex items-center text-warm-white/60 hover:text-gold transition-colors">
+                <span className="mr-2">📧</span> softverse4@gmail.com
+              </a>
+              <a href="mailto:softverse4@gmail.com" className="flex items-center text-warm-white/60 hover:text-gold transition-colors">
+                <span className="mr-2">⚖️</span> Legal: softverse4@gmail.com
+              </a>
+              <a href="https://devopsenginer.com/contact" className="flex items-center text-warm-white/60 hover:text-gold transition-colors">
+                <span className="mr-2">🌐</span> devopsenginer.com/contact
+              </a>
+            </div>
           </div>
 
           {/* Company Links */}
