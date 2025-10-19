@@ -1,8 +1,11 @@
+import dynamic from 'next/dynamic'
 import Hero from '@/components/sections/Hero'
-import TechNiches from '@/components/sections/TechNiches'
-import FeaturedContent from '@/components/sections/FeaturedContent'
-import Newsletter from '@/components/sections/Newsletter'
 import AdSense from '@/components/ads/AdSense'
+
+// Lazy load components below the fold
+const TechNiches = dynamic(() => import('@/components/sections/TechNiches'))
+const FeaturedContent = dynamic(() => import('@/components/sections/FeaturedContent'))
+const Newsletter = dynamic(() => import('@/components/sections/Newsletter'))
 
 export default function Home() {
   return (

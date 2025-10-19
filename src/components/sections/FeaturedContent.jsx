@@ -1,4 +1,10 @@
-import AdSense from '@/components/ads/AdSense'
+'use client'
+import dynamic from 'next/dynamic'
+
+const AdSense = dynamic(() => import('@/components/ads/AdSense'), {
+  loading: () => <div className="h-24 bg-charcoal/20 animate-pulse rounded-lg"></div>,
+  ssr: false
+})
 
 export default function FeaturedContent() {
   const articles = [
