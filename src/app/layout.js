@@ -1,5 +1,6 @@
 import "./globals.css";
 import Header from '@/components/ui/Header'
+import Script from 'next/script'
 
 export const metadata = {
   title: "DevOps Engineer - Master DevOps, Cloud & Cybersecurity",
@@ -52,6 +53,12 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5338006842623882"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <Header />
         {children}
       </body>
