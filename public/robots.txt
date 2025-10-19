@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemap
-Sitemap: https://portfolio-mts9qxpk8-softverseadmins-projects.vercel.app/sitemap.xml
+Sitemap: https://www.devopsenginer.com/sitemap.xml
 
 # Crawl-delay for better server performance
 Crawl-delay: 1
@@ -16,3 +16,7 @@ Allow: /
 
 User-agent: Slurp
 Allow: /
+
+# Disallow admin areas (future use)
+Disallow: /admin/
+Disallow: /api/private/
