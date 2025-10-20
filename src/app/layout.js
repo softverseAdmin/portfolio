@@ -115,31 +115,6 @@ export default function RootLayout({ children }) {
         <meta name="google-site-verification" content="google11d554c204b2b981" />
         <meta name="theme-color" content="#0a0a0a" />
         
-        {/* Open Graph Meta Tags for Social Media */}
-        <meta property="og:title" content="DevOps Engineer - Master DevOps, Cloud & Cybersecurity" />
-        <meta property="og:description" content="Expert tutorials, guides, and resources for tech professionals. Learn DevOps best practices, cloud architecture, and cybersecurity fundamentals." />
-        <meta property="og:image" content="https://www.devopsenginer.com/images/og-devops-hero.jpg" />
-        <meta property="og:image:alt" content="DevOps Enginer - Expert DevOps, Cloud & Cybersecurity Resources" />
-        <meta property="og:image:width" content="1200" />
-        <meta property="og:image:height" content="630" />
-        <meta property="og:image:type" content="image/jpeg" />
-        <meta property="og:url" content="https://www.devopsenginer.com" />
-        <meta property="og:type" content="website" />
-        <meta property="og:site_name" content="DevOps Enginer" />
-        <meta property="og:locale" content="en_US" />
-        
-        {/* Twitter Card Meta Tags */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:site" content="@devopsenginer" />
-        <meta name="twitter:creator" content="@devopsenginer" />
-        <meta name="twitter:title" content="DevOps Engineer - Master DevOps, Cloud & Cybersecurity" />
-        <meta name="twitter:description" content="Expert tutorials, guides and resources for tech professionals. Learn DevOps, Cloud, and Security best practices." />
-        <meta name="twitter:image" content="https://www.devopsenginer.com/images/og-devops-hero.jpg" />
-        <meta name="twitter:image:alt" content="DevOps Enginer - Expert DevOps Resources" />
-        
-        {/* LinkedIn Meta Tags */}
-        <meta property="linkedin:owner" content="Rabin Adhikari" />
-        
         <link rel="canonical" href="https://www.devopsenginer.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
