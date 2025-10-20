@@ -4,6 +4,7 @@ import Header from '@/components/ui/Header'
 import Footer from '@/components/ui/Footer'
 import Script from 'next/script'
 import { Analytics } from "@vercel/analytics/next"
+import GoogleAnalytics from '@/components/GoogleAnalytics'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -48,19 +49,6 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5338006842623882" crossOrigin="anonymous"></script>
-        
-        {/* Google tag (gtag.js) */}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-EKMV8PQDHR"></script>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-EKMV8PQDHR');
-            `,
-          }}
-        />
         
         {/* Enhanced Structured Data / Schema Markup */}
         <script
@@ -175,6 +163,7 @@ export default function RootLayout({ children }) {
         />
       </head>
       <body>
+        <GoogleAnalytics />
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5338006842623882"
