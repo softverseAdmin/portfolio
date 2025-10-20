@@ -63,17 +63,6 @@ export default function Hero() {
           <div className="absolute inset-0 bg-[linear-gradient(rgba(212,175,55,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(212,175,55,0.03)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
         </div>
       </section>
-      
-      {/* Strategic Ad Placement - Top Banner with elegant styling */}
-      <div className="bg-rich-black py-8 border-y border-gold/10">
-        <div className="max-w-4xl mx-auto px-4">
-          <AdSense 
-            adSlot="1234567890"
-            adFormat="horizontal"
-            className="text-center"
-          />
-        </div>
-      </div>
     </>
   )
 }

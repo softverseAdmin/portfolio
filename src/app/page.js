@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic'
 import Hero from '@/components/sections/Hero'
+import ServicesSection from '@/components/sections/ServicesSection'
 import AdSense from '@/components/ads/AdSense'
 
 // Lazy load components below the fold
@@ -16,7 +17,7 @@ export default function Home() {
       <div className="py-8 bg-charcoal/30 backdrop-blur-sm border-y border-gold/10">
         <div className="max-w-7xl mx-auto px-4">
           <AdSense 
-            adSlot="1234567890"
+            adSlot="5338006842623882"
             adFormat="horizontal"
             style={{ display: 'block', textAlign: 'center' }}
             className="mb-4"
@@ -26,11 +27,13 @@ export default function Home() {
 
       <TechNiches />
       
+      <ServicesSection />
+      
       {/* Ad between content sections with premium feel */}
       <div className="py-8 bg-deep-black">
         <div className="max-w-7xl mx-auto px-4">
           <AdSense 
-            adSlot="0987654321"
+            adSlot="1234567890"
             adFormat="rectangle"
             style={{ display: 'block', textAlign: 'center' }}
           />
