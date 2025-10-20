@@ -1,0 +1,53 @@
+{
+  "facebook": {
+    "debugger_url": "https://developers.facebook.com/tools/debug/",
+    "instructions": [
+      "1. Go to Facebook Sharing Debugger",
+      "2. Enter your URL: https://www.devopsenginer.com",
+      "3. Click \"Debug\" to fetch new scrape information",
+      "4. Click \"Scrape Again\" if needed to update cache"
+    ]
+  },
+  "twitter": {
+    "validator_url": "https://cards-dev.twitter.com/validator",
+    "instructions": [
+      "1. Go to Twitter Card Validator",
+      "2. Enter your URL: https://www.devopsenginer.com",
+      "3. Preview the card appearance",
+      "4. Check for any validation errors"
+    ]
+  },
+  "linkedin": {
+    "inspector_url": "https://www.linkedin.com/post-inspector/",
+    "instructions": [
+      "1. Go to LinkedIn Post Inspector",
+      "2. Enter your URL: https://www.devopsenginer.com",
+      "3. Inspect the preview",
+      "4. Clear cache if needed"
+    ]
+  },
+  "requirements": {
+    "og_image": {
+      "min_width": 1200,
+      "min_height": 630,
+      "max_size": "8MB",
+      "formats": [
+        "JPG",
+        "PNG",
+        "WebP"
+      ],
+      "aspect_ratio": "1.91:1"
+    },
+    "twitter_image": {
+      "min_width": 1200,
+      "min_height": 630,
+      "max_size": "5MB",
+      "formats": [
+        "JPG",
+        "PNG",
+        "WebP",
+        "GIF"
+      ]
+    }
+  }
+}

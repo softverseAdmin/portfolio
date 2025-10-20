@@ -1,4 +1,10 @@
 export function generateBlogMetadata(post) {
+  const ogImageUrl = post.image ? 
+    `https://www.devopsenginer.com${post.image}` : 
+    `https://www.devopsenginer.com/images/blog/${post.slug}/${post.slug.includes('devops') ? 'devops-hero.jpg' : 
+      post.slug.includes('cloud') ? 'cloud-hero.jpg' : 
+      post.slug.includes('security') ? 'devsecops-hero.jpg' : 'hero.jpg'}`;
+
   return {
     title: `${post.title} | DevOps Enginer`,
     description: post.excerpt,
@@ -29,11 +35,19 @@ export function generateBlogMetadata(post) {
       siteName: 'DevOps Enginer',
       images: [
         {
-          url: post.image || `/images/blog/${post.slug}/hero.jpg`,
+          url: ogImageUrl,
           width: 1200,
           height: 630,
           alt: post.title,
+          type: 'image/jpeg'
         },
+        {
+          url: 'https://www.devopsenginer.com/images/og-devops-hero.jpg',
+          width: 1200,
+          height: 630,
+          alt: 'DevOps Enginer - Expert Resources',
+          type: 'image/jpeg'
+        }
       ],
     },
     twitter: {
@@ -41,12 +55,24 @@ export function generateBlogMetadata(post) {
       title: post.title,
       description: post.excerpt,
       creator: '@devopsenginer',
-      images: [post.image || `/images/blog/${post.slug}/hero.jpg`],
+      site: '@devopsenginer',
+      images: [
+        {
+          url: ogImageUrl,
+          alt: post.title
+        }
+      ],
     },
     alternates: {
       canonical: `https://www.devopsenginer.com/blog/${post.slug}`,
     },
     category: post.category || 'Technology',
+    other: {
+      // Additional meta tags for better social media support
+      'og:image:secure_url': ogImageUrl,
+      'twitter:image:src': ogImageUrl,
+      'linkedin:owner': 'Rabin Adhikari'
+    }
   };
 }
 

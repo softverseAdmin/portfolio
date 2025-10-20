@@ -44,10 +44,18 @@ export const metadata = {
     siteName: "DevOps Enginer",
     images: [
       {
-        url: "/images/og-image.jpg",
+        url: "https://www.devopsenginer.com/images/og-devops-hero.jpg",
         width: 1200,
         height: 630,
-        alt: "DevOps Enginer - Expert DevOps, Cloud & Cybersecurity Resources"
+        alt: "DevOps Enginer - Expert DevOps, Cloud & Cybersecurity Resources",
+        type: "image/jpeg"
+      },
+      {
+        url: "https://www.devopsenginer.com/images/og-fallback.png",
+        width: 1200,
+        height: 630,
+        alt: "DevOps Enginer Portfolio",
+        type: "image/png"
       }
     ]
   },
@@ -56,7 +64,13 @@ export const metadata = {
     title: "DevOps Engineer - Master DevOps, Cloud & Cybersecurity",
     description: "Expert tutorials, guides and resources for tech professionals. Learn DevOps, Cloud, and Security best practices.",
     creator: "@devopsenginer",
-    images: ["/images/og-image.jpg"]
+    site: "@devopsenginer",
+    images: [
+      {
+        url: "https://www.devopsenginer.com/images/og-devops-hero.jpg",
+        alt: "DevOps Enginer - Expert DevOps Resources"
+      }
+    ]
   },
   alternates: {
     canonical: "https://www.devopsenginer.com",
@@ -100,6 +114,32 @@ export default function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="google-site-verification" content="google11d554c204b2b981" />
         <meta name="theme-color" content="#0a0a0a" />
+        
+        {/* Open Graph Meta Tags for Social Media */}
+        <meta property="og:title" content="DevOps Engineer - Master DevOps, Cloud & Cybersecurity" />
+        <meta property="og:description" content="Expert tutorials, guides, and resources for tech professionals. Learn DevOps best practices, cloud architecture, and cybersecurity fundamentals." />
+        <meta property="og:image" content="https://www.devopsenginer.com/images/og-devops-hero.jpg" />
+        <meta property="og:image:alt" content="DevOps Enginer - Expert DevOps, Cloud & Cybersecurity Resources" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:url" content="https://www.devopsenginer.com" />
+        <meta property="og:type" content="website" />
+        <meta property="og:site_name" content="DevOps Enginer" />
+        <meta property="og:locale" content="en_US" />
+        
+        {/* Twitter Card Meta Tags */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@devopsenginer" />
+        <meta name="twitter:creator" content="@devopsenginer" />
+        <meta name="twitter:title" content="DevOps Engineer - Master DevOps, Cloud & Cybersecurity" />
+        <meta name="twitter:description" content="Expert tutorials, guides and resources for tech professionals. Learn DevOps, Cloud, and Security best practices." />
+        <meta name="twitter:image" content="https://www.devopsenginer.com/images/og-devops-hero.jpg" />
+        <meta name="twitter:image:alt" content="DevOps Enginer - Expert DevOps Resources" />
+        
+        {/* LinkedIn Meta Tags */}
+        <meta property="linkedin:owner" content="Rabin Adhikari" />
+        
         <link rel="canonical" href="https://www.devopsenginer.com" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
