@@ -14,30 +14,83 @@ const inter = Inter({
 })
 
 export const metadata = {
-  title: "DevOps Engineer - Master DevOps, Cloud & Cybersecurity",
+  metadataBase: new URL('https://www.devopsenginer.com'),
+  title: {
+    default: "DevOps Engineer - Master DevOps, Cloud & Cybersecurity",
+    template: "%s | DevOps Enginer"
+  },
   description: "Expert tutorials, guides, and resources for DevOps, Cloud Computing, and Cybersecurity professionals. Learn Docker, Kubernetes, AWS, Azure, penetration testing, and more.",
-  keywords: "DevOps, Cloud Computing, Cybersecurity, AWS, Docker, Kubernetes, Security, Azure, GCP, CI/CD, Docker containers, Infrastructure as Code, Penetration testing, DevOps Engineer",
-  authors: [{ name: "DevOps Engineer" }],
-  creator: "DevOps Engineer",
-  publisher: "DevOps Engineer",
-  robots: "index, follow",
+  keywords: "DevOps, Cloud Computing, Cybersecurity, AWS, Docker, Kubernetes, Security, Azure, GCP, CI/CD, Docker containers, Infrastructure as Code, Penetration testing, DevOps Engineer, DevSecOps, Terraform, Ansible, Jenkins, GitLab, GitHub Actions, Prometheus, Grafana, ELK Stack, Linux, Python, Bash, PowerShell, Monitoring, Observability, Site Reliability Engineering, SRE",
+  authors: [{ name: "Rabin Adhikari", url: "https://www.linkedin.com/in/rabin-adhikari-52573320b/" }],
+  creator: "Rabin Adhikari",
+  publisher: "DevOps Enginer",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
   openGraph: {
     title: "DevOps Engineer - Master DevOps, Cloud & Cybersecurity",
-    description: "Expert tutorials, guides, and resources for tech professionals",
+    description: "Expert tutorials, guides, and resources for tech professionals. Learn DevOps best practices, cloud architecture, and cybersecurity fundamentals.",
     type: "website",
     locale: "en_US",
     url: "https://www.devopsenginer.com",
-    siteName: "DevOps Engineer"
+    siteName: "DevOps Enginer",
+    images: [
+      {
+        url: "/images/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "DevOps Enginer - Expert DevOps, Cloud & Cybersecurity Resources"
+      }
+    ]
   },
   twitter: {
     card: "summary_large_image",
     title: "DevOps Engineer - Master DevOps, Cloud & Cybersecurity",
-    description: "Expert tutorials, guide and resources for tech professionals"
+    description: "Expert tutorials, guides and resources for tech professionals. Learn DevOps, Cloud, and Security best practices.",
+    creator: "@devopsenginer",
+    images: ["/images/og-image.jpg"]
   },
   alternates: {
-    canonical: "https://www.devopsenginer.com"
+    canonical: "https://www.devopsenginer.com",
+    languages: {
+      'en-US': 'https://www.devopsenginer.com',
+    }
   },
-
+  category: 'technology',
+  classification: 'Education',
+  referrer: 'origin-when-cross-origin',
+  colorScheme: 'dark',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' }
+  ],
+  manifest: '/site.webmanifest',
+  icons: {
+    icon: [
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+    other: [
+      { rel: 'mask-icon', url: '/safari-pinned-tab.svg', color: '#d4af37' },
+    ]
+  },
+  verification: {
+    google: 'google11d554c204b2b981',
+    other: {
+      'msvalidate.01': 'your-bing-verification-code',
+    }
+  }
 };
 
 export default function RootLayout({ children }) {
@@ -62,6 +115,18 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(structuredData.website)
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData.person)
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData.organization)
           }}
         />
         <script

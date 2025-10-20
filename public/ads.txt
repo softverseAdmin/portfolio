@@ -1,1 +1,8 @@
+# ads.txt file for devopsenginer.com
+# This file is used to authorize digital sellers and prevent counterfeit inventory
+
+# Google AdSense
 google.com, pub-5338006842623882, DIRECT, f08c47fec0942fa0
+
+# Additional authorized sellers can be added below
+# Format: domain.com, publisher_id, DIRECT/RESELLER, certification_authority_id

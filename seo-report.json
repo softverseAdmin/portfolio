@@ -1,0 +1,181 @@
+{
+  "timestamp": "2025-10-20T15:17:17.337Z",
+  "domain": "https://www.devopsenginer.com",
+  "totalPages": 13,
+  "pages": [
+    {
+      "path": "/",
+      "title": "DevOps Engineer - Master DevOps, Cloud & Cybersecurity",
+      "priority": 1,
+      "changeFreq": "weekly",
+      "url": "https://www.devopsenginer.com/",
+      "keywords": [
+        "DevOps engineer",
+        "Cloud computing guide",
+        "Cybersecurity roadmap",
+        "DevOps tutorials"
+      ]
+    },
+    {
+      "path": "/devops",
+      "title": "DevOps Roadmap & Tools Guide",
+      "priority": 0.9,
+      "changeFreq": "weekly",
+      "url": "https://www.devopsenginer.com/devops",
+      "keywords": [
+        "DevOps roadmap",
+        "DevOps tools",
+        "CI/CD pipeline",
+        "Infrastructure as code",
+        "Container orchestration"
+      ]
+    },
+    {
+      "path": "/cloud",
+      "title": "Cloud Computing Architecture Guide",
+      "priority": 0.9,
+      "changeFreq": "weekly",
+      "url": "https://www.devopsenginer.com/cloud",
+      "keywords": [
+        "AWS vs Azure vs GCP",
+        "Cloud architecture",
+        "Multi-cloud strategy",
+        "Cloud migration",
+        "Serverless architecture"
+      ]
+    },
+    {
+      "path": "/cybersecurity",
+      "title": "Cybersecurity Expert Guide & Roadmap",
+      "priority": 0.9,
+      "changeFreq": "weekly",
+      "url": "https://www.devopsenginer.com/cybersecurity",
+      "keywords": [
+        "Cybersecurity roadmap",
+        "Ethical hacking",
+        "Penetration testing",
+        "Security frameworks",
+        "DevSecOps"
+      ]
+    },
+    {
+      "path": "/resources",
+      "title": "DevOps, Cloud & Cybersecurity Resources",
+      "priority": 0.8,
+      "changeFreq": "weekly",
+      "url": "https://www.devopsenginer.com/resources",
+      "keywords": [
+        "DevOps resources",
+        "Cloud computing tools",
+        "Cybersecurity frameworks",
+        "Technical certifications"
+      ]
+    },
+    {
+      "path": "/blog",
+      "title": "DevOps & Tech Blog",
+      "priority": 0.9,
+      "changeFreq": "daily",
+      "url": "https://www.devopsenginer.com/blog",
+      "keywords": []
+    },
+    {
+      "path": "/contact",
+      "title": "Contact DevOps Engineer - Expert Consultation",
+      "priority": 0.7,
+      "changeFreq": "monthly",
+      "url": "https://www.devopsenginer.com/contact",
+      "keywords": [
+        "DevOps consultant",
+        "Cloud architect",
+        "DevOps services",
+        "Technical consultation"
+      ]
+    },
+    {
+      "path": "/about",
+      "title": "About DevOps Engineer",
+      "priority": 0.7,
+      "changeFreq": "monthly",
+      "url": "https://www.devopsenginer.com/about",
+      "keywords": []
+    }
+  ],
+  "blogPosts": [
+    {
+      "slug": "top-10-devops-tools-2025",
+      "title": "Top 10 DevOps Tools for 2025",
+      "priority": 0.8,
+      "url": "https://www.devopsenginer.com/blog/top-10-devops-tools-2025",
+      "path": "/blog/top-10-devops-tools-2025"
+    },
+    {
+      "slug": "how-to-build-cicd-pipeline-github-actions-2025",
+      "title": "How to Build CI/CD Pipeline with GitHub Actions 2025",
+      "priority": 0.8,
+      "url": "https://www.devopsenginer.com/blog/how-to-build-cicd-pipeline-github-actions-2025",
+      "path": "/blog/how-to-build-cicd-pipeline-github-actions-2025"
+    },
+    {
+      "slug": "devsecops-checklist-securing-pipeline-2025",
+      "title": "DevSecOps Checklist: Securing Your Pipeline 2025",
+      "priority": 0.8,
+      "url": "https://www.devopsenginer.com/blog/devsecops-checklist-securing-pipeline-2025",
+      "path": "/blog/devsecops-checklist-securing-pipeline-2025"
+    },
+    {
+      "slug": "how-to-become-devops-engineer-japan-2025-career-guide",
+      "title": "How to Become DevOps Engineer in Japan 2025 Career Guide",
+      "priority": 0.8,
+      "url": "https://www.devopsenginer.com/blog/how-to-become-devops-engineer-japan-2025-career-guide",
+      "path": "/blog/how-to-become-devops-engineer-japan-2025-career-guide"
+    },
+    {
+      "slug": "rise-of-platform-engineering-redefining-devops-2025",
+      "title": "Rise of Platform Engineering: Redefining DevOps 2025",
+      "priority": 0.8,
+      "url": "https://www.devopsenginer.com/blog/rise-of-platform-engineering-redefining-devops-2025",
+      "path": "/blog/rise-of-platform-engineering-redefining-devops-2025"
+    }
+  ],
+  "seoChecklist": {
+    "sitemap": "✅ Generated and includes all pages",
+    "robots": "✅ Configured to allow crawling",
+    "metadata": "✅ Comprehensive meta tags on all pages",
+    "structuredData": "✅ JSON-LD implemented (Organization, Person, Educational)",
+    "openGraph": "✅ OG tags for social sharing",
+    "twitter": "✅ Twitter cards configured",
+    "canonicals": "✅ Canonical URLs set",
+    "headings": "✅ Proper H1-H6 hierarchy",
+    "images": "✅ Alt text and optimization",
+    "performance": "✅ Next.js optimization enabled",
+    "security": "✅ Security headers configured",
+    "pwa": "✅ Web manifest created"
+  },
+  "nextSteps": [
+    "1. Submit sitemap to Google Search Console",
+    "2. Submit sitemap to Bing Webmaster Tools",
+    "3. Monitor Core Web Vitals",
+    "4. Set up Google Analytics 4",
+    "5. Monitor keyword rankings",
+    "6. Set up search console alerts",
+    "7. Monitor click-through rates",
+    "8. Optimize for featured snippets"
+  ],
+  "targetKeywords": {
+    "primary": [
+      "DevOps engineer",
+      "Cloud computing",
+      "Cybersecurity",
+      "AWS tutorials",
+      "Kubernetes guide"
+    ],
+    "longTail": [
+      "How to become DevOps engineer",
+      "DevOps tools comparison",
+      "Cloud architecture best practices",
+      "DevSecOps implementation",
+      "Infrastructure as code tutorial"
+    ]
+  }
+}
