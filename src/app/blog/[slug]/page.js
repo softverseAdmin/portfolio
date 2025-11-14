@@ -82,6 +82,8 @@ export default async function BlogPost({ params }) {
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Dynamic content based on slug */}
+        {post.slug === 'aws-cost-optimization-15-tactics-saved-50k-month' && <BlogContentRenderer content={post.content} />}
+        {post.slug === 'github-actions-vs-gitlab-ci-vs-jenkins-2025-comparison' && <BlogContentRenderer content={post.content} />}
         {post.slug === 'gitops-vs-traditional-cicd-2025-comparison' && <BlogContentRenderer content={post.content} />}
         {post.slug === 'kubernetes-deployment-strategies-2025-complete-guide' && <BlogContentRenderer content={post.content} />}
         {post.slug === 'top-10-devops-tools-2025' && <DevOpsToolsContent />}

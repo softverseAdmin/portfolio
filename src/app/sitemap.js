@@ -80,6 +80,11 @@ export default function sitemap() {
 
   // Blog posts with their metadata
   const blogPosts = [
+    'aws-cost-optimization-15-tactics-saved-50k-month',
+    'github-actions-vs-gitlab-ci-vs-jenkins-2025-comparison',
+    'gitops-vs-traditional-cicd-2025-comparison',
+    'kubernetes-deployment-strategies-2025-complete-guide',
+    'terraform-vs-pulumi-cloudformation-2025-iac-comparison',
     'top-10-devops-tools-2025',
     'how-to-build-cicd-pipeline-github-actions-2025',
     'devsecops-checklist-securing-pipeline-2025',
