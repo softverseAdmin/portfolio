@@ -4,7 +4,8 @@ import { getBlogPost, getRelatedPosts } from '../blogData';
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
-  const post = getBlogPost(params.slug);
+  const { slug } = await params;
+  const post = getBlogPost(slug);
   
   if (!post) {
     return {
@@ -32,8 +33,9 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default function BlogPost({ params }) {
-  const post = getBlogPost(params.slug);
+export default async function BlogPost({ params }) {
+  const { slug } = await params;
+  const post = getBlogPost(slug);
   
   if (!post) {
     notFound();
@@ -80,6 +82,8 @@ export default function BlogPost({ params }) {
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Dynamic content based on slug */}
+        {post.slug === 'gitops-vs-traditional-cicd-2025-comparison' && <BlogContentRenderer content={post.content} />}
+        {post.slug === 'kubernetes-deployment-strategies-2025-complete-guide' && <BlogContentRenderer content={post.content} />}
         {post.slug === 'top-10-devops-tools-2025' && <DevOpsToolsContent />}
         {post.slug === 'how-to-build-cicd-pipeline-github-actions-2025' && <BlogContentRenderer content={post.content} />}
         {post.slug === 'devsecops-checklist-securing-pipeline-2025' && <BlogContentRenderer content={post.content} />}
@@ -784,15 +788,26 @@ function BlogContentRenderer({ content }) {
           iconColor = 'text-purple-400';
         }
         
-        // Extract emoji and text more safely
-        const emojiMatch = trimmedLine.match(/^([💡💬🔒⚙️🗣🗾🛂🔖📋💰🧭💼])/);
-        const emoji = emojiMatch ? emojiMatch[1] : '💡';
-        const text = trimmedLine.replace(/^[💡💬🔒⚙️🗣🗾🛂🔖📋💰🧭💼]\s*/, '');
+        // Extract emoji (first character or two) and remaining text
+        // Most emojis are 2 characters in JS (surrogate pairs)
+        let emoji = '';
+        let text = '';
+        
+        // Check if starts with emoji by trying to match first 1-3 chars
+        if (trimmedLine.charCodeAt(0) >= 0xD800 && trimmedLine.charCodeAt(0) <= 0xDFFF) {
+          // Surrogate pair emoji (2 chars in JS)
+          emoji = trimmedLine.substring(0, 2);
+          text = trimmedLine.substring(2).trim();
+        } else {
+          // Single char emoji
+          emoji = trimmedLine.substring(0, 1);
+          text = trimmedLine.substring(1).trim();
+        }
         
         elements.push(
           <div key={elements.length} className={`${bgColor} rounded-lg p-5 border mb-6 flex items-start space-x-4`}>
-            <div className={`${iconBg} rounded-full p-2 flex-shrink-0 min-w-[2.5rem] h-10 flex items-center justify-center`}>
-              <span className={`text-lg ${iconColor}`} suppressHydrationWarning>
+            <div className={`${iconBg} rounded-full p-2 flex-shrink-0 min-w-[2.5rem] h-10 flex items-center justify-center`} suppressHydrationWarning>
+              <span className={`text-lg ${iconColor}`}>
                 {emoji}
               </span>
             </div>

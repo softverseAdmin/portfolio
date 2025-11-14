@@ -81,11 +81,6 @@ export const metadata = {
   category: 'technology',
   classification: 'Education',
   referrer: 'origin-when-cross-origin',
-  colorScheme: 'dark',
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' }
-  ],
   manifest: '/site.webmanifest',
   icons: {
     icon: [
@@ -105,6 +100,14 @@ export const metadata = {
       'msvalidate.01': 'your-bing-verification-code',
     }
   }
+};
+
+export const viewport = {
+  colorScheme: 'dark',
+  themeColor: [
+    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
+    { media: '(prefers-color-scheme: dark)', color: '#0a0a0a' }
+  ],
 };
 
 export default function RootLayout({ children }) {
