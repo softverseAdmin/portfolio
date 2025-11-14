@@ -6,6 +6,7 @@ import { cicdGithubActionsBlog } from './cicd-github-actions';
 import { devopsToolsBlog } from './devops-tools';
 import { platformEngineeringBlog } from './platform-engineering';
 import { japanCareerBlog } from './japan-career';
+import { terraformPulumiCloudformationBlog } from './terraform-vs-pulumi-cloudformation';
 
 export const blogPosts = [
   gitopsCicdBlog,
@@ -15,6 +16,7 @@ export const blogPosts = [
   devopsToolsBlog,
   platformEngineeringBlog,
   japanCareerBlog,
+  terraformPulumiCloudformationBlog,
 ];
 
 // Helper function to get a blog post by slug

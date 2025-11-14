@@ -89,6 +89,7 @@ export default async function BlogPost({ params }) {
         {post.slug === 'devsecops-checklist-securing-pipeline-2025' && <BlogContentRenderer content={post.content} />}
         {post.slug === 'rise-of-platform-engineering-redefining-devops-2025' && <BlogContentRenderer content={post.content} />}
         {post.slug === 'how-to-become-devops-engineer-japan-2025-career-guide' && <BlogContentRenderer content={post.content} />}
+        {post.slug === 'terraform-vs-pulumi-cloudformation-2025-iac-comparison' && <BlogContentRenderer content={post.content} />}
         
         {/* Tags */}
         <div className="mt-12 pt-8 border-t border-gold/30">
