@@ -9,8 +9,10 @@ import { japanCareerBlog } from './japan-career';
 import { terraformPulumiCloudformationBlog } from './terraform-vs-pulumi-cloudformation';
 import { githubActionsGitlabJenkinsBlog } from './github-actions-gitlab-jenkins';
 import { awsCostOptimizationBlog } from './aws-cost-optimization';
+import { dockerImageOptimizationBlog } from './docker-image-optimization';
 
 export const blogPosts = [
+  dockerImageOptimizationBlog,
   awsCostOptimizationBlog,
   githubActionsGitlabJenkinsBlog,
   gitopsCicdBlog,

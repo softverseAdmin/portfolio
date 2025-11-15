@@ -8,7 +8,7 @@
   <!-- Main Pages -->
   <url>
     <loc>https://www.devopsenginer.com</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -16,25 +16,25 @@
   <!-- Core Service Pages -->
   <url>
     <loc>https://www.devopsenginer.com/devops</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.devopsenginer.com/cloud</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.devopsenginer.com/cybersecurity</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://www.devopsenginer.com/resources</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -42,39 +42,69 @@
   <!-- Blog and Content -->
   <url>
     <loc>https://www.devopsenginer.com/blog</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   
   <!-- Individual Blog Posts -->
   <url>
+    <loc>https://www.devopsenginer.com/blog/aws-cost-optimization-15-tactics-saved-50k-month</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.devopsenginer.com/blog/github-actions-vs-gitlab-ci-vs-jenkins-2025-comparison</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.devopsenginer.com/blog/gitops-vs-traditional-cicd-2025-comparison</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.devopsenginer.com/blog/kubernetes-deployment-strategies-2025-complete-guide</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.devopsenginer.com/blog/terraform-vs-pulumi-cloudformation-2025-iac-comparison</loc>
+    <lastmod>2025-11-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://www.devopsenginer.com/blog/top-10-devops-tools-2025</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.devopsenginer.com/blog/how-to-build-cicd-pipeline-github-actions-2025</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.devopsenginer.com/blog/devsecops-checklist-securing-pipeline-2025</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.devopsenginer.com/blog/how-to-become-devops-engineer-japan-2025-career-guide</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://www.devopsenginer.com/blog/rise-of-platform-engineering-redefining-devops-2025</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -82,13 +112,13 @@
   <!-- Contact and Business Pages -->
   <url>
     <loc>https://www.devopsenginer.com/contact</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://www.devopsenginer.com/about</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -96,25 +126,25 @@
   <!-- Legal Pages -->
   <url>
     <loc>https://www.devopsenginer.com/privacy</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.devopsenginer.com/terms</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.devopsenginer.com/disclaimer</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
     <loc>https://www.devopsenginer.com/cookies</loc>
-    <lastmod>2025-10-21</lastmod>
+    <lastmod>2025-11-15</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

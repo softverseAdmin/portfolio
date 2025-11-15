@@ -13,22 +13,60 @@ export async function generateMetadata({ params }) {
     };
   }
 
+  const url = `https://www.devopsenginer.com/blog/${slug}`;
+  const imageUrl = post.featuredImage.startsWith('http') 
+    ? post.featuredImage 
+    : `https://www.devopsenginer.com${post.featuredImage}`;
+
   return {
     title: post.seo.title,
     description: post.seo.description,
     keywords: post.seo.keywords,
+    authors: [{ name: post.author }],
+    creator: post.author,
+    publisher: 'DevOps Enginer',
+    robots: {
+      index: true,
+      follow: true,
+      nocache: false,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+    alternates: {
+      canonical: url,
+    },
     openGraph: {
+      type: 'article',
+      url: url,
       title: post.title,
       description: post.excerpt,
-      images: [post.featuredImage],
-      type: 'article',
+      siteName: 'DevOps Enginer',
+      images: [
+        {
+          url: imageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
       publishedTime: post.publishDate,
+      modifiedTime: post.lastModified || post.publishDate,
+      authors: [post.author],
+      section: post.category,
+      tags: post.tags,
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.excerpt,
-      images: [post.featuredImage],
+      images: [imageUrl],
+      creator: '@devopsenginer',
+      site: '@devopsenginer',
     },
   };
 }
@@ -42,9 +80,85 @@ export default async function BlogPost({ params }) {
   }
 
   const relatedPosts = getRelatedPosts(post.slug);
+  
+  // Generate Article Structured Data for better Google indexing
+  const url = `https://www.devopsenginer.com/blog/${slug}`;
+  const imageUrl = post.featuredImage.startsWith('http') 
+    ? post.featuredImage 
+    : `https://www.devopsenginer.com${post.featuredImage}`;
+  
+  const articleStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.excerpt,
+    image: imageUrl,
+    datePublished: post.publishDate,
+    dateModified: post.lastModified || post.publishDate,
+    author: {
+      '@type': 'Person',
+      name: post.author,
+      url: 'https://www.devopsenginer.com/about',
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'DevOps Enginer',
+      logo: {
+        '@type': 'ImageObject',
+        url: 'https://www.devopsenginer.com/favicon.ico',
+      },
+    },
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': url,
+    },
+    articleSection: post.category,
+    keywords: post.tags.join(', '),
+    wordCount: post.content?.length || 2000,
+    inLanguage: 'en-US',
+  };
+  
+  // Breadcrumb structured data for navigation
+  const breadcrumbStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://www.devopsenginer.com',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: 'https://www.devopsenginer.com/blog',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: post.title,
+        item: url,
+      },
+    ],
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-deep-black via-rich-black to-charcoal">
+    <>
+      {/* Article Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(articleStructuredData) }}
+      />
+      
+      {/* Breadcrumb Structured Data for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
+      />
+      
+      <div className="min-h-screen bg-gradient-to-br from-deep-black via-rich-black to-charcoal">
       {/* Hero Section */}
       <div className="relative bg-gradient-to-br from-charcoal to-rich-black">
         <div className="absolute inset-0">
@@ -82,6 +196,7 @@ export default async function BlogPost({ params }) {
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         {/* Dynamic content based on slug */}
+        {post.slug === 'how-to-optimize-docker-images-production-2025' && <BlogContentRenderer content={post.content} />}
         {post.slug === 'aws-cost-optimization-15-tactics-saved-50k-month' && <BlogContentRenderer content={post.content} />}
         {post.slug === 'github-actions-vs-gitlab-ci-vs-jenkins-2025-comparison' && <BlogContentRenderer content={post.content} />}
         {post.slug === 'gitops-vs-traditional-cicd-2025-comparison' && <BlogContentRenderer content={post.content} />}
@@ -166,6 +281,7 @@ export default async function BlogPost({ params }) {
         </div>
       )}
     </div>
+    </>
   );
 }
 

@@ -80,6 +80,7 @@ export default function sitemap() {
 
   // Blog posts with their metadata
   const blogPosts = [
+    'how-to-optimize-docker-images-production-2025',
     'aws-cost-optimization-15-tactics-saved-50k-month',
     'github-actions-vs-gitlab-ci-vs-jenkins-2025-comparison',
     'gitops-vs-traditional-cicd-2025-comparison',
