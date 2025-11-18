@@ -10,8 +10,14 @@ import { terraformPulumiCloudformationBlog } from './terraform-vs-pulumi-cloudfo
 import { githubActionsGitlabJenkinsBlog } from './github-actions-gitlab-jenkins';
 import { awsCostOptimizationBlog } from './aws-cost-optimization';
 import { dockerImageOptimizationBlog } from './docker-image-optimization';
+import { multiCloudStrategyBlog } from './multi-cloud-strategy';
+import { selfHealingInfrastructureBlog } from './self-healing-infrastructure';
+import { serverlessVsContainers2025Blog } from './serverless-vs-containers-2025';
 
 export const blogPosts = [
+  serverlessVsContainers2025Blog,
+  selfHealingInfrastructureBlog,
+  multiCloudStrategyBlog,
   dockerImageOptimizationBlog,
   awsCostOptimizationBlog,
   githubActionsGitlabJenkinsBlog,

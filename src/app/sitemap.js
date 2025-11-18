@@ -91,6 +91,9 @@ export default function sitemap() {
     'devsecops-checklist-securing-pipeline-2025',
     'how-to-become-devops-engineer-japan-2025-career-guide',
     'rise-of-platform-engineering-redefining-devops-2025',
+    'multi-cloud-strategy-2025',
+    'self-healing-infrastructure-2025',
+    'serverless-vs-containers-2025',
   ].map((slug) => ({
     url: `${baseUrl}/blog/${slug}`,
     lastModified: currentDate,
