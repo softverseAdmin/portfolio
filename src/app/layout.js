@@ -119,6 +119,7 @@ export default function RootLayout({ children }) {
         <meta name="theme-color" content="#0a0a0a" />
         
         <link rel="canonical" href="https://www.devopsenginer.com" />
+        <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         
