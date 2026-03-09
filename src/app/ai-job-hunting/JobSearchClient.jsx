@@ -347,8 +347,9 @@ export default function JobSearchClient() {
             <span className="text-warm-white"> Engine</span>
           </h2>
           <p className="text-warm-white/60 text-lg max-w-2xl mx-auto">
-            Upload your resume (TXT or MD). The AI engine parses your skills, scores every
-            job, and shows your best matches — ranked and ready to apply.
+            Upload your resume (TXT, MD, or PDF). The engine parses your skills, fetches
+            <span className="text-green-400 font-semibold"> real live jobs</span> from RemoteOK, WeWorkRemotely &amp; Remotive,
+            then scores and ranks every match instantly.
           </p>
         </div>
 
@@ -393,8 +394,8 @@ export default function JobSearchClient() {
               <div className="absolute inset-0 rounded-full border-4 border-violet-500/20"></div>
               <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-violet-500 animate-spin"></div>
             </div>
-            <p className="text-violet-300 font-semibold text-lg animate-pulse">Parsing resume & scoring jobs…</p>
-            <p className="text-warm-white/40 text-sm">Rule-based engine · no AI API cost · blazing fast</p>
+            <p className="text-violet-300 font-semibold text-lg animate-pulse">Scanning live job boards…</p>
+            <p className="text-warm-white/40 text-sm">Fetching from RemoteOK · WeWorkRemotely · Remotive</p>
           </div>
         )}
 
