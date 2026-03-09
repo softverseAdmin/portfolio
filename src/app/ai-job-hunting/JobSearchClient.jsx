@@ -339,7 +339,7 @@ export default function JobSearchClient() {
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/40 text-green-300 px-4 py-2 rounded-full text-sm font-medium mb-4">
             <span>⚡</span>
-            <span>Live Resume Matcher — No API key required</span>
+            <span>Live Resume Matcher for free — No money required</span>
             <span className="bg-green-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">FREE</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-extrabold mb-3">
