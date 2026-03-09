@@ -26,7 +26,38 @@ async function extractText(filename, buffer) {
 
   if (ext === 'pdf') {
     try {
-      // pdf-parse v2 uses a class-based API
+      // pdfjs-dist (used internally by pdf-parse v2) calls DOMMatrix which
+      // does not exist in Node.js. Polyfill it globally before the import.
+      if (typeof globalThis.DOMMatrix === 'undefined') {
+        globalThis.DOMMatrix = class DOMMatrix {
+          constructor() {
+            this.is2D = true; this.isIdentity = true;
+            this.a=1; this.b=0; this.c=0; this.d=1; this.e=0; this.f=0;
+            this.m11=1; this.m12=0; this.m13=0; this.m14=0;
+            this.m21=0; this.m22=1; this.m23=0; this.m24=0;
+            this.m31=0; this.m32=0; this.m33=1; this.m34=0;
+            this.m41=0; this.m42=0; this.m43=0; this.m44=1;
+          }
+          multiply()            { return new globalThis.DOMMatrix(); }
+          inverse()             { return new globalThis.DOMMatrix(); }
+          translate(tx=0,ty=0)  { const m = new globalThis.DOMMatrix(); m.e=tx; m.f=ty; return m; }
+          scale(sx=1,sy=sx)     { const m = new globalThis.DOMMatrix(); m.a=sx; m.d=sy; return m; }
+          rotate()              { return new globalThis.DOMMatrix(); }
+          transformPoint(p={})  { return { x: p.x||0, y: p.y||0, z: p.z||0, w: p.w||1 }; }
+          static fromMatrix()         { return new globalThis.DOMMatrix(); }
+          static fromFloat32Array()   { return new globalThis.DOMMatrix(); }
+          static fromFloat64Array()   { return new globalThis.DOMMatrix(); }
+        };
+      }
+      // Also polyfill Path2D if needed by pdfjs canvas operations
+      if (typeof globalThis.Path2D === 'undefined') {
+        globalThis.Path2D = class Path2D {
+          constructor() {}
+          moveTo() {} lineTo() {} closePath() {} arc() {} rect() {}
+          addPath() {} bezierCurveTo() {} quadraticCurveTo() {}
+        };
+      }
+
       const { PDFParse } = await import('pdf-parse');
       const parser = new PDFParse({ data: buffer });
       const result = await parser.getText();
