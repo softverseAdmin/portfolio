@@ -2,12 +2,12 @@ import Link from 'next/link';
 import JobSearchClient from './JobSearchClient';
 
 export const metadata = {
-  title: 'AI-Powered Job Hunting Guide for DevOps & Cloud Engineers | DevOps Enginer',
-  description: 'Master AI-powered job hunting strategies for DevOps and Cloud engineers. Leverage ChatGPT, AI resume builders, interview prep bots, and smart job search automation to land your dream role faster.',
-  keywords: 'AI job hunting, AI resume builder, ChatGPT job search, AI interview prep, LinkedIn AI optimization, DevOps jobs, cloud engineer jobs, AI cover letter, job search automation, career AI tools',
+  title: 'AI-Powered Job Hunting Guide for Tech & Software Engineers | DevOps Enginer',
+  description: 'Master AI-powered job hunting strategies for software, DevOps, cloud, frontend, backend, and data engineers. Leverage ChatGPT, AI resume builders, interview prep, and smart job search automation to land your dream role faster.',
+  keywords: 'AI job hunting, AI resume builder, ChatGPT job search, AI interview prep, LinkedIn AI optimization, tech jobs, software engineer jobs, DevOps jobs, cloud engineer jobs, AI cover letter, job search automation, career AI tools',
   openGraph: {
-    title: 'AI-Powered Job Hunting Guide for DevOps & Cloud Engineers',
-    description: 'Master AI-powered job hunting strategies for DevOps and Cloud engineers. Leverage ChatGPT, AI resume builders, interview prep bots, and smart job search automation.',
+    title: 'AI-Powered Job Hunting Guide for Tech & Software Engineers',
+    description: 'Master AI-powered job hunting strategies for software, DevOps, cloud, frontend, backend, and data engineers. Leverage ChatGPT, AI resume builders, interview prep, and smart automation.',
     type: 'website',
   }
 };
@@ -105,7 +105,7 @@ const aiPrompts = [
     icon: "📝",
     color: "border-violet-500/40 bg-violet-500/5",
     headerColor: "text-violet-300",
-    prompt: `Act as a senior DevOps recruiter. I'm applying for [JOB TITLE] at [COMPANY]. Here is the job description:
+    prompt: `Act as a senior technical recruiter. I'm applying for [JOB TITLE] at [COMPANY]. Here is the job description:
 [PASTE JOB DESCRIPTION]
 
 Here is my current resume summary:
@@ -115,7 +115,7 @@ Rewrite my resume summary and bullet points to:
 1. Match keywords from the job description
 2. Quantify achievements with metrics
 3. Pass ATS scanning for the role
-4. Highlight cloud/DevOps skills most relevant to this role`,
+4. Highlight the technical skills most relevant to this role`,
     tags: ["Resume", "ATS", "Keywords"]
   },
   {
@@ -155,7 +155,7 @@ My top 3 relevant achievements:
 Guidelines:
 - 3 paragraphs, under 300 words
 - Lead with a strong hook about why THIS company
-- Connect my DevOps/Cloud experience directly to their stack
+- Connect my technical experience directly to their stack and needs
 - Close with a confident call to action
 - Professional but personable tone`,
     tags: ["Cover Letter", "Personalization"]
@@ -165,10 +165,10 @@ Guidelines:
     icon: "🔗",
     color: "border-sky-500/40 bg-sky-500/5",
     headerColor: "text-sky-300",
-    prompt: `Create 5 optimized LinkedIn headlines for a DevOps/Cloud Engineer with this background:
+    prompt: `Create 5 optimized LinkedIn headlines for a tech professional with this background:
 - Current role: [YOUR CURRENT TITLE]
 - Years of experience: [X years]
-- Key skills: [e.g., Kubernetes, AWS, Terraform, CI/CD]
+- Key skills: [e.g., React, Node.js, AWS, Kubernetes, Python, Terraform]
 - Target role: [TARGET JOB TITLE]
 - Open to: [Contract/Full-time/Remote]
 
@@ -202,22 +202,22 @@ Write me a professional email and phone script to:
     icon: "💻",
     color: "border-red-500/40 bg-red-500/5",
     headerColor: "text-red-300",
-    prompt: `Act as a senior DevOps interviewer at a top tech company. 
+    prompt: `Act as a senior technical interviewer at a top tech company.
 I'm interviewing for: [JOB TITLE] at [COMPANY TYPE e.g. FAANG/Startup/Enterprise]
 
-Conduct a mock technical interview with me on:
-- Kubernetes troubleshooting scenarios
-- CI/CD pipeline design questions
-- Infrastructure as Code (Terraform) best practices
-- Cloud architecture design (AWS/Azure/GCP)
-- Incident response and on-call scenarios
+Conduct a mock technical interview covering the most relevant topics for my role, such as:
+- System design and architecture
+- Core language / framework questions (e.g. [MY STACK])
+- Cloud / infrastructure / DevOps practices (if relevant)
+- Algorithms and data structures (if relevant)
+- Debugging and incident response scenarios
 
 Ask one question at a time. After my answer, provide:
 1. What was good about my answer
 2. What was missing or could be improved
 3. The ideal answer structure
 4. Then ask the next question`,
-    tags: ["Technical", "Mock Interview", "DevOps"]
+    tags: ["Technical", "Mock Interview", "System Design"]
   }
 ];
 
@@ -244,7 +244,8 @@ const jobHuntingSteps = [
       "Use ChatGPT to rewrite your About section with your unique value proposition",
       "Add an AI-generated LinkedIn banner with your top skills using Canva AI",
       "Post weekly DevOps content using AI writing assistance to build authority",
-      "Use LinkedIn's AI to find 2nd-degree connections at target companies"
+      "Use LinkedIn's AI to find 2nd-degree connections at target companies",
+      "Post weekly content in your area of expertise using AI writing assistance to build authority"
     ],
     tip: "Profiles with consistent weekly activity get 6x more recruiter views",
     color: "from-sky-500 to-blue-600",
@@ -272,7 +273,7 @@ const jobHuntingSteps = [
       "Research the company using ChatGPT + their blog, press releases, and engineering blog",
       "Practice STAR-format answers for the top 20 behavioral questions using AI",
       "Do live mock interviews with Pramp or Interviewing.io weekly",
-      "Ask ChatGPT to simulate a DevOps technical interview for your target company"
+      "Ask ChatGPT to simulate a technical interview for your target role and company"
     ],
     tip: "Record yourself answering — AI tools like Yoodli analyze your filler words and pace",
     color: "from-green-500 to-emerald-600",
@@ -313,21 +314,23 @@ const jobBoards = [
   { name: "Otta", type: "Tech Startups", bestFor: "Startup & scale-up roles", aiFeature: "Smart role matching score", color: "text-green-300" },
   { name: "Levels.fyi Jobs", type: "FAANG & Big Tech", bestFor: "High compensation roles", aiFeature: "Verified salary transparency", color: "text-violet-300" },
   { name: "Wellfound (AngelList)", type: "Startups", bestFor: "Early-stage startup roles", aiFeature: "AI startup matching", color: "text-orange-300" },
-  { name: "RemoteOK", type: "Remote Only", bestFor: "100% remote DevOps roles", aiFeature: "Smart remote filters", color: "text-blue-300" },
+  { name: "RemoteOK", type: "Remote Only", bestFor: "100% remote tech roles", aiFeature: "Smart remote filters", color: "text-blue-300" },
   { name: "Hired.com", type: "Tech Professionals", bestFor: "Companies apply to you", aiFeature: "Reverse job matching AI", color: "text-pink-300" },
   { name: "Toptal", type: "Freelance/Contract", bestFor: "Top 3% freelance market", aiFeature: "AI skill vetting", color: "text-amber-300" },
   { name: "Dev.to Jobs", type: "Developer Community", bestFor: "Developer-first companies", aiFeature: "Community-vetted listings", color: "text-red-300" },
 ];
 
 const devopsJobTitles = [
-  { title: "DevOps Engineer", salaryRange: "$120k – $180k", demand: "Very High", trend: "↑" },
+  { title: "Frontend Engineer (React / Next.js)", salaryRange: "$100k – $170k", demand: "High", trend: "↑" },
+  { title: "Backend Engineer (Node / Go / Python)", salaryRange: "$110k – $185k", demand: "Very High", trend: "↑" },
+  { title: "Full-Stack Engineer", salaryRange: "$115k – $190k", demand: "Very High", trend: "↑" },
+  { title: "DevOps / Platform Engineer", salaryRange: "$120k – $195k", demand: "Very High", trend: "↑↑" },
   { title: "Site Reliability Engineer (SRE)", salaryRange: "$140k – $210k", demand: "Very High", trend: "↑" },
-  { title: "Platform Engineer", salaryRange: "$135k – $195k", demand: "High", trend: "↑↑" },
-  { title: "Cloud Architect", salaryRange: "$160k – $250k", demand: "High", trend: "↑" },
-  { title: "Kubernetes Engineer", salaryRange: "$130k – $200k", demand: "High", trend: "↑" },
-  { title: "Security DevOps (DevSecOps)", salaryRange: "$145k – $220k", demand: "Very High", trend: "↑↑" },
-  { title: "ML Platform Engineer", salaryRange: "$160k – $240k", demand: "Exploding", trend: "↑↑↑" },
-  { title: "Infrastructure Engineer", salaryRange: "$115k – $175k", demand: "Stable", trend: "→" },
+  { title: "Cloud / Infrastructure Engineer", salaryRange: "$125k – $200k", demand: "High", trend: "↑" },
+  { title: "Data Engineer", salaryRange: "$120k – $195k", demand: "High", trend: "↑↑" },
+  { title: "Security Engineer (DevSecOps)", salaryRange: "$145k – $220k", demand: "Very High", trend: "↑↑" },
+  { title: "ML / AI Engineer", salaryRange: "$160k – $250k", demand: "Exploding", trend: "↑↑↑" },
+  { title: "Mobile Engineer (iOS / Android)", salaryRange: "$110k – $180k", demand: "Stable", trend: "→" },
 ];
 
 export default function AIJobHuntingPage() {
@@ -352,12 +355,13 @@ export default function AIJobHuntingPage() {
             <h1 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
               <span className="bg-gradient-to-r from-violet-400 via-purple-300 to-white bg-clip-text text-transparent">Land Your Dream</span>
               <br />
-              <span className="bg-gradient-to-r from-gold via-amber to-soft-gold bg-clip-text text-transparent">DevOps Job with AI</span>
+              <span className="bg-gradient-to-r from-gold via-amber to-soft-gold bg-clip-text text-transparent">Tech Job with AI</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-warm-white/70 mb-8 leading-relaxed">
               Stop blindly sending resumes. Use <span className="text-violet-300 font-semibold">AI tools, smart prompts, and proven strategies</span> to
-              get more interviews, crush technical rounds, and negotiate the salary you deserve.
+              get more interviews, crush technical rounds, and negotiate the salary you deserve —
+              whether you&apos;re a frontend, backend, DevOps, data, or cloud engineer.
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 mb-10">
@@ -417,7 +421,7 @@ export default function AIJobHuntingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">2026 DevOps Job Market</span>
+              <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">2026 Tech Job Market</span>
             </h2>
             <p className="text-warm-white/60 text-lg max-w-2xl mx-auto">
               Know your target roles, salary ranges, and market demand before you start applying
@@ -466,7 +470,7 @@ export default function AIJobHuntingPage() {
               The <span className="bg-gradient-to-r from-violet-400 to-purple-300 bg-clip-text text-transparent">6-Step AI Job Hunt</span> System
             </h2>
             <p className="text-warm-white/60 text-lg max-w-2xl mx-auto">
-              A battle-tested, AI-powered playbook used by top DevOps engineers to land offers fast
+              A battle-tested, AI-powered playbook used by top tech engineers to land offers fast
             </p>
           </div>
 
@@ -596,7 +600,7 @@ export default function AIJobHuntingPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
               <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">Best Job Boards</span>
-              <span className="text-warm-white"> for DevOps Engineers</span>
+              <span className="text-warm-white"> for Tech Engineers</span>
             </h2>
             <p className="text-warm-white/60 text-lg max-w-2xl mx-auto">
               Know where to find the best roles — not all job boards are equal for tech professionals
@@ -635,7 +639,7 @@ export default function AIJobHuntingPage() {
                 href="/blog"
                 className="bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-500 hover:to-purple-500 text-white px-8 py-3.5 rounded-xl font-semibold transition-all hover:shadow-lg hover:shadow-violet-500/30 hover:-translate-y-0.5"
               >
-                📚 Read DevOps Career Blog
+                📚 Read the Tech Career Blog
               </Link>
               <Link
                 href="/contact"
