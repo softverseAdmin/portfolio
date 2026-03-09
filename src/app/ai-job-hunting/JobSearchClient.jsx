@@ -2,6 +2,18 @@
 
 import { useState, useRef } from 'react';
 
+// ─── Salary extractor ────────────────────────────────────────────────────
+function salaryNumber(salaryText) {
+  if (!salaryText) return 0;
+  const nums = [...salaryText.matchAll(/(\d[\d,]*)/g)]
+    .map(m => parseInt(m[1].replace(/,/g, ''), 10))
+    .filter(Boolean);
+  if (!nums.length) return 0;
+  // handle "$50k - $75k"
+  if (/k/i.test(salaryText)) return nums[0] * 1000;
+  return nums[0];
+}
+
 // ─── Score ring ──────────────────────────────────────────────────────────────
 function ScoreRing({ pct }) {
   const r = 20;
@@ -58,6 +70,19 @@ function JobCard({ job, rank }) {
     job.matchPercent >= 45 ? 'text-amber-400' :
                              'text-red-400';
 
+  // Build geo chip: show specific restriction when not Worldwide
+  const geoChip = (() => {
+    const ce = job.countryEligibility ?? ['Worldwide'];
+    const isWorldwide = ce.includes('Worldwide') || ce.length === 0;
+    if (isWorldwide) return { label: '🌍 Worldwide', color: 'green' };
+    const regions = ce.join(', ');
+    // Japan-residents can apply to Japan/APAC/Worldwide
+    const japanOk = ce.includes('Worldwide') || ce.includes('Japan') || ce.includes('APAC');
+    return japanOk
+      ? { label: `✓ ${regions}`, color: 'green' }
+      : { label: `⚠ ${regions} only`, color: 'red' };
+  })();
+
   return (
     <div className="border border-gold/10 rounded-xl bg-charcoal/40 hover:border-gold/30 transition-all overflow-hidden">
       {/* Main row */}
@@ -83,6 +108,7 @@ function JobCard({ job, rank }) {
                 <span className="text-warm-white/60 text-sm">{job.company}</span>
               </div>
               <div className="flex flex-wrap gap-1.5 items-center">
+                <Chip label={geoChip.label} color={geoChip.color} />
                 {job.eligibleFromJapan
                   ? <Chip label="🇯🇵 Japan OK" color="green" />
                   : <Chip label="⚠ Geo restricted" color="red" />}
@@ -292,6 +318,18 @@ export default function JobSearchClient() {
 
   async function submitFile(file) {
     if (!file) return;
+    const MAX_MB = 10;
+    if (file.size > MAX_MB * 1024 * 1024) {
+      setErrorMsg(`File too large. Max ${MAX_MB} MB allowed.`);
+      setState('error');
+      return;
+    }
+    const ext = file.name.split('.').pop().toLowerCase();
+    if (!['txt', 'md', 'pdf', 'doc', 'docx'].includes(ext)) {
+      setErrorMsg('Unsupported file type. Please upload TXT, MD, PDF, DOC, or DOCX.');
+      setState('error');
+      return;
+    }
     setState('loading');
     setErrorMsg('');
     setData(null);
@@ -324,11 +362,16 @@ export default function JobSearchClient() {
 
   // Filter + sort
   const eligible = data?.results?.filter(r => r.eligibleFromJapan).length ?? 0;
-  const filtered = (data?.results ?? []).filter(r => {
+  const filteredBase = (data?.results ?? []).filter(r => {
     if (filter === 'eligible') return r.eligibleFromJapan;
     if (filter === 'remote')   return r.locationPolicy === 'remote';
     if (filter === 'top')      return r.matchPercent >= 50;
+    if (filter === 'salary')   return true;  // show all, sorted by salary
     return true;
+  });
+  const filtered = [...filteredBase].sort((a, b) => {
+    if (filter === 'salary') return salaryNumber(b.salaryText) - salaryNumber(a.salaryText);
+    return b.matchPercent - a.matchPercent;
   });
 
   return (
@@ -339,7 +382,7 @@ export default function JobSearchClient() {
         <div className="text-center mb-10">
           <div className="inline-flex items-center gap-2 bg-green-500/20 border border-green-500/40 text-green-300 px-4 py-2 rounded-full text-sm font-medium mb-4">
             <span>⚡</span>
-            <span>Live Resume Matcher for free — No money required</span>
+            <span>Free live job matcher — no account, no sign-up needed</span>
             <span className="bg-green-500 text-white text-[10px] px-2 py-0.5 rounded-full font-bold">FREE</span>
           </div>
           <h2 className="text-3xl md:text-4xl font-extrabold mb-3">
@@ -347,9 +390,9 @@ export default function JobSearchClient() {
             <span className="text-warm-white"> Engine</span>
           </h2>
           <p className="text-warm-white/60 text-lg max-w-2xl mx-auto">
-            Upload your resume (TXT, MD, or PDF). The engine parses your skills, fetches
-            <span className="text-green-400 font-semibold"> real live jobs</span> from RemoteOK, WeWorkRemotely &amp; Remotive,
-            then scores and ranks every match instantly.
+            Upload your resume and the engine parses your skills, fetches
+            <span className="text-green-400 font-semibold"> live jobs</span> from RemoteOK, WeWorkRemotely &amp; Remotive,
+            then scores and ranks every match instantly. No data is saved.
           </p>
         </div>
 
@@ -376,12 +419,19 @@ export default function JobSearchClient() {
             <p className="text-warm-white font-semibold text-lg">
               Drop your resume here, or <span className="text-violet-400 underline underline-offset-2">browse</span>
             </p>
-            <p className="text-warm-white/40 text-sm mt-1">
-              Supports TXT, MD &nbsp;·&nbsp; PDF / DOCX with optional server packages
+            <p className="text-warm-white/50 text-sm mt-1">
+              Accepted: <span className="text-warm-white/70 font-medium">TXT, MD, DOCX, DOC, PDF</span>
+              &nbsp;· Max <span className="text-warm-white/70 font-medium">10 MB</span>
+            </p>
+            <p className="text-amber-400/70 text-xs mt-1.5">
+              💡 Best results: <strong>DOCX</strong> or <strong>TXT</strong> &mdash; PDF must be text-based, not a scanned image
             </p>
             {state === 'error' && (
               <p className="mt-4 text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-4 py-2 text-sm font-medium">
                 ❌ {errorMsg}
+                {/pdf/i.test(errorMsg) && (
+                  <span className="block mt-1 text-amber-300 text-xs">Try converting to DOCX or TXT for best results.</span>
+                )}
               </p>
             )}
           </div>
@@ -396,6 +446,7 @@ export default function JobSearchClient() {
             </div>
             <p className="text-violet-300 font-semibold text-lg animate-pulse">Scanning live job boards…</p>
             <p className="text-warm-white/40 text-sm">Fetching from RemoteOK · WeWorkRemotely · Remotive</p>
+            <p className="text-warm-white/30 text-xs">This usually takes 5–15 seconds</p>
           </div>
         )}
 
@@ -420,6 +471,21 @@ export default function JobSearchClient() {
                 </div>
               ))}
             </div>
+
+            {/* Source summary */}
+            {data.sourceSummary && (
+              <div className="flex flex-wrap items-center gap-3 px-4 py-3 bg-charcoal/40 border border-gold/10 rounded-xl text-xs">
+                <span className="text-warm-white/40 font-semibold uppercase tracking-wider">Sources fetched:</span>
+                {Object.entries(data.sourceSummary).map(([src, count]) => (
+                  <span key={src} className="text-warm-white/60">
+                    <span className="text-sky-300 font-semibold">{src}</span>: {count}
+                  </span>
+                ))}
+                {data.sourceErrors?.length > 0 && (
+                  <span className="text-amber-400/70">⚠ {data.sourceErrors.length} source(s) unavailable</span>
+                )}
+              </div>
+            )}
 
             {/* Filter bar */}
             <FilterBar filter={filter} setFilter={setFilter} total={data.results.length} eligible={eligible} />

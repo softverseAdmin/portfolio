@@ -1,14 +1,14 @@
 /**
  * Job Match API Route
  * -------------------
- * POST /api/job-match  — accepts a resume file (TXT / MD / PDF* / DOCX*)
- *   Returns: { run_id, created_at, candidate, results }
+ * POST /api/job-match  — accepts a resume file (TXT / MD / PDF / DOCX)
+ *   Returns: { run_id, created_at, candidate, results, sourceSummary }
  *
- * PDF support  → install: npm install pdf-parse
+ * Free, no account needed. Fetches live jobs from:
+ *   RemoteOK (JSON), WeWorkRemotely (RSS), Remotive (JSON)
+ *
  * DOCX support → install: npm install mammoth
- *
- * Environment variables (optional — for GitHub storage, added later):
- *   GITHUB_TOKEN, GITHUB_OWNER, GITHUB_REPO, GITHUB_BRANCH
+ * PDF: text-based PDFs only (not scanned/image). Best results: DOCX or TXT.
  */
 
 import { NextResponse } from 'next/server';
@@ -283,6 +283,52 @@ function parseSalary(raw, desc) {
   return m ? m[0] : null;
 }
 
+// ─── Geo eligibility inference ────────────────────────────
+// Parses location text and job description to detect restrictions.
+function inferEligibility(locationText = '', desc = '') {
+  const t = `${locationText} ${desc}`.toLowerCase();
+
+  // US-only signals
+  if (/\bus[- ]?only\b|united states only|must be (based|located) in the us|\b(usa only)\b|us residents only/.test(t)) {
+    return { countryEligibility: ['US'], timezoneConstraint: 'US (EST/PST)', locationPolicy: 'remote' };
+  }
+  // Individual US states or US timezone
+  if (/\b(pst|mst|cst|est|pacific|mountain|central|eastern)\b.*\bonly\b|\bcontiguous us\b/.test(t)) {
+    return { countryEligibility: ['US'], timezoneConstraint: 'US timezone required', locationPolicy: 'remote' };
+  }
+  // Canada or North America
+  if (/\bcanada[- ]only\b|\bnorth america[- ]only\b|\b(us|canada) only\b/.test(t)) {
+    return { countryEligibility: ['US', 'Canada'], timezoneConstraint: 'Americas', locationPolicy: 'remote' };
+  }
+  // Americas
+  if (/\bamericas[- ]only\b|\b(latam|latin america)[- ]only\b/.test(t)) {
+    return { countryEligibility: ['Americas'], timezoneConstraint: 'Americas (UTC-8 to UTC-3)', locationPolicy: 'remote' };
+  }
+  // Europe/EMEA
+  if (/\beurope[- ]only\b|\beu[- ]only\b|\bemea\b|\bwithin europe\b/.test(t)) {
+    return { countryEligibility: ['Europe'], timezoneConstraint: 'EMEA', locationPolicy: 'remote' };
+  }
+  // UK
+  if (/\buk[- ]only\b|\bunited kingdom only\b/.test(t)) {
+    return { countryEligibility: ['UK'], timezoneConstraint: 'GMT/BST', locationPolicy: 'remote' };
+  }
+  // APAC / Asia
+  if (/\bapac\b|\basia[- ]only\b|\basia[- ]pacific\b/.test(t)) {
+    return { countryEligibility: ['APAC'], timezoneConstraint: 'APAC (UTC+5 to UTC+12)', locationPolicy: 'remote' };
+  }
+  // Japan specifically
+  if (/\bjapan[- ]only\b|\bbased in japan\b/.test(t)) {
+    return { countryEligibility: ['Japan'], timezoneConstraint: 'JST', locationPolicy: 'remote' };
+  }
+  // Open / worldwide
+  if (/\bworldwide\b|\banywhere\b|\bopen to all\b/.test(t)) {
+    return { countryEligibility: ['Worldwide'], timezoneConstraint: null, locationPolicy: 'remote' };
+  }
+
+  // Default: worldwide (can't confirm restriction)
+  return { countryEligibility: ['Worldwide'], timezoneConstraint: null, locationPolicy: 'remote' };
+}
+
 // ─── RemoteOK JSON ────────────────────────────────────────
 // Docs: https://remoteok.com/api
 async function fetchRemoteOK(tag) {
@@ -301,15 +347,17 @@ async function fetchRemoteOK(tag) {
       const salary = j.salary_min && j.salary_max
         ? `$${Math.round(j.salary_min / 1000)}k – $${Math.round(j.salary_max / 1000)}k`
         : parseSalary(null, desc);
+      const locationText = j.location || 'Remote, Worldwide';
+      const geo = inferEligibility(locationText, desc);
       return {
         source: 'RemoteOK',
         sourceUrl: j.url || `https://remoteok.com/l/${j.id}`,
         title: (j.position || j.title || '').trim(),
         company: (j.company || 'Unknown').trim(),
-        locationText: j.location || 'Remote, Worldwide',
-        locationPolicy: 'remote',
-        countryEligibility: ['Worldwide'],
-        timezoneConstraint: null,
+        locationText,
+        locationPolicy: geo.locationPolicy,
+        countryEligibility: geo.countryEligibility,
+        timezoneConstraint: geo.timezoneConstraint,
         salaryText: salary,
         seniority: inferSeniority(j.position || j.title || '', desc),
         mustHave: skills.slice(0, 5),
@@ -352,15 +400,17 @@ async function fetchWeWorkRemotely(slug) {
       const desc    = stripHtml(get('description'));
       if (!title || !link || title.toLowerCase().includes('we work remotely')) continue;
       const skills = extractSkillsFromText(title + ' ' + desc);
+      const wwrLocationText = region === 'Anywhere' ? 'Remote, Worldwide' : `Remote, ${region}`;
+      const wwrGeo = inferEligibility(region, desc);
       out.push({
         source: 'WeWorkRemotely',
         sourceUrl: link,
         title: title.trim(),
         company: company.trim() || 'Unknown',
-        locationText: region === 'Anywhere' ? 'Remote, Worldwide' : `Remote, ${region}`,
-        locationPolicy: 'remote',
-        countryEligibility: ['Worldwide'],
-        timezoneConstraint: null,
+        locationText: wwrLocationText,
+        locationPolicy: wwrGeo.locationPolicy,
+        countryEligibility: wwrGeo.countryEligibility,
+        timezoneConstraint: wwrGeo.timezoneConstraint,
         salaryText: parseSalary(null, desc),
         seniority: inferSeniority(title, desc),
         mustHave: skills.slice(0, 5),
@@ -389,15 +439,17 @@ async function fetchRemotive(category) {
       const desc = stripHtml(j.description || '');
       const tagText = j.title + ' ' + (Array.isArray(j.tags) ? j.tags.join(' ') : '') + ' ' + desc;
       const skills = extractSkillsFromText(tagText);
+      const remLocationText = j.candidate_required_location || 'Worldwide';
+      const remGeo = inferEligibility(remLocationText, desc);
       return {
         source: 'Remotive',
         sourceUrl: j.url,
         title: (j.title || '').trim(),
         company: (j.company_name || 'Unknown').trim(),
-        locationText: j.candidate_required_location || 'Worldwide',
-        locationPolicy: 'remote',
-        countryEligibility: ['Worldwide'],
-        timezoneConstraint: null,
+        locationText: remLocationText,
+        locationPolicy: remGeo.locationPolicy,
+        countryEligibility: remGeo.countryEligibility,
+        timezoneConstraint: remGeo.timezoneConstraint,
         salaryText: j.salary || parseSalary(null, desc),
         seniority: inferSeniority(j.title, desc),
         mustHave: skills.slice(0, 5),
@@ -444,13 +496,27 @@ async function fetchLiveJobs(roleFamilies) {
   const settled = await Promise.allSettled(promises);
   const all = settled.flatMap(r => r.status === 'fulfilled' ? r.value : []);
 
-  // Deduplicate by URL
+  // Build per-source counts (before dedup)
+  const sourceCounts = {};
+  for (const j of all) {
+    if (j?.source) sourceCounts[j.source] = (sourceCounts[j.source] || 0) + 1;
+  }
+
+  // Note any sources that errored
+  const sourceErrors = settled
+    .filter(r => r.status === 'rejected')
+    .map(r => r.reason?.message || 'fetch failed');
+
+  // Deduplicate by URL, filter incomplete records
   const seen = new Set();
-  return all.filter(j => {
-    if (!j.sourceUrl || seen.has(j.sourceUrl)) return false;
+  const jobs = all.filter(j => {
+    if (!j.sourceUrl || !j.title || !j.company) return false;
+    if (seen.has(j.sourceUrl)) return false;
     seen.add(j.sourceUrl);
     return true;
   }).slice(0, 60);
+
+  return { jobs, sourceSummary: sourceCounts, sourceErrors };
 }
 
 
@@ -526,15 +592,16 @@ function scoreJob(candidate, job) {
   if (job.domains.length) tweaks.push('Move your most relevant domain project to the top section.');
 
   return {
-    company:           job.company,
-    title:             job.title,
-    source:            job.source,
-    sourceUrl:         job.sourceUrl,
-    locationText:      job.locationText,
-    locationPolicy:    job.locationPolicy,
-    eligibleFromJapan: eligible,
-    geoFlagReason:     geoReason,
-    timezoneConstraint:job.timezoneConstraint,
+    company:            job.company,
+    title:              job.title,
+    source:             job.source,
+    sourceUrl:          job.sourceUrl,
+    locationText:       job.locationText,
+    locationPolicy:     job.locationPolicy,
+    countryEligibility: job.countryEligibility,
+    eligibleFromJapan:  eligible,
+    geoFlagReason:      geoReason,
+    timezoneConstraint: job.timezoneConstraint,
     salaryText:        job.salaryText,
     seniority:         job.seniority,
     matchPercent:      Math.round(total * 10) / 10,
@@ -589,8 +656,8 @@ export async function POST(request) {
 
     const candidate = parseResume(resumeText);
 
-    // Fetch real live jobs from RSS/JSON feeds based on candidate's role
-    const liveJobs = await fetchLiveJobs(candidate.roleFamilies);
+    // Fetch real live jobs from public free feeds based on candidate's role
+    const { jobs: liveJobs, sourceSummary, sourceErrors } = await fetchLiveJobs(candidate.roleFamilies);
 
     const results = liveJobs
       .map(job => scoreJob(candidate, job))
@@ -602,10 +669,12 @@ export async function POST(request) {
     const runId = `${Date.now().toString(36).toUpperCase()}`;
 
     return NextResponse.json({
-      run_id:     runId,
-      created_at: new Date().toISOString(),
+      run_id:      runId,
+      created_at:  new Date().toISOString(),
       candidate,
       results,
+      sourceSummary,
+      sourceErrors: sourceErrors.length ? sourceErrors : undefined,
     });
 
   } catch (err) {
