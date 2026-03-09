@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef, useMemo, useState } from 'react'
+import { useEffect, useRef, useId, useState } from 'react'
 
 export default function AdSense({ 
   adSlot, 
@@ -12,8 +12,9 @@ export default function AdSense({
   const initialized = useRef(false)
   const [hasError, setHasError] = useState(false)
   
-  // Generate unique ID for each ad instance
-  const adId = useMemo(() => `ad-${adSlot}-${Date.now()}-${Math.random().toString(36).substr(2, 5)}`, [adSlot])
+  // useId() is SSR-safe — produces the same value on server and client
+  const uid = useId()
+  const adId = `ad-${adSlot}-${uid.replace(/:/g, '')}`
 
   // Development mode fallback
   const isDevelopment = process.env.NODE_ENV === 'development'
