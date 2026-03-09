@@ -14,7 +14,59 @@
 import { NextResponse } from 'next/server';
 
 // =========================================================
-// Text extraction  (lazy-loads optional parsers at runtime)
+// Pure-JS PDF text extractor
+// No workers, no external deps, works on Vercel / any serverless.
+// Covers text-based PDFs (the vast majority of resumes).
+// =========================================================
+
+function decodePDFString(s) {
+  return s
+    .replace(/\\n/g, '\n')
+    .replace(/\\r/g, '\n')
+    .replace(/\\t/g, ' ')
+    .replace(/\\([0-7]{1,3})/g, (_, oct) => {
+      try { return String.fromCharCode(parseInt(oct, 8)); } catch { return ''; }
+    })
+    .replace(/\\(.)/g, '$1');
+}
+
+function extractPDFText(buffer) {
+  // Read raw binary. PDF text operators live inside BT … ET blocks.
+  const src = buffer.toString('binary');
+  const parts = [];
+
+  const blockRe = /BT([\s\S]*?)ET/g;
+  let block;
+  while ((block = blockRe.exec(src)) !== null) {
+    const inner = block[1];
+
+    // (text) Tj  |  (text) '  |  (text) "
+    const tjRe = /\(([^)\\]*(?:\\[\s\S][^)\\]*)*)\)\s*(?:Tj|'|")/g;
+    let m;
+    while ((m = tjRe.exec(inner)) !== null) {
+      const t = decodePDFString(m[1]);
+      if (t.trim()) parts.push(t);
+    }
+
+    // [(text) spacing …] TJ
+    const tjArrRe = /\[([^\]]*)\]\s*TJ/g;
+    while ((m = tjArrRe.exec(inner)) !== null) {
+      const strRe = /\(([^)\\]*(?:\\[\s\S][^)\\]*)*)\)/g;
+      let sm;
+      while ((sm = strRe.exec(m[1])) !== null) {
+        const t = decodePDFString(sm[1]);
+        if (t.trim()) parts.push(t);
+      }
+    }
+
+    parts.push('\n');
+  }
+
+  return parts.join(' ').replace(/[ \t]{2,}/g, ' ').replace(/\n{3,}/g, '\n\n').trim();
+}
+
+// =========================================================
+// Text extraction dispatcher
 // =========================================================
 
 async function extractText(filename, buffer) {
@@ -26,43 +78,11 @@ async function extractText(filename, buffer) {
 
   if (ext === 'pdf') {
     try {
-      // pdfjs-dist (used internally by pdf-parse v2) calls DOMMatrix which
-      // does not exist in Node.js. Polyfill it globally before the import.
-      if (typeof globalThis.DOMMatrix === 'undefined') {
-        globalThis.DOMMatrix = class DOMMatrix {
-          constructor() {
-            this.is2D = true; this.isIdentity = true;
-            this.a=1; this.b=0; this.c=0; this.d=1; this.e=0; this.f=0;
-            this.m11=1; this.m12=0; this.m13=0; this.m14=0;
-            this.m21=0; this.m22=1; this.m23=0; this.m24=0;
-            this.m31=0; this.m32=0; this.m33=1; this.m34=0;
-            this.m41=0; this.m42=0; this.m43=0; this.m44=1;
-          }
-          multiply()            { return new globalThis.DOMMatrix(); }
-          inverse()             { return new globalThis.DOMMatrix(); }
-          translate(tx=0,ty=0)  { const m = new globalThis.DOMMatrix(); m.e=tx; m.f=ty; return m; }
-          scale(sx=1,sy=sx)     { const m = new globalThis.DOMMatrix(); m.a=sx; m.d=sy; return m; }
-          rotate()              { return new globalThis.DOMMatrix(); }
-          transformPoint(p={})  { return { x: p.x||0, y: p.y||0, z: p.z||0, w: p.w||1 }; }
-          static fromMatrix()         { return new globalThis.DOMMatrix(); }
-          static fromFloat32Array()   { return new globalThis.DOMMatrix(); }
-          static fromFloat64Array()   { return new globalThis.DOMMatrix(); }
-        };
+      const text = extractPDFText(buffer);
+      if (!text?.trim()) {
+        return { error: 'Could not extract text from this PDF. It may be scanned/image-based. Please use a text-based PDF or convert to TXT.' };
       }
-      // Also polyfill Path2D if needed by pdfjs canvas operations
-      if (typeof globalThis.Path2D === 'undefined') {
-        globalThis.Path2D = class Path2D {
-          constructor() {}
-          moveTo() {} lineTo() {} closePath() {} arc() {} rect() {}
-          addPath() {} bezierCurveTo() {} quadraticCurveTo() {}
-        };
-      }
-
-      const { PDFParse } = await import('pdf-parse');
-      const parser = new PDFParse({ data: buffer });
-      const result = await parser.getText();
-      if (!result.text?.trim()) return { error: 'Could not extract text from PDF. Try a text-based PDF or plain TXT.' };
-      return result.text;
+      return text;
     } catch (e) {
       return { error: 'Failed to parse PDF: ' + e.message };
     }
