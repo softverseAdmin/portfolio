@@ -12,6 +12,7 @@ export default function Header() {
     { name: 'Blog', href: '/blog' },
     { name: 'Resources', href: '/resources' },
     { name: 'About', href: '/about' },
+    { name: '🤖 AI Job Hunt', href: '/ai-job-hunting', badge: 'NEW', special: true },
   ]
 
   return (
@@ -29,17 +30,30 @@ export default function Header() {
             </Link>
           </div>
 
-          <div className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-warm-white/80 hover:text-gold px-3 py-2 text-sm font-medium transition-colors relative group"
-              >
-                {item.name}
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-gold group-hover:w-full transition-all duration-300"></span>
-              </Link>
-            ))}
+          <div className="hidden md:flex items-center space-x-6">
+            {navigation.map((item) =>
+              item.special ? (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="relative flex items-center gap-1.5 bg-gradient-to-r from-violet-600/20 to-purple-600/20 hover:from-violet-600/40 hover:to-purple-600/40 border border-violet-500/50 hover:border-violet-400 text-violet-300 hover:text-violet-200 px-3 py-1.5 rounded-lg text-sm font-semibold transition-all duration-300 hover:shadow-md hover:shadow-violet-500/20"
+                >
+                  {item.name}
+                  <span className="bg-violet-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold leading-none animate-pulse">
+                    {item.badge}
+                  </span>
+                </Link>
+              ) : (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-warm-white/80 hover:text-gold px-3 py-2 text-sm font-medium transition-colors relative group"
+                >
+                  {item.name}
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-gold group-hover:w-full transition-all duration-300"></span>
+                </Link>
+              )
+            )}
             <Link
               href="/contact"
               className="bg-gradient-gold hover:shadow-lg hover:shadow-gold/50 text-deep-black px-6 py-2.5 rounded-lg text-sm font-semibold transition-all transform hover:scale-105"
@@ -67,16 +81,28 @@ export default function Header() {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-charcoal/50 backdrop-blur-md border-t border-gold/20 rounded-b-lg">
-              {navigation.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-warm-white/80 hover:text-gold hover:bg-gold/10 block px-3 py-2 rounded-lg text-base font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navigation.map((item) =>
+                item.special ? (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="flex items-center justify-between bg-gradient-to-r from-violet-600/20 to-purple-600/20 border border-violet-500/40 text-violet-300 hover:text-violet-200 hover:border-violet-400 block px-3 py-2.5 rounded-lg text-base font-semibold transition-all"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <span>{item.name}</span>
+                    <span className="bg-violet-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold animate-pulse">{item.badge}</span>
+                  </Link>
+                ) : (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className="text-warm-white/80 hover:text-gold hover:bg-gold/10 block px-3 py-2 rounded-lg text-base font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                )
+              )}
               <Link
                 href="/contact"
                 className="bg-gradient-gold hover:shadow-lg hover:shadow-gold/50 text-deep-black block px-3 py-2.5 rounded-lg text-base font-semibold mt-4 text-center"

@@ -91,6 +91,9 @@ const nextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
 
+  // Keep server-only packages out of the Next.js bundle
+  serverExternalPackages: ['pdf-parse', 'mammoth'],
+
   // Experimental features for better performance
   experimental: {
     optimizeCss: true,
