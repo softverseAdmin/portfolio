@@ -7,12 +7,15 @@ import {loadCharacterAsset,createRiggedCharacter,greetingLayout,animateHandshake
 import {loadMotion,actionDuration,endGreeting,warmMotionLibrary} from './motions.js';
 import {loadEnvironmentAsset,applyEnvironmentAsset,setAssetQuality} from './model-assets.js';
 import {RoomEnvironment} from './vendor/addons/environments/RoomEnvironment.js';
-import {prepareVisitAssets,createAssetProgress} from './loading.js';
+import {prepareVisitAssets,createAssetProgress,loadVisitAssets} from './loading.js';
 import {resolveCamera,characterCameraTarget} from './camera.js';
 import {chairPose,chairExit,chairContact,driverPose} from './poses.js';
 import {actionPosition,carCameraBlend} from './transitions.js';
 import {ROAD_START,HOUSE_PARKING,ROAD_SAMPLES,journeyDirections} from './journey.js';
 import {setPianoKeyPressed} from './furnishings.js';
+import {deviceProfile,landscapeSize,landscapeDelta,applyRenderSize,requestLandscape} from './mobile.js';
+import {prepareGraphics} from './texture-budget.js';
+import {paintTouchControls} from './controls.js';
 import {createArrival,arrivalSpawn,VISIT_OBJECTIVES,actorBlocker,greetingApproach,walkArrivalRoute,carExitSpot} from './arrival.js';
 import {PORTFOLIO as copy,STORY_PREVIEWS,CONVERSATIONS,TECH_TOPICS,INVITATION,portfolioSummary} from './portfolio.js';
 import {readVisit,writeVisit,freshVisit,createInvitation,tourRouteFrom,guideShouldWait,surfaceAt} from './story.js';
@@ -26,6 +29,7 @@ let savedVisit;try{savedVisit=readVisit(localStorage);}catch{savedVisit=readVisi
 Object.assign(state,{sound:savedVisit.settings.sound,volume:savedVisit.settings.volume,night:savedVisit.settings.night,quality:savedVisit.settings.quality,reducedMotion:savedVisit.settings.reducedMotion??state.reducedMotion,reducedMotionChoice:savedVisit.settings.reducedMotion,visited:new Set(savedVisit.visited),actions:new Set(savedVisit.actions),completed:savedVisit.completed,guideCheckpoint:savedVisit.checkpoint,guidePausedByDistance:false,hostReturnRoute:[],invitation:null});
 const keys=new Set();
 let renderer,scene,camera,world,player,host,sun,ambient,physics,trajectory,previousTime=performance.now(),elapsed=0,yaw=0,pitch=0,cameraDistance=5.3,toastTimer,cinematicTime=0,drag=null,audioContext=null,memoryToken=0;
+let frameRequest=null,stopped=false,resizeTimer;
 let playerPos={x:0,y:.02,z:18.8},joystick={x:0,y:0},joystickPointer=null;
 const lookTarget=new THREE.Vector3(),cameraTarget=new THREE.Vector3(),cameraDesired=new THREE.Vector3();
 let lastRoom='',mapTick=0,mouseCaptured=false,intentionalMouseRelease=false,arrivalLayout;
@@ -113,6 +117,12 @@ function controlsModal(){
   $('replay-setting')?.addEventListener('click',replayVisit);
   const gestureButton=document.createElement('button');gestureButton.textContent='Try character gestures';gestureButton.className='gold-button';
   gestureButton.onclick=gesturesModal;$('modal-content').append(gestureButton);
+  const menu=document.createElement('div');menu.className='modal-links';
+  menu.innerHTML='<button id="menu-portfolio">Read the portfolio</button><button id="menu-tour">'+(state.guide?'Pause the tour':'Follow Rabin’s tour')+'</button><button id="menu-fullscreen">Fullscreen</button><a href="/">Back to the blog →</a>';
+  $('modal-content').append(menu);$('menu-portfolio').onclick=portfolioModal;
+  $('menu-tour').disabled=visit?.progress.stage!=='welcomed';$('menu-tour').onclick=()=>{closeModal();if(state.guide)pauseTour(true);else startTour();};
+  $('menu-fullscreen').onclick=()=>{void requestLandscape();};
+  if(deviceProfile().mobile){const note=document.createElement('p');note.className='small-note';note.textContent='Phone graphics use less memory. Your original models and texture files are preserved. Turn your phone sideways for the most comfortable controls.';$('modal-content').append(note);}
   updateReadyControls();
 }
 
@@ -262,12 +272,13 @@ function resetPosition(){
 function beginVisit(){
   if(state.phase!=='welcome')return;
   if(!visitReady()){toast(state.loading||state.houseLoading?'The house is still loading. You can browse the portfolio or use simpler models.':'The 3D view is unavailable. Your portfolio is still available.');return;}
+  if(deviceProfile().mobile)void requestLandscape();
   closeModal();$('welcome').hidden=true;$('arrival').hidden=true;state.phase='playing';document.body.classList.add('playing');$('hud').hidden=false;
   playerPos=savedVisit.welcomed?{x:1.96,y:.13,z:11.8}:arrivalSpawn(world);player.position.set(playerPos.x,playerPos.y,playerPos.z);player.rotation.y=Math.atan2(-playerPos.x,10.55-playerPos.z);player.visible=true;host.visible=true;keys.clear();joystick={x:0,y:0};
   yaw=player.rotation.y-Math.PI;pitch=0;camera.position.set(playerPos.x+Math.sin(yaw)*5.3,playerPos.y+2.35,playerPos.z+Math.cos(yaw)*5.3);lookTarget.set(playerPos.x,playerPos.y+1.3,playerPos.z);camera.lookAt(lookTarget);
   if(savedVisit.welcomed){visit.resume();state.hostReturnRoute=tourRouteFrom(host.position,CHAPTERS[0]);host.userData.nameSprite.visible=true;physics.syncColliders();updateVisitUI(true);toast('Welcome back. Your stories and settings are restored. Continue the tour or explore.',6000);}
   else beginInvitation();
-  updateProgress();updateVehicleLights();canvas.focus();
+  updateProgress();updateVehicleLights();paintTouchControls(document,state);canvas.focus();
 }
 
 function parkVisitor(){
@@ -580,7 +591,8 @@ function updateLighting(){
   for(const bulb of world.bulbs)if(bulb.visible)bulb.material.emissiveIntensity=state.night?2:.7;
   for(const light of world.entranceLights)light.intensity=state.night?3.5:.45;
 }
-function setQuality(){physics?.setQuality(state.quality==='low');setAssetQuality(world,state.quality==='low');if(!renderer)return;renderer.setPixelRatio(Math.min(devicePixelRatio,state.quality==='low'?1:1.6));renderer.shadowMap.enabled=state.quality!=='low';renderer.setSize(innerWidth,innerHeight);}
+function resizeRenderer(){if(!renderer||stopped)return;const profile=deviceProfile(),size=landscapeSize(innerWidth,innerHeight,profile.mobile);camera.aspect=size.width/size.height;camera.updateProjectionMatrix();applyRenderSize(renderer,size.width,size.height,state.quality==='low'?1:profile.pixelRatio);}
+function setQuality(){physics?.setQuality(state.quality==='low');setAssetQuality(world,state.quality==='low');if(!renderer)return;renderer.shadowMap.enabled=state.quality!=='low';resizeRenderer();}
 
 function releaseMouse(){if(document.pointerLockElement===canvas){intentionalMouseRelease=true;document.exitPointerLock();}}
 function captureMouse(){
@@ -593,6 +605,7 @@ function bindEvents(){
   $('gestures').onclick=gesturesModal;
   $('enter').onclick=beginVisit;$('portfolio').onclick=portfolioModal;$('quick-view').onclick=portfolioModal;$('fallback-portfolio').onclick=portfolioModal;$('loading-portfolio').onclick=portfolioModal;$('skip-drive').onclick=skipInvitation;
   $('help').onclick=controlsModal;$('brand').onclick=e=>{e.preventDefault();controlsModal();};$('modal-close').onclick=closeModal;
+  $('objective-open').onclick=mapModal;
   $('modal').onclick=e=>{if(e.target===$('modal'))closeModal();};
   $('dialogue-close').onclick=()=>pauseTour();$('dialogue-next').onclick=()=>state.dialogueAction?.();
   $('interact').onclick=use;$('gesture-stop').onclick=()=>{if(!state.modal)stopGesture();};
@@ -652,7 +665,7 @@ function bindEvents(){
     if(e.pointerType==='mouse'){captureMouse();}
     drag={id:e.pointerId,x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId);
   });
-  canvas.addEventListener('pointermove',e=>{if(mouseCaptured||state.modal||state.gesture||!drag||drag.id!==e.pointerId)return;look((e.clientX-drag.x)*1.4,(e.clientY-drag.y)*1.4);drag.x=e.clientX;drag.y=e.clientY;});
+  canvas.addEventListener('pointermove',e=>{if(mouseCaptured||state.modal||state.gesture||!drag||drag.id!==e.pointerId)return;const delta=landscapeDelta(e.clientX-drag.x,e.clientY-drag.y,landscapeSize(innerWidth,innerHeight,deviceProfile().mobile).rotated);look(delta.x*1.4,delta.y*1.4);drag.x=e.clientX;drag.y=e.clientY;});
   function releasePointerAction(e){if(e.pointerId===actionPointer&&e.button===0){actionPointer=null;actionRelease();}}
   window.addEventListener('pointerup',e=>{releasePointerAction(e);if(e.button===2)state.aiming=false;if(drag?.id===e.pointerId)drag=null;});
   canvas.addEventListener('pointercancel',e=>{if(drag?.id===e.pointerId)drag=null;if(actionPointer===e.pointerId){actionPointer=null;state.charging=false;}state.aiming=false;});
@@ -670,19 +683,20 @@ function bindEvents(){
   $('touch-drop').onclick=()=>{if(touchReady()){if(state.driving&&!state.journey)beginRace();else if(!state.driving)dropObject();}};
   $('touch-run').addEventListener('pointerdown',e=>{if(!touchReady()||(runPointer!==null&&runPointer!==e.pointerId))return;runPointer=e.pointerId;if(state.driving)state.touchBrake=true;else state.touchRun=true;$('touch-run').setPointerCapture(e.pointerId);});
   const endRun=e=>{if(runPointer!==e.pointerId)return;runPointer=null;state.touchRun=state.touchBrake=false;};$('touch-run').addEventListener('pointerup',endRun);$('touch-run').addEventListener('pointercancel',endRun);
-  window.addEventListener('resize',()=>{if(!renderer)return;camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+  window.addEventListener('resize',()=>{clearInput();clearTimeout(resizeTimer);resizeTimer=setTimeout(resizeRenderer,150);});
   document.addEventListener('visibilitychange',()=>{clearInput();previousTime=performance.now();});
 }
-function updateJoystick(e){const r=$('joystick').getBoundingClientRect(),dx=e.clientX-r.left-r.width/2,dy=e.clientY-r.top-r.height/2,scale=Math.max(1,Math.hypot(dx,dy)/34);joystick={x:dx/scale/34,y:-dy/scale/34};$('joystick-knob').style.transform=`translate(${dx/scale}px,${dy/scale}px)`;}
+function updateJoystick(e){const r=$('joystick').getBoundingClientRect(),delta=landscapeDelta(e.clientX-r.left-r.width/2,e.clientY-r.top-r.height/2,landscapeSize(innerWidth,innerHeight,deviceProfile().mobile).rotated),dx=delta.x,dy=delta.y,scale=Math.max(1,Math.hypot(dx,dy)/34);joystick={x:dx/scale/34,y:-dy/scale/34};$('joystick-knob').style.transform=`translate(${dx/scale}px,${dy/scale}px)`;}
 function jump(){if(state.crouching&&isBlocked(playerPos.x,playerPos.z,playerPos.y,world.blockers,.31,actorHeight(player))){toast('There is not enough clearance to jump here.');return;}if(state.driving||state.sitting||state.transition||state.modal||state.gesture||state.phase!=='playing'||!state.grounded)return;state.jumpStarted=elapsed;state.jumpVelocity=4.8;state.grounded=false;state.crouching=false;tone(250,.07,.025);}
 
 async function boot({useBasic=false}={}){
+  const profile=deviceProfile(),size=landscapeSize(innerWidth,innerHeight,profile.mobile);
   bindEvents();canvas.tabIndex=0;updateSoundUI();updateProgress();document.body.classList.toggle('reduced-motion',state.reducedMotion);
-  try{renderer=new THREE.WebGLRenderer({canvas,antialias:true,powerPreference:'high-performance'});}catch(error){state.loading=false;document.body.classList.remove('preparing');updateReadyControls();$('welcome').hidden=true;$('arrival').hidden=true;$('loading').hidden=true;$('fatal').hidden=false;return;}
+  try{renderer=new THREE.WebGLRenderer({canvas,antialias:profile.antialias,powerPreference:profile.mobile?'default':'high-performance'});}catch(error){state.loading=false;document.body.classList.remove('preparing');updateReadyControls();$('welcome').hidden=true;$('arrival').hidden=true;$('loading').hidden=true;$('fatal').hidden=false;return;}
   scene=new THREE.Scene();scene.background=new THREE.Color('#c1cfb8');scene.fog=new THREE.Fog('#c1cfb8',60,135);
-  camera=new THREE.PerspectiveCamera(48,innerWidth/innerHeight,.1,220);
-  renderer.setSize(innerWidth,innerHeight);renderer.setPixelRatio(Math.min(devicePixelRatio,1.6));renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
-  sun=new THREE.DirectionalLight('#fff0cf',3.2);sun.position.set(-10,26,17);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);sun.shadow.camera.left=-40;sun.shadow.camera.right=40;sun.shadow.camera.top=40;sun.shadow.camera.bottom=-40;sun.shadow.camera.far=100;sun.shadow.normalBias=.025;sun.shadow.bias=-.0002;scene.add(sun,sun.target);
+  camera=new THREE.PerspectiveCamera(48,size.width/size.height,.1,220);
+  applyRenderSize(renderer,size.width,size.height,state.quality==='low'?1:profile.pixelRatio);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  sun=new THREE.DirectionalLight('#fff0cf',3.2);sun.position.set(-10,26,17);sun.castShadow=true;sun.shadow.mapSize.set(profile.shadowSize,profile.shadowSize);sun.shadow.camera.left=-40;sun.shadow.camera.right=40;sun.shadow.camera.top=40;sun.shadow.camera.bottom=-40;sun.shadow.camera.far=100;sun.shadow.normalBias=.025;sun.shadow.bias=-.0002;scene.add(sun,sun.target);
   ambient=new THREE.HemisphereLight('#f1f1e3','#697c50',2.8);scene.add(ambient);
   try{const room=new RoomEnvironment(),pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromScene(room,.04).texture;pmrem.dispose();room.dispose();}catch(error){console.warn('Reflection lighting is unavailable:',error);}
   // Present a graphics frame before waiting for the full-resolution assets.
@@ -693,19 +707,18 @@ async function boot({useBasic=false}={}){
   });
   const downloads=Array.from({length:3},()=>new AbortController());
   const simpleAsset=()=>{const error=new Error('Simpler models requested.');error.code='simple-models';return Promise.reject(error);};
-  const assets=prepareVisitAssets([
-    useBasic?simpleAsset():loadCharacterAsset({onProgress:progress.update,signal:downloads[0].signal,initialMotions:['idle','walk','start-walk','drive','exit-car','enter-car','sit','stand','sit-idle','jump','pickup','throw','punch','wave']}),
-    useBasic?simpleAsset():loadEnvironmentAsset(e=>{if(e.total>0)$('load-house').textContent=`${Math.round(e.loaded/e.total*100)}%`;},{signal:downloads[1].signal}),
-    useBasic?simpleAsset():loadImportedVehicle(e=>{progress.update('car',e);if(e.total>0)$('load-car').textContent=e.phase==='prepare'?'Preparing':`${Math.round(e.loaded/e.total*100)}%`;},{signal:downloads[2].signal})
-  ],statuses=>{
+  const startCharacters=()=>useBasic?simpleAsset():loadCharacterAsset({onProgress:progress.update,signal:downloads[0].signal,maxTextureSize:profile.maxTextureSize,sequential:profile.mobile,initialMotions:['idle','walk','start-walk','drive','exit-car','enter-car','sit','stand','sit-idle','jump','pickup','throw','punch','wave']});
+  const startCar=()=>useBasic?simpleAsset():loadImportedVehicle(e=>{progress.update('car',e);if(e.total>0)$('load-car').textContent=e.phase==='prepare'?'Preparing':`${Math.round(e.loaded/e.total*100)}%`;},{signal:downloads[2].signal,maxTextureSize:profile.maxTextureSize,concurrency:profile.mobile?1:2});
+  const startHouse=()=>useBasic?simpleAsset():loadEnvironmentAsset(e=>{if(e.total>0)$('load-house').textContent=`${Math.round(e.loaded/e.total*100)}%`;},{signal:downloads[1].signal,maxTextureSize:profile.maxTextureSize});
+  const assets=prepareVisitAssets(loadVisitAssets({sequential:profile.mobile,character:startCharacters,vehicle:startCar,environment:startHouse}),statuses=>{
     const [characterStatus,houseStatus,carStatus]=statuses;
     if(houseStatus!=='pending')$('load-house').textContent=houseStatus==='fulfilled'?'Ready':'Simpler house';
     $('load-characters').textContent=characterStatus==='fulfilled'?'Ready':characterStatus==='rejected'?'Simpler models':'Loading';
     if(carStatus!=='pending')$('load-car').textContent=carStatus==='fulfilled'?'Ready':'Simpler car';
-    $('loading-status').textContent=carStatus==='pending'?'Loading your original Land Cruiser with its full textures and geometry.':characterStatus==='pending'?'Preparing the uploaded character models and motions.':houseStatus==='pending'?'Drive ready. House detail continues while you travel.':'Ready to explore.';
+    $('loading-status').textContent=characterStatus==='pending'?'Preparing the uploaded character models and motions.':carStatus==='pending'?'Preparing your original Land Cruiser.':houseStatus==='pending'?'Drive ready. House detail continues while you travel.':'Ready to explore.';
   },{readyIndexes:[0,2],cancel:index=>downloads[index].abort()});
   $('basic-visit').hidden=false;$('basic-visit').onclick=()=>assets.useBasic();$('basic-house').onclick=()=>assets.useBasic();$('welcome-basic-house').onclick=()=>assets.useBasic();
-  const [characterResult,environmentResult,vehicleResult]=await assets.promise;$('basic-visit').hidden=true;progress.finish();
+  const [characterResult,environmentResult,vehicleResult]=await assets.promise;$('basic-visit').hidden=true;
   state.houseLoading=environmentResult.status==='pending';
   try{if(characterResult.status!=='fulfilled')throw characterResult.reason;const asset=characterResult.value;player=createRiggedCharacter(asset);host=createRiggedCharacter(asset,{host:true});}catch(error){if(error?.code!=='simple-models')console.warn('Character model could not load:',error);player=createCharacter();host=createCharacter({host:true});}
   if(vehicleResult.status==='rejected'&&vehicleResult.reason?.code!=='simple-models')console.warn('Uploaded car could not load:',vehicleResult.reason);
@@ -725,10 +738,13 @@ async function boot({useBasic=false}={}){
   visit=createArrival(world,host);
   host.userData.nameSprite.visible=false;
   const hostRing=new THREE.Mesh(new THREE.RingGeometry(.47,.51,32),new THREE.MeshBasicMaterial({color:'#69bb9a',transparent:true,opacity:.8,side:THREE.DoubleSide}));hostRing.rotation.x=-Math.PI/2;hostRing.position.y=.02;host.add(hostRing);
+  $('loading-status').textContent='Preparing the first graphics frame…';setQuality();updateLighting();
+  camera.position.set(32,20,37);camera.lookAt(-4.6,1.6,1.8);
+  await prepareGraphics(renderer,scene,camera,[player,host]);if(stopped)return;progress.finish();
   state.loading=false;document.body.classList.remove('preparing');setQuality();updateLighting();updateVehicleLights();$('loading').classList.add('is-ready');setTimeout(()=>$('loading').hidden=true,state.reducedMotion?0:700);$('loading-status').textContent=state.houseLoading?'Drive ready. House detail continues while you travel.':world.visuals.applied&&player.userData.rig?'Ready to explore.':'Ready with simpler models. You can still tour and explore.';updateReadyControls();$('replay-entry').hidden=!savedVisit.welcomed;
   warmMotionLibrary(player.userData.rig?.asset.motions);warmMotionLibrary(host.userData.rig?.asset.motions);
   assets.complete.then(([,result])=>finishHouseLoading(result));
-  requestAnimationFrame(frame);
+  frameRequest=requestAnimationFrame(frame);
 }
 
 function finishHouseLoading(result){
@@ -864,6 +880,7 @@ function updateInteraction(){
   if(!state.held)for(const toy of physics.toys){if(!toy.holdable||toy.held||toy.broken||toy.body.velocity.length()>3)continue;const p=toy.mesh.position;options.push({id:toy.id,action:'pickup',label:`Pick up the ${toy.label}`,x:p.x,y:Math.max(.02,p.y-(toy.radius??.45)),z:p.z,radius:1.7,toy});}
   state.near=chooseInteraction(playerPos,yaw+Math.PI,options,world.blockers);
   $('interact').hidden=!state.near||state.modal;if(state.near)$('interact-label').textContent=state.near.label;
+  $('touch-use').hidden=!state.near;paintTouchControls(document,state);
 }
 
 function updateSandbox(dt){
@@ -904,8 +921,8 @@ function updateActivityHUD(){
   badge.hidden=!text;if(text)badge.innerHTML=text;
   $('gesture-stop').hidden=!state.gesture;
   const driving=state.driving,blocked=!!state.gesture||!!state.transition;
-  $('touch-use').textContent=state.gesture?'STOP':driving?'EXIT':state.sitting?'STAND':'E';$('touch-use').setAttribute('aria-label',state.gesture?'Stop the gesture preview':driving?'Exit the stopped car':state.sitting?'Stand up':'Interact with the nearest object');
-  $('touch-use').hidden=driving&&(state.houseLoading||Math.hypot(state.vehicle.vx,state.vehicle.vz)>=.5||!!state.journey&&!state.journey.arrived);
+  $('touch-use').setAttribute('aria-label',state.gesture?'Stop the gesture preview':driving?'Exit the stopped car':state.sitting?'Stand up':state.near?.label??'Interact with the nearest object');
+  $('touch-use').hidden=driving?(state.houseLoading||Math.hypot(state.vehicle.vx,state.vehicle.vz)>=.5||!!state.journey&&!state.journey.arrived):!state.gesture&&!state.sitting&&!state.near;
   $('touch-use').disabled=!!state.transition;
   for(const id of ['touch-run','touch-jump','touch-drop','touch-aim','touch-action'])$(id).disabled=blocked;
   $('touch-jump').hidden=driving||state.sitting;
@@ -915,8 +932,9 @@ function updateActivityHUD(){
   $('touch-action').hidden=state.sitting;
   $('reticle').hidden=!state.aiming&&!mouseCaptured;
   $('reticle').classList.toggle('aiming',state.aiming);
-  $('touch-run').textContent=driving?'BRAKE':'RUN';$('touch-run').setAttribute('aria-label',driving?'Hold to brake':'Hold to run');$('touch-jump').textContent='↑';$('touch-drop').textContent=driving?'LAP':'DROP';$('touch-action').textContent=driving?'HORN':state.held?'THROW':'ACT';$('touch-action').setAttribute('aria-label',driving?'Sound the car horn':state.held?'Hold and release to throw':'Punch or kick');
+  $('touch-run').setAttribute('aria-label',driving?'Hold to brake':'Hold to run');$('touch-action').setAttribute('aria-label',driving?'Sound the car horn':state.held?'Hold and release to throw':'Punch or kick');
   $('touch-aim').setAttribute('aria-pressed',String(state.aiming));
+  paintTouchControls(document,state);
   const mode=state.gesture?'gesture':driving?'driving':state.sitting?'seated':state.held?'carrying':'walking';
   const hints=$('controls-hint');if(hints.dataset.mode!==mode){hints.dataset.mode=mode;const lines=mode==='driving'?[['W / S','drive'],['A / D','steer'],['SPACE','brake'],['E / F','exit'],['H','horn']]:mode==='seated'?[['E','stand up'],['MOUSE','look']]:mode==='gesture'?[['E','stop preview']]:mode==='carrying'?[['WASD','move'],['RIGHT CLICK','aim'],['J / CLICK','hold & throw'],['Q','drop']]:[['WASD','move'],['MOUSE','look'],['SHIFT','run'],['E','use'],['SPACE','jump'],['F','car']];hints.innerHTML=lines.map(([key,label])=>'<span><kbd>'+key+'</kbd> '+label+'</span>').join('')+'<span><kbd>ESC</kbd> pause</span>';}
 }
@@ -1006,7 +1024,7 @@ function drawMinimap(){
 }
 
 function frame(time){
-  requestAnimationFrame(frame);const dt=Math.min((time-previousTime)/1000,.035);previousTime=time;elapsed+=dt;
+  if(stopped)return;frameRequest=requestAnimationFrame(frame);const dt=Math.max(.001,Math.min((time-previousTime)/1000,.035));previousTime=time;elapsed+=dt;
   const shadowCenter=state.journey||state.phase==='invitation'?world.car.position:new THREE.Vector3();sun.target.position.set(shadowCenter.x,0,shadowCenter.z);sun.position.set(shadowCenter.x-10,26,shadowCenter.z+17);
   if(state.phase==='welcome'){
     const drift=state.reducedMotion?0:Math.sin(elapsed*.08)*1.5;camera.position.set(32+drift,20,37);camera.lookAt(-4.6,1.6,1.8);world.roof.forEach(r=>r.visible=true);animateCharacter(host,elapsed,0,true);
@@ -1042,7 +1060,7 @@ function frame(time){
     if(a){if(a.type==='kick')pose.kick=progress;else if(a.type==='throw')pose.throwProgress=progress;else pose.punch={side:a.side,progress};}
     animateCharacter(player,elapsed,speed,!pose.preview&&elapsed<state.waveUntil,state.sitting||state.driving,pose);animateCharacter(host,elapsed,hostSpeed,false,false,hostPose);
     updateSandbox(dt);followCamera(dt);updateNavigation();updateInteraction();
-    const room=roomAt(playerPos.x,playerPos.z,playerPos.y);if(room.name!==lastRoom){lastRoom=room.name;$('room-name').textContent=room.name;$('room-hint').textContent=room.hint;}
+    const room=roomAt(playerPos.x,playerPos.z,playerPos.y);if(room.name!==lastRoom){lastRoom=room.name;$('room-name').textContent=room.name;$('brand-room').textContent=room.name;$('room-hint').textContent=room.hint;}
     if((mapTick+=dt)>.1){mapTick=0;drawMinimap();}
   }
   if(state.phase==='welcome')physics.step(dt,null,null);
@@ -1053,5 +1071,5 @@ function frame(time){
   renderer.render(scene,camera);
 }
 
-function pauseAfterError(){state.modal=true;clearInput();}
+function pauseAfterError(){stopped=true;if(frameRequest!==null)cancelAnimationFrame(frameRequest);clearTimeout(resizeTimer);state.modal=true;clearInput();renderer?.dispose?.();}
 export {boot,portfolioModal,pauseAfterError};

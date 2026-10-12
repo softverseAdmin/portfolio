@@ -1,7 +1,9 @@
 import {PORTFOLIO,portfolioSummary} from './portfolio.js';
+import {installLandscape} from './mobile.js';
 
 // Keep entry and portfolio controls usable before the 3D modules arrive.
-export function launchStartup({doc=document,loadGame=()=>import('./game.js?v=14'),reload=()=>{const url=new URL(location.href);url.searchParams.delete('simple');location.assign(url);},reloadSimple=()=>{const url=new URL(location.href);url.searchParams.set('simple','1');location.assign(url);},simple=false}={}){
+export function launchStartup({doc=document,loadGame=()=>import('./game.js?v=15'),reload=()=>{const url=new URL(location.href);url.searchParams.delete('simple');location.assign(url);},reloadSimple=()=>{const url=new URL(location.href);url.searchParams.set('simple','1');location.assign(url);},simple=false}={}){
+  installLandscape({doc});
   const $=id=>doc.getElementById(id);let game,basic=simple,portfolioOpen=false,failed=false;
   const close=()=>{portfolioOpen=false;$('modal').hidden=true;};
   function portfolio(id){
@@ -19,6 +21,7 @@ export function launchStartup({doc=document,loadGame=()=>import('./game.js?v=14'
     if(failed)reloadSimple();
   }
   function fail(error){
+    if(failed)return;
     failed=true;console.warn('Game startup failed:',error);
     game?.pauseAfterError?.();
     $('loading').hidden=false;$('loading').classList.remove('is-ready');$('fatal').hidden=true;

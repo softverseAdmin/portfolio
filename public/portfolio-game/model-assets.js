@@ -2,6 +2,7 @@ import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/addons/loaders/GLTFLoader.js';
 import {updateCollider} from './physics.js';
 import {loadModelAsset} from './asset-transfer.js';
+import {withTextureBudget} from './texture-budget.js';
 
 const runtimeURL=file=>new URL('./assets/runtime/'+file,import.meta.url).href;
 export async function loadReviewedAppearance(role,onProgress){
@@ -50,7 +51,7 @@ export function bindReviewedAppearance(model,skin,appearance,{host=false}={}){
   model.userData.appearance={style:host?'host':'visitor',source:'reviewed-model',height:appearance.height};
 }
 
-export async function loadEnvironmentAsset(onProgress,{signal}={}){return (await loadModelAsset(new GLTFLoader(new THREE.LoadingManager()),runtimeURL('estate.glb'),onProgress,{signal})).scene;}
+export async function loadEnvironmentAsset(onProgress,{signal,maxTextureSize=0}={}){return (await loadModelAsset(withTextureBudget(new GLTFLoader(new THREE.LoadingManager()),maxTextureSize),runtimeURL('estate.glb'),onProgress,{signal})).scene;}
 
 const vertical=7/(8.15-.48),yAt=y=>.13+(y-.48)*vertical;
 function sourcePoint(x,depth,y,origin,angle){

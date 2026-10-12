@@ -2,6 +2,7 @@ import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/addons/loaders/GLTFLoader.js';
 import {MeshoptDecoder} from './vendor/meshopt_decoder.module.js';
 import {receiveAsset} from './asset-transfer.js';
+import {withTextureBudget} from './texture-budget.js';
 
 const assetURL=file=>new URL('./assets/imported/car/'+file,import.meta.url).href;
 const point=(root,node)=>root.worldToLocal(node.getWorldPosition(new THREE.Vector3()));
@@ -9,7 +10,7 @@ const required=(root,name)=>{const node=root.getObjectByName(name);if(!node)thro
 
 // The original full-resolution PNG bytes and exact mesh buffers survive both
 // codecs. Blob URLs let the official loader resolve the lossless delivery files.
-export async function loadImportedVehicle(onProgress=()=>{},{signal,requestTimeoutMs=30000,concurrency=2}={}){
+export async function loadImportedVehicle(onProgress=()=>{},{signal,requestTimeoutMs=30000,concurrency=2,maxTextureSize=0}={}){
   const abort=new AbortController(),urls=new Map();let document,transfers=[],manager;
   const cancel=()=>{abort.abort(signal?.reason);manager?.abort();};
   if(signal?.aborted)cancel();else signal?.addEventListener('abort',cancel,{once:true});
@@ -31,7 +32,7 @@ export async function loadImportedVehicle(onProgress=()=>{},{signal,requestTimeo
     transfers=Array.from({length:Math.min(Math.max(1,concurrency),manifest.files.length)},worker);await Promise.all(transfers);
     abort.signal.throwIfAborted();report('prepare');
     manager=new THREE.LoadingManager();manager.setURLModifier(url=>urls.get(url)??url);
-    const gltf=await new GLTFLoader(manager).setMeshoptDecoder(MeshoptDecoder).parseAsync(document,new URL('./assets/imported/car/',import.meta.url).href);
+    const gltf=await withTextureBudget(new GLTFLoader(manager),maxTextureSize).setMeshoptDecoder(MeshoptDecoder).parseAsync(document,new URL('./assets/imported/car/',import.meta.url).href);
     abort.signal.throwIfAborted();
     return {scene:gltf.scene,config};
   }catch(error){abort.abort();await Promise.allSettled(transfers);throw error;}
