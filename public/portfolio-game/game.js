@@ -1,7 +1,7 @@
 import * as THREE from './vendor/three.module.js';
 import {loadImportedVehicle,createImportedVehicle} from './imported-vehicle.js';
 import {createWorld,createCharacter,animateCharacter} from './world.js';
-import {CHAPTERS,CROUCH_HEIGHT,clamp,angleLerp,moveWithCollisions,floorAt,roomAt,horizontalDistance,memoryDeck,isBlocked,chooseInteraction,basketballLaunch,scoredBasket,stepVehicle,passedCheckpoint,overlapsBlocker,supportHeight,ceilingHeight} from './core.js';
+import {CHAPTERS,CROUCH_HEIGHT,HOST_RADIUS,VISITOR_RADIUS,clamp,angleLerp,moveWithCollisions,floorAt,roomAt,horizontalDistance,memoryDeck,isBlocked,chooseInteraction,basketballLaunch,scoredBasket,stepVehicle,passedCheckpoint,overlapsBlocker,supportHeight,ceilingHeight} from './core.js';
 import {createSandboxPhysics} from './physics.js';
 import {loadCharacterAsset,createRiggedCharacter,greetingLayout,animateHandshake,animateFallbackHandshake,handPosition} from './characters.js';
 import {loadMotion,actionDuration,endGreeting,warmMotionLibrary} from './motions.js';
@@ -782,8 +782,8 @@ function movePlayer(dt){
   state.moveVZ+=((-Math.cos(yaw)*forward-Math.sin(yaw)*side)*speed-state.moveVZ)*acceleration;
   const dx=state.moveVX*dt,dz=state.moveVZ*dt,previous={...playerPos};
   physics.nudgeFurniture(playerPos,{x:state.moveVX,z:state.moveVZ},dt);
-  const hostBlocker={...world.hostBlocker,minX:host.position.x-.28,maxX:host.position.x+.28,minZ:host.position.z-.28,maxZ:host.position.z+.28,minY:host.position.y,maxY:host.position.y+actorHeight(host)};
-  playerPos=moveWithCollisions(playerPos,dx,dz,[...world.blockers,hostBlocker],.32,state.crouching?CROUCH_HEIGHT:actorHeight(player));
+  const hostBlocker={...world.hostBlocker,...actorBlocker(host.position,HOST_RADIUS),maxY:host.position.y+actorHeight(host)};
+  playerPos=moveWithCollisions(playerPos,dx,dz,[...world.blockers,hostBlocker],VISITOR_RADIUS,state.crouching?CROUCH_HEIGHT:actorHeight(player));
   if(Math.abs(playerPos.x-previous.x)<Math.abs(dx)*.3)state.moveVX=0;
   if(Math.abs(playerPos.z-previous.z)<Math.abs(dz)*.3)state.moveVZ=0;
   const support=supportHeight(playerPos,world.blockers);
@@ -823,7 +823,7 @@ function moveHost(dt){
   if(state.gesture)return 0;
   if(!state.guide&&state.hostReturnRoute.length){
     if(!$('dialogue').hidden)return 0;
-    const [x,z]=state.hostReturnRoute[0],result=walkArrivalRoute(host.position,{x,z},dt,[...world.blockers,actorBlocker(playerPos,.29)],2.15,.25);
+    const [x,z]=state.hostReturnRoute[0],result=walkArrivalRoute(host.position,{x,z},dt,[...world.blockers,actorBlocker(playerPos,VISITOR_RADIUS)],2.15,HOST_RADIUS);
     host.position.set(result.position.x,result.position.y,result.position.z);if(result.speed>.01)host.rotation.y=angleLerp(host.rotation.y,Math.atan2(x-host.position.x,z-host.position.z),1-Math.exp(-10*dt));if(result.done)state.hostReturnRoute.shift();return result.speed;
   }
   let speed=0;
@@ -834,7 +834,7 @@ function moveHost(dt){
     const [x,z]=state.guideRoute[0],dx=x-host.position.x,dz=z-host.position.z,dist=Math.hypot(dx,dz),step=Math.min(dist,2.15*dt);
     for(const door of world.doors)if(!door.open&&Math.hypot(door.x-host.position.x,door.z-host.position.z)<2.1){door.open=true;door.blocker.active=false;}
     if(dist<.09)state.guideRoute.shift();else{
-      const next=moveWithCollisions(host.position,dx/dist*step,dz/dist*step,[...world.blockers,actorBlocker(playerPos,.29)],.25);next.y=floorAt(next.x,next.z,host.position.y);
+      const next=moveWithCollisions(host.position,dx/dist*step,dz/dist*step,[...world.blockers,actorBlocker(playerPos,VISITOR_RADIUS)],HOST_RADIUS);next.y=floorAt(next.x,next.z,host.position.y);
       speed=Math.hypot(next.x-host.position.x,next.z-host.position.z)/dt;host.position.set(next.x,next.y,next.z);host.rotation.y=angleLerp(host.rotation.y,Math.atan2(dx,dz),1-Math.exp(-10*dt));
       if(speed<.03){guideBlockedTime+=dt;if(guideBlockedTime>2.5&&guideBlockedTime-dt<=2.5)toast('Leave Rabin’s path clear. Repair & reset can restore displaced furniture.',5000);}else guideBlockedTime=0;
     }

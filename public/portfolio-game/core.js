@@ -1,5 +1,7 @@
 import {approachHeight} from './terrain.js';
 export const CROUCH_HEIGHT=1.14;
+// Both actors must use the same clearance when either one approaches the other.
+export const VISITOR_RADIUS=.32,HOST_RADIUS=.28;
 export const HOUSE = { minX: -12, maxX: 12, minZ: -10, maxZ: 9 };
 export const BOUNDS = { minX: -26, maxX: 26, minZ: -25, maxZ: 88 };
 export {CHAPTERS} from './portfolio.js';

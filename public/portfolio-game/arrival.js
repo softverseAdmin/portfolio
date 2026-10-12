@@ -1,5 +1,5 @@
 import * as THREE from './vendor/three.module.js';
-import {BOUNDS,angleLerp,floorAt,horizontalDistance,isBlocked,moveWithCollisions} from './core.js';
+import {BOUNDS,HOST_RADIUS,VISITOR_RADIUS,angleLerp,floorAt,horizontalDistance,isBlocked,moveWithCollisions} from './core.js';
 
 export const ARRIVAL_HOST={x:0,y:.13,z:5.1};
 export const WELCOME_HOST={x:0,y:.13,z:10.55};
@@ -32,7 +32,7 @@ export function carExitSpot(world,side=1){
   return null;
 }
 
-export function actorBlocker(actor,radius=.32){
+export function actorBlocker(actor,radius=VISITOR_RADIUS){
   return {minX:actor.x-radius,maxX:actor.x+radius,minZ:actor.z-radius,maxZ:actor.z+radius,minY:actor.y,maxY:actor.y+1.76};
 }
 
@@ -85,7 +85,7 @@ export function createArrival(world,host){
     }else if(stage==='opening'&&Math.abs(front.group.rotation.y-front.angle)<.08)setStage('approaching');
     let speed=0;
     if(progress.stage==='approaching'){
-      const result=walkArrivalRoute(host.position,WELCOME_HOST,dt,[...world.blockers,actorBlocker(visitor)],2.15,.25);
+      const result=walkArrivalRoute(host.position,WELCOME_HOST,dt,[...world.blockers,actorBlocker(visitor)],2.15,HOST_RADIUS);
       host.position.set(result.position.x,result.position.y,result.position.z);speed=result.speed;
       host.rotation.y=angleLerp(host.rotation.y,0,1-Math.exp(-10*dt));
       if(result.done)setStage('invited');
