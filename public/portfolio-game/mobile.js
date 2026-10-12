@@ -12,6 +12,16 @@ export function landscapeSize(width,height,mobile=false){
 // The visible game turns clockwise in portrait; input must turn back with it.
 export function landscapeDelta(x,y,rotated=false){return rotated?{x:y,y:x===0?0:-x}:{x,y};}
 
+export function applyRenderSize(renderer,width,height,pixelRatio){
+  const current={x:0,y:0,set(x,y){this.x=x;this.y=y;return this;}};
+  renderer.getSize?.(current);
+  if(current.x===width&&current.y===height&&renderer.getPixelRatio?.()===pixelRatio)return false;
+  if(renderer.setDrawingBufferSize)renderer.setDrawingBufferSize(width,height,pixelRatio);
+  else{renderer.setPixelRatio(pixelRatio);renderer.setSize(width,height);}
+  if(renderer.domElement){renderer.domElement.style.width='100%';renderer.domElement.style.height='100%';}
+  return true;
+}
+
 export function installLandscape({doc=document,env=globalThis,onChange=()=>{}}={}){
   const root=doc.getElementById('game-viewport'),profile=deviceProfile(env);
   if(!root)return {update:()=>{},size:()=>landscapeSize(env.innerWidth,env.innerHeight,profile.mobile)};

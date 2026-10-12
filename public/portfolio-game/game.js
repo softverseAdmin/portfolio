@@ -13,7 +13,7 @@ import {chairPose,chairExit,chairContact,driverPose} from './poses.js';
 import {actionPosition,carCameraBlend} from './transitions.js';
 import {ROAD_START,HOUSE_PARKING,ROAD_SAMPLES,journeyDirections} from './journey.js';
 import {setPianoKeyPressed} from './furnishings.js';
-import {deviceProfile,landscapeSize,landscapeDelta,requestLandscape} from './mobile.js';
+import {deviceProfile,landscapeSize,landscapeDelta,applyRenderSize,requestLandscape} from './mobile.js';
 import {prepareGraphics} from './texture-budget.js';
 import {paintTouchControls} from './controls.js';
 import {createArrival,arrivalSpawn,VISIT_OBJECTIVES,actorBlocker,greetingApproach,walkArrivalRoute,carExitSpot} from './arrival.js';
@@ -591,8 +591,8 @@ function updateLighting(){
   for(const bulb of world.bulbs)if(bulb.visible)bulb.material.emissiveIntensity=state.night?2:.7;
   for(const light of world.entranceLights)light.intensity=state.night?3.5:.45;
 }
-function resizeRenderer(){if(!renderer||stopped)return;const size=landscapeSize(innerWidth,innerHeight,deviceProfile().mobile);camera.aspect=size.width/size.height;camera.updateProjectionMatrix();const current=renderer.getSize?.(new THREE.Vector2());if(!current||current.x!==size.width||current.y!==size.height)renderer.setSize(size.width,size.height);}
-function setQuality(){physics?.setQuality(state.quality==='low');setAssetQuality(world,state.quality==='low');if(!renderer)return;const profile=deviceProfile();renderer.setPixelRatio(state.quality==='low'?1:profile.pixelRatio);renderer.shadowMap.enabled=state.quality!=='low';resizeRenderer();}
+function resizeRenderer(){if(!renderer||stopped)return;const profile=deviceProfile(),size=landscapeSize(innerWidth,innerHeight,profile.mobile);camera.aspect=size.width/size.height;camera.updateProjectionMatrix();applyRenderSize(renderer,size.width,size.height,state.quality==='low'?1:profile.pixelRatio);}
+function setQuality(){physics?.setQuality(state.quality==='low');setAssetQuality(world,state.quality==='low');if(!renderer)return;renderer.shadowMap.enabled=state.quality!=='low';resizeRenderer();}
 
 function releaseMouse(){if(document.pointerLockElement===canvas){intentionalMouseRelease=true;document.exitPointerLock();}}
 function captureMouse(){
@@ -695,7 +695,7 @@ async function boot({useBasic=false}={}){
   try{renderer=new THREE.WebGLRenderer({canvas,antialias:profile.antialias,powerPreference:profile.mobile?'default':'high-performance'});}catch(error){state.loading=false;document.body.classList.remove('preparing');updateReadyControls();$('welcome').hidden=true;$('arrival').hidden=true;$('loading').hidden=true;$('fatal').hidden=false;return;}
   scene=new THREE.Scene();scene.background=new THREE.Color('#c1cfb8');scene.fog=new THREE.Fog('#c1cfb8',60,135);
   camera=new THREE.PerspectiveCamera(48,size.width/size.height,.1,220);
-  renderer.setPixelRatio(profile.pixelRatio);renderer.setSize(size.width,size.height);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
+  applyRenderSize(renderer,size.width,size.height,state.quality==='low'?1:profile.pixelRatio);renderer.outputColorSpace=THREE.SRGBColorSpace;renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.05;renderer.shadowMap.enabled=true;renderer.shadowMap.type=THREE.PCFSoftShadowMap;
   sun=new THREE.DirectionalLight('#fff0cf',3.2);sun.position.set(-10,26,17);sun.castShadow=true;sun.shadow.mapSize.set(profile.shadowSize,profile.shadowSize);sun.shadow.camera.left=-40;sun.shadow.camera.right=40;sun.shadow.camera.top=40;sun.shadow.camera.bottom=-40;sun.shadow.camera.far=100;sun.shadow.normalBias=.025;sun.shadow.bias=-.0002;scene.add(sun,sun.target);
   ambient=new THREE.HemisphereLight('#f1f1e3','#697c50',2.8);scene.add(ambient);
   try{const room=new RoomEnvironment(),pmrem=new THREE.PMREMGenerator(renderer);scene.environment=pmrem.fromScene(room,.04).texture;pmrem.dispose();room.dispose();}catch(error){console.warn('Reflection lighting is unavailable:',error);}

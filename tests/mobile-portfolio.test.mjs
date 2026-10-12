@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {deviceProfile,landscapeSize,landscapeDelta,installLandscape,requestLandscape} from '../public/portfolio-game/mobile.js';
+import {deviceProfile,landscapeSize,landscapeDelta,applyRenderSize,installLandscape,requestLandscape} from '../public/portfolio-game/mobile.js';
 import {textureSize,resizeTextureImage,budgetImageLoader,withTextureBudget,prepareGraphics} from '../public/portfolio-game/texture-budget.js';
 import {touchControlLabels} from '../public/portfolio-game/controls.js';
 import {controllerFixture} from './helpers/portfolio-controller.mjs';
@@ -32,6 +32,15 @@ test('a rejected fullscreen or orientation request cannot prevent a visit',async
   const doc={getElementById:()=>null,documentElement:{requestFullscreen(){requested++;throw new Error('Unavailable');}}};
   const env={screen:{orientation:{lock:async value=>{locked++;assert.equal(value,'landscape');throw new Error('Unsupported');}}}};
   await assert.doesNotReject(requestLandscape({doc,env}));assert.equal(requested,1);assert.equal(locked,1);
+});
+
+test('repeated quality and viewport updates do not allocate another drawing buffer at the same size',()=>{
+  let width=300,height=150,ratio=1,allocations=0;
+  const renderer={getSize:target=>target.set(width,height),getPixelRatio:()=>ratio,domElement:{style:{}},setDrawingBufferSize(w,h,r){width=w;height=h;ratio=r;allocations++;}};
+  assert.equal(applyRenderSize(renderer,852,393,1),true);
+  for(let i=0;i<20;i++)assert.equal(applyRenderSize(renderer,852,393,1),false);
+  assert.equal(allocations,1);assert.equal(renderer.domElement.style.width,'100%');
+  assert.equal(applyRenderSize(renderer,852,393,1.6),true);assert.equal(allocations,2);
 });
 
 test('texture budgeting preserves aspect ratio, closes the oversized bitmap and leaves smaller images unchanged',async()=>{
