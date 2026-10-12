@@ -8,13 +8,15 @@
   <title>Rabin’s House — A portfolio you can explore</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23192b29'/%3E%3Cpath d='M12 31 32 14 52 31M20 29v23h24V29M29 52V38h6v14' fill='none' stroke='%23e9c58b' stroke-width='4'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./mobile.css">
 </head>
 <body class="preparing">
+  <div id="game-viewport">
   <canvas id="world" aria-label="A playable three-dimensional house. WASD to move, E to use, J to act, F to enter a car. Click the scene to capture mouse-look."></canvas>
   <div class="vignette" aria-hidden="true"></div>
   <header class="topbar">
-    <a class="brand" href="#" id="brand" aria-label="Rabin’s House — controls and settings"><span class="brand-icon">⌂</span><span>RABIN’S HOUSE<small>A PORTFOLIO YOU CAN EXPLORE</small></span></a>
-    <div class="top-actions"><button id="mouse-mode" title="Click to capture the mouse. Escape releases it.">Capture mouse</button><button id="sound" aria-pressed="false" title="Enable sound">Sound off</button><button id="gestures" title="Try the uploaded character gestures">Gestures</button><button id="portfolio">Portfolio</button><button id="help" title="Controls and settings" aria-label="Pause, controls and settings">?</button></div>
+    <a class="brand" href="#" id="brand" aria-label="Rabin’s House — controls and settings"><span class="brand-icon">⌂</span><span>RABIN’S HOUSE<small id="brand-room">A PORTFOLIO YOU CAN EXPLORE</small></span></a>
+    <div class="top-actions"><button id="mouse-mode" title="Click to capture the mouse. Escape releases it.">Capture mouse</button><button id="sound" aria-pressed="false" title="Enable sound">Sound off</button><button id="gestures" title="Try the uploaded character gestures">Gestures</button><button id="portfolio">Portfolio</button><button id="help" title="Controls and settings" aria-label="Pause, controls and settings" aria-haspopup="dialog">☰</button></div>
   </header>
   <main id="welcome" class="welcome">
     <div class="eyebrow"><span class="status-dot"></span> TOKYO, JAPAN · OPEN FOR EXPLORATION</div>
@@ -40,14 +42,15 @@
   </section>
   <div id="hud" hidden>
     <section class="location"><span class="tiny-label" id="mode-label">FREE EXPLORATION</span><h2 id="room-name">The front garden</h2><p id="room-hint">Your host is waiting at the door.</p></section>
-    <div class="objectives"><span class="tiny-label">YOUR VISIT</span><section class="visit-task" aria-live="polite"><span id="visit-step">00 / THE INVITATION</span><strong id="visit-objective">Answer the phone</strong><p id="visit-hint">Your destination is Rabin’s house.</p></section><div><strong id="chapter-count">0 / 7</strong><span>stories discovered</span></div><div><strong id="action-count">0</strong><span>activities tried · optional</span></div><button id="tour" class="gold-button">Let Rabin guide you ↗</button></div>
+    <div class="objectives"><span class="tiny-label">YOUR VISIT</span><button id="objective-open" class="visit-task" aria-label="Open the house map and tour" aria-live="polite"><span id="visit-step">00 / THE INVITATION</span><strong id="visit-objective">Answer the phone</strong><p id="visit-hint">Your destination is Rabin’s house.</p></button><div><strong id="chapter-count">0 / 7</strong><span>stories discovered</span></div><div><strong id="action-count">0</strong><span>activities tried · optional</span></div><button id="tour" class="gold-button">Let Rabin guide you ↗</button></div>
     <div class="minimap-wrap"><canvas id="minimap" width="320" height="320" aria-label="House map"></canvas><span>N ↑ &nbsp; · &nbsp; <b>YOU</b> &nbsp; <i>RABIN</i></span><button id="map-button" title="Show the house map">M · MAP</button></div>
     <button id="interact" class="interact" type="button" hidden><kbd>E</kbd><span id="interact-label">Talk to Rabin</span></button>
     <div class="activity-panel"><div id="game-badge" class="game-badge" hidden></div><button id="gesture-stop" class="gold-button" hidden>Stop preview →</button></div>
     <section id="journey" class="journey" hidden><span class="tiny-label">THE ROAD TO RABIN’S HOUSE</span><div><i id="journey-turn" aria-hidden="true">↑</i><strong id="journey-distance">Follow the road</strong></div><p id="journey-tip">W/S drive · A/D steer · Space brake</p><button id="basic-house" class="text-button" hidden>Use simpler house →</button><button id="skip-drive" class="text-button">Skip drive →</button></section>
     <div id="reticle" class="reticle" hidden aria-hidden="true"><i></i></div>
     <footer id="controls-hint" class="controls"><span><kbd>W A S D</kbd> move</span><span><kbd>MOUSE</kbd> look</span><span><kbd>SHIFT</kbd> run</span><span><kbd>E</kbd> use</span><span><kbd>J / CLICK</kbd> act</span><span><kbd>F</kbd> car</span><span><kbd>ESC</kbd> pause</span></footer>
-    <div class="touch-controls" id="touch-controls"><div id="joystick" aria-label="Movement joystick"><span id="joystick-knob"></span></div><div class="touch-buttons"><button id="touch-run" aria-label="Run, or brake when driving">RUN</button><button id="touch-jump" aria-label="Jump, or brake when driving">↑</button><button id="touch-use" aria-label="Interact with the nearest object">E</button><button id="touch-aim" aria-pressed="false" aria-label="Toggle aiming">AIM</button><button id="touch-drop" aria-label="Drop an object, or start a lap when driving">DROP</button><button id="touch-action" aria-label="Punch, kick, or hold and release to throw">ACT</button></div></div>
+    <div class="touch-controls" id="touch-controls"><div id="joystick" aria-label="Movement joystick"><span class="joystick-direction north" aria-hidden="true">⌃</span><span class="joystick-direction east" aria-hidden="true">›</span><span class="joystick-direction south" aria-hidden="true">⌄</span><span class="joystick-direction west" aria-hidden="true">‹</span><span id="joystick-knob"></span></div><div class="touch-buttons"><button id="touch-run" aria-label="Run, or brake when driving">Run</button><button id="touch-jump" aria-label="Jump">Jump</button><button id="touch-use" aria-label="Interact with the nearest object">Use</button><button id="touch-aim" aria-pressed="false" aria-label="Toggle aiming">Aim</button><button id="touch-drop" aria-label="Drop an object, or start a lap when driving">Drop</button><button id="touch-action" aria-label="Punch, kick, or hold and release to throw">Hit</button></div></div>
+    <p id="touch-hint" class="touch-hint">Drag to look · Talk, pick up and open nearby</p>
   </div>
   <button id="skip-greeting" class="skip-greeting" hidden>Skip greeting · Esc</button>
   <section id="invitation" class="invitation" hidden aria-labelledby="invitation-title"><span class="tiny-label">00 / THE INVITATION · BEFORE THE DRIVE</span><h2 id="invitation-title">An invitation</h2><p id="invitation-text" aria-live="polite"></p><div class="invitation-actions"><button id="invitation-next" class="gold-button">Answer & drive →</button><button id="skip-invitation" class="text-button">Skip to the house</button></div><small>E or Space to continue · Esc for settings</small></section>
@@ -56,6 +59,7 @@
   <div id="modal" class="modal" hidden><section class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button id="modal-close" class="close" aria-label="Close dialog">×</button><span id="modal-eyebrow" class="tiny-label"></span><h2 id="modal-title"></h2><div id="modal-content"></div></section></div>
   <div id="fatal" class="fatal" hidden><h2>Your visit needs a browser with WebGL 2.</h2><p>You can still explore Rabin’s work below.</p><button id="fallback-portfolio" class="primary">View portfolio →</button><button id="fatal-retry" class="text-button">Retry loading →</button></div>
   <noscript><div class="fatal"><h2>Rabin Adhikari</h2><p>Full-stack engineer and project lead based in Tokyo. Experience in healthcare applications, cloud systems, and AI integration.</p><p>Enable JavaScript to explore the house, or <a href="https://www.linkedin.com/in/rabin-adhikari-52573320b/">visit LinkedIn</a>.</p></div></noscript>
-  <script type="module" src="./startup.js?v=14"></script>
+  </div>
+  <script type="module" src="./startup.js?v=15"></script>
 </body>
 </html>

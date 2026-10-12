@@ -1,3 +1,11 @@
+// Mobile loads the large models in turn, keeping their parsing peaks apart.
+export function loadVisitAssets({sequential=false,character,vehicle,environment}){
+  const characters=Promise.resolve().then(character);
+  const car=sequential?characters.catch(()=>{}).then(vehicle):Promise.resolve().then(vehicle);
+  const house=sequential?car.catch(()=>{}).then(environment):Promise.resolve().then(environment);
+  return [characters,house,car];
+}
+
 // Keep completed assets when a visitor chooses to stop waiting for detail.
 // Late downloads are handled, but never replace an already playable scene.
 export function prepareVisitAssets(tasks,onProgress=()=>{},{readyIndexes=tasks.map((_,i)=>i),cancel=()=>{}}={}){
