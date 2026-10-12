@@ -1,0 +1,83 @@
+{
+  "entryPoint": "car.gltf",
+  "totalBytes": 116561849,
+  "files": [
+    {
+      "uri": "car.gltf",
+      "bytes": 49057,
+      "sha256": "a0ba6abfa2431215414f7ddcf0d7bd31c11502c3becc420babffb64bcc644b08"
+    },
+    {
+      "uri": "car-geometry-00.bin",
+      "deliveryUri": "car-geometry-00.bin.gz",
+      "bytes": 1963400,
+      "sha256": "5dc735bc4ceb9030253516af6eb80c684871c71f263aec98cfb5fa74244a6892",
+      "decodedBytes": 2252852,
+      "decodedSha256": "1f049512e11714946a480cba4af16994c10ac668079d26cf418ea7fe93d935d0"
+    },
+    {
+      "uri": "car-texture-02.png",
+      "deliveryUri": "car-texture-02.png",
+      "bytes": 13947584,
+      "sha256": "572bfec46b2e38475655dc783461a0a28a0f06c0a612f3e333d5f06a906e1adb",
+      "decodedBytes": 13947584,
+      "decodedSha256": "572bfec46b2e38475655dc783461a0a28a0f06c0a612f3e333d5f06a906e1adb"
+    },
+    {
+      "uri": "car-texture-03.png",
+      "deliveryUri": "car-texture-03.png",
+      "bytes": 5666216,
+      "sha256": "93518b09bc9f2a51f53719bafae928d5551a5b52dac8869e35138dfbcab98f2f",
+      "decodedBytes": 5666216,
+      "decodedSha256": "93518b09bc9f2a51f53719bafae928d5551a5b52dac8869e35138dfbcab98f2f"
+    },
+    {
+      "uri": "car-texture-04.png",
+      "deliveryUri": "car-texture-04.png",
+      "bytes": 12403388,
+      "sha256": "4f7c51b1e4ab7eaa4ba99341bd2f3293d4bfdc988556b2c951fdfd4055b088dc",
+      "decodedBytes": 12403388,
+      "decodedSha256": "4f7c51b1e4ab7eaa4ba99341bd2f3293d4bfdc988556b2c951fdfd4055b088dc"
+    },
+    {
+      "uri": "car-geometry-01.bin",
+      "deliveryUri": "car-geometry-01.bin.gz",
+      "bytes": 20199320,
+      "sha256": "65e93950114753aba59d010a1d26acd4c1cd6748ff1d5723410abf4c0e5dbdbd",
+      "decodedBytes": 24313348,
+      "decodedSha256": "cff9d92633f70d0f2ca0c5ed787953f328074aaad40574f7a15acf77e3d9d956"
+    },
+    {
+      "uri": "car-geometry-02.bin",
+      "deliveryUri": "car-geometry-02.bin.gz",
+      "bytes": 10529624,
+      "sha256": "e0244ccf13ca911b62f2cabac22199b47bec744939882443eee3a7b7396f2578",
+      "decodedBytes": 16011912,
+      "decodedSha256": "22a3084fa2c6827f148ba050866b0919020f4bea65de45d649600760bdc44d68"
+    },
+    {
+      "uri": "car-geometry-03.bin",
+      "deliveryUri": "car-geometry-03.bin.gz",
+      "bytes": 23312017,
+      "sha256": "008d54d2a462ca0b1721f171a23724d2222ba0f369b951e8eefdc6bc76d796c6",
+      "decodedBytes": 24963980,
+      "decodedSha256": "6d157dba00bd619dedf045b0e528dcea338a524437b1359b3d243bdf67dabb8e"
+    },
+    {
+      "uri": "car-geometry-04.bin",
+      "deliveryUri": "car-geometry-04.bin.gz",
+      "bytes": 15368519,
+      "sha256": "d6d3947cdd7328f94bba6214ba367a5c16b7e2b76fdf4ac7a8c892e3ac6c3c95",
+      "decodedBytes": 16622768,
+      "decodedSha256": "b633bfbecbb6fc32321d9b107c15d34c62e8d5642553decf12604b0a1bae2625"
+    },
+    {
+      "uri": "car-geometry-05.bin",
+      "deliveryUri": "car-geometry-05.bin.gz",
+      "bytes": 13122724,
+      "sha256": "637922b8e27e24f7051754b49f73e7fbd6728bd6d28c340f7a75015a35c702bb",
+      "decodedBytes": 18803608,
+      "decodedSha256": "ffcfe0537e5bf1958f676f764ab1f127da22fd0f4148b23126e3be5ad43e9c13"
+    }
+  ]
+}

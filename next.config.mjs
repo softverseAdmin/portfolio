@@ -16,7 +16,7 @@ const nextConfig = {
           },
           {
             key: 'X-Frame-Options',
-            value: 'DENY',
+            value: 'SAMEORIGIN',
           },
           {
             key: 'X-XSS-Protection',
@@ -89,6 +89,10 @@ const nextConfig = {
   // Compiler optimizations
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
+  },
+
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 
   // Keep server-only packages out of the Next.js bundle

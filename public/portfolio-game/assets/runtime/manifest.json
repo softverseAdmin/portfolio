@@ -1,0 +1,49 @@
+{
+  "format": 1,
+  "characters": {
+    "host": {
+      "height": 1.82,
+      "nativeScale": 0.010001099022293628,
+      "nativeOffset": [
+        -9.002636657511594e-09,
+        -0.0012001319596696841,
+        -0.01139338298563577
+      ],
+      "joints": 65,
+      "triangles": 73979
+    },
+    "visitor": {
+      "height": 1.75,
+      "nativeScale": 0.009616441367590028,
+      "nativeOffset": [
+        -8.656381401453456e-09,
+        -0.001153973038143927,
+        -0.0109551759477267
+      ],
+      "joints": 65,
+      "triangles": 73283
+    }
+  },
+  "environment": {
+    "triangles": 177257,
+    "verticalScale": 0.9126466753585398,
+    "width": 24,
+    "depth": 19,
+    "meshGroups": 40,
+    "physics": "Game owns colliders and breakable panes."
+  },
+  "files": {
+    "estate.glb": {
+      "bytes": 16050628,
+      "sha256": "4dcecbdaa7caf9415c27c63482d7f282a7a261815aee7d7b7fb90147caf81768"
+    },
+    "host.glb": {
+      "bytes": 3752612,
+      "sha256": "d9fcfc5724f7717cb19f7c515de0231bd5b76bbd4a838d667ca8715d14270910"
+    },
+    "visitor.glb": {
+      "bytes": 3783644,
+      "sha256": "fcb8b10ae772a97d19804f31f49255d7fb2a1d72494743c32d4e4222ac15916f"
+    }
+  }
+}

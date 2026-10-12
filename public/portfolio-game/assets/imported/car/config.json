@@ -1,0 +1,194 @@
+{
+  "units": "metres",
+  "forward": "+Z",
+  "up": "+Y",
+  "driveSide": "right",
+  "doors": [
+    {
+      "name": "Door_Left_Front",
+      "angle": 1.12,
+      "window": null
+    },
+    {
+      "name": "Door_Left_Rear",
+      "angle": 1.12,
+      "window": null
+    },
+    {
+      "name": "Door_Right_Front",
+      "angle": -1.12,
+      "window": null
+    },
+    {
+      "name": "Door_Right_Rear",
+      "angle": -1.12,
+      "window": null
+    }
+  ],
+  "hood": {
+    "name": "Hood",
+    "axis": "x",
+    "angle": -0.8
+  },
+  "tailgate": {
+    "name": "Tailgate",
+    "axis": "x",
+    "angle": 1.2
+  },
+  "wheels": [
+    {
+      "steer": "Wheel_Left_Front_Steer",
+      "spin": "Wheel_Left_Front_Spin",
+      "front": true,
+      "radius": 0.42924442849403416
+    },
+    {
+      "steer": "Wheel_Left_Rear_Steer",
+      "spin": "Wheel_Left_Rear_Spin",
+      "front": false,
+      "radius": 0.42924442849403416
+    },
+    {
+      "steer": "Wheel_Right_Front_Steer",
+      "spin": "Wheel_Right_Front_Spin",
+      "front": true,
+      "radius": 0.42924442849403416
+    },
+    {
+      "steer": "Wheel_Right_Rear_Steer",
+      "spin": "Wheel_Right_Rear_Spin",
+      "front": false,
+      "radius": 0.42924442849403416
+    }
+  ],
+  "seats": [
+    {
+      "name": "Driver",
+      "anchor": "Occupant_Driver",
+      "entry": "Entry_Driver",
+      "seat": "Seat_Driver",
+      "back": "Seat_Driver_BackPivot",
+      "front": true
+    },
+    {
+      "name": "Passenger",
+      "anchor": "Occupant_Passenger",
+      "entry": "Entry_Passenger",
+      "seat": "Seat_Passenger",
+      "back": "Seat_Passenger_BackPivot",
+      "front": true
+    },
+    {
+      "name": "Rear_Right",
+      "anchor": "Occupant_Rear_Right",
+      "entry": "Entry_Rear_Right",
+      "seat": "Seat_Rear_Right",
+      "back": "Seat_Rear_Right_BackPivot",
+      "front": false
+    },
+    {
+      "name": "Rear_Left",
+      "anchor": "Occupant_Rear_Left",
+      "entry": "Entry_Rear_Left",
+      "seat": "Seat_Rear_Left",
+      "back": "Seat_Rear_Left_BackPivot",
+      "front": false
+    },
+    {
+      "name": "Rear_Center",
+      "anchor": "Occupant_Rear_Center",
+      "entry": "Entry_Rear_Center",
+      "seat": "Seat_Rear_Center",
+      "back": "Seat_Rear_Center_BackPivot",
+      "front": false
+    }
+  ],
+  "lights": [
+    {
+      "name": "Headlight_Left",
+      "kind": "Headlight",
+      "side": "Left",
+      "position": [
+        -0.6936398716945946,
+        1.0964857678362456,
+        2.379031995645309
+      ]
+    },
+    {
+      "name": "Brake_Left",
+      "kind": "Brake",
+      "side": "Left",
+      "position": [
+        -0.8848873893404514,
+        1.1177354920191187,
+        -2.402155945501111
+      ]
+    },
+    {
+      "name": "Indicator_Front_Left",
+      "kind": "Indicator_Front",
+      "side": "Left",
+      "position": [
+        -0.889137334177026,
+        1.0922358229996711,
+        2.3195327679332647
+      ]
+    },
+    {
+      "name": "Headlight_Right",
+      "kind": "Headlight",
+      "side": "Right",
+      "position": [
+        0.6918421450287235,
+        1.0964857678362456,
+        2.379031995645309
+      ]
+    },
+    {
+      "name": "Brake_Right",
+      "kind": "Brake",
+      "side": "Right",
+      "position": [
+        0.8830896626745803,
+        1.1177354920191187,
+        -2.402155945501111
+      ]
+    },
+    {
+      "name": "Indicator_Front_Right",
+      "kind": "Indicator_Front",
+      "side": "Right",
+      "position": [
+        0.8873396075111549,
+        1.0922358229996711,
+        2.3195327679332647
+      ]
+    }
+  ],
+  "colliders": [
+    {
+      "name": "Body",
+      "center": [
+        0,
+        0.9,
+        0
+      ],
+      "size": [
+        1.96,
+        1.7,
+        4.8
+      ]
+    }
+  ],
+  "sourceTriangles": 1500000,
+  "exportTriangles": 1827964,
+  "originalExteriorPreserved": true,
+  "windowsOperable": false,
+  "limitations": [
+    "Door boundaries are reconstructed from a fused surface; exposed interior edges are approximate.",
+    "Original opaque glazing is preserved; windows cannot be lowered without altering the supplied surface.",
+    "Simplified added cabin and seats; exterior source is preserved with reduced geometry.",
+    "Mixamo FBX animations must be supplied separately; seat anchors do not automatically create realistic seated poses.",
+    "Controls are in the companion JavaScript; GLB alone contains movable parts but no baked clips."
+  ]
+}

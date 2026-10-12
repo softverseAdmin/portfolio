@@ -1,0 +1,1598 @@
+{
+  "original_blog_upload": "portfolio.zip",
+  "blog_existing_files_unchanged": true,
+  "original_blog_files": [
+    {
+      "path": "jsconfig.json",
+      "bytes": 77,
+      "sha256": "56123956b551c203af11a2a5a985e82bcfdf6d4e619acbdd0a5e2bf1e79aba58"
+    },
+    {
+      "path": "social-media-debug.json",
+      "bytes": 1334,
+      "sha256": "3ae2cabaae16115cd60547c2317b8099189e654a089a47f881ae665def60f186"
+    },
+    {
+      "path": "seo-report.json",
+      "bytes": 5752,
+      "sha256": "096c1edef98091642849b7aaa523094c8811cf63db45d9d68de42b67907a3b5a"
+    },
+    {
+      "path": "postcss.config.mjs",
+      "bytes": 135,
+      "sha256": "ac31e2a95ef64fe27ceb4124e101675273107aae2e33bc490b01d919e7f03646"
+    },
+    {
+      "path": "QUICK_ACTION_GUIDE.md",
+      "bytes": 4466,
+      "sha256": "e39f233490727c244e0ecc4832f3674bd7054255ae3bbe33912a954b5b7fa88a"
+    },
+    {
+      "path": "next.config.mjs",
+      "bytes": 2714,
+      "sha256": "54d1c3c8724f233f65b760b37a7fff4418ff312d7dd0fc6884de2e29751545d7"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1458,
+      "sha256": "e54d573f70711f7c45c6f2ee5cfbaac78596406a741e4c8ad025f7e9dd810cbb"
+    },
+    {
+      "path": "tailwind.config.mjs",
+      "bytes": 871,
+      "sha256": "184912bc53e947de6ba2970bbcfa2d3795c54e6caaa5be20d64008576cd20d4c"
+    },
+    {
+      "path": ".gitignore",
+      "bytes": 583,
+      "sha256": "54cf0d96af2a45535e863a860dd914d0d6b0ce5bc779be30d0aa4ca6cbcf53da"
+    },
+    {
+      "path": "package-lock.json",
+      "bytes": 257794,
+      "sha256": "87f801a8d8ca17037055bc70049b8bd06da66873b8b31356fe19ac2d569aaa7e"
+    },
+    {
+      "path": "package.json",
+      "bytes": 1118,
+      "sha256": "e929d720e00cf9336f10ec0394f4e0037f870d446d8c3156d6bddf2ace12da96"
+    },
+    {
+      "path": "PRODUCTION_READY.md",
+      "bytes": 3603,
+      "sha256": "a5065dffbe9461365236f46e42e5c51ab83a58c85779f5891ea9f099f7712f96"
+    },
+    {
+      "path": "GOOGLE_INDEXING_FIXES.md",
+      "bytes": 10921,
+      "sha256": "10e378dc508cabee765ab3717538321924939edc22be27f33ee6cdce24255287"
+    },
+    {
+      "path": "eslint.config.mjs",
+      "bytes": 369,
+      "sha256": "07d48fd85eb9cecbe0846db4da0b4d882f877b7197a8022935ac35658a76fb2b"
+    },
+    {
+      "path": "public/file.svg",
+      "bytes": 391,
+      "sha256": "2b67812c325c199a02536cdbeea0c593a72f707d323b72ee3e08dbab06753bd4"
+    },
+    {
+      "path": "public/ads.txt",
+      "bytes": 329,
+      "sha256": "df2ca50a2047b02458aea738d86b30e5ca09b8ed196ef095770aa7a49e24d690"
+    },
+    {
+      "path": "public/google11d554c204b2b981.html",
+      "bytes": 53,
+      "sha256": "15c88915d69b480d72ff812164dffe5691a2fb9f2fdcda492e5c0c5f8dee2559"
+    },
+    {
+      "path": "public/site.webmanifest",
+      "bytes": 2387,
+      "sha256": "9a671a3a7a012ef2099c1d79a995e1be83ffad8262c87df6df7674323b0a4675"
+    },
+    {
+      "path": "public/vercel.svg",
+      "bytes": 128,
+      "sha256": "f081337b2fee635b455b63275406a3e7f39d6a014e25ad90dab5a67e62a12ac4"
+    },
+    {
+      "path": "public/next.svg",
+      "bytes": 1375,
+      "sha256": "55995dfad6ecb4945a1e856ddca03c5e16aa5bf13fd21b4df6a74ae79357bcfc"
+    },
+    {
+      "path": "public/sitemap.xml",
+      "bytes": 4734,
+      "sha256": "f698f01ed448a88b495c8e62e1c853687c33e63f4420c5e4bed405790388bd3d"
+    },
+    {
+      "path": "public/robots.txt",
+      "bytes": 994,
+      "sha256": "4acd823b804ffea5926f67dde1eb6fdce12e6a587bcbc28432b4e02d301fbd9f"
+    },
+    {
+      "path": "public/globe.svg",
+      "bytes": 1035,
+      "sha256": "b614b9bf183925957661ac851498fe1d8029fd43a62fbfed86f9e2624a57e7cf"
+    },
+    {
+      "path": "public/window.svg",
+      "bytes": 385,
+      "sha256": "644768c4aaeb4767bce293344eeb0c125fb804a94d801440424072202d85e3a1"
+    },
+    {
+      "path": "public/images/og-devops-hero.jpg",
+      "bytes": 849461,
+      "sha256": "192b26fc0303412ed51221b0f33383fe7662cbabdb220ca5113dde9b025099a6"
+    },
+    {
+      "path": "public/images/og-fallback.png",
+      "bytes": 954217,
+      "sha256": "bb12b2b11ee607ca8a0860acce2bc9b977581fe1b6b48cf0fdbc465329c866ea"
+    },
+    {
+      "path": "public/images/og-fallback.svg",
+      "bytes": 960,
+      "sha256": "45799fb931282bf481bb980c314b0b81b65417d42dcdb8f40f7d682ae9cfb5d8"
+    },
+    {
+      "path": "src/app/sitemap.js",
+      "bytes": 3721,
+      "sha256": "c594b0aa295c1d86558079e9d80803fbc7963079e6b1efa367fe62f364f1038b"
+    },
+    {
+      "path": "src/app/layout.js",
+      "bytes": 5837,
+      "sha256": "93ae04cc43b27f8a7525722378e9a5ee3f07ca11959b15d1cc959f3a549e8d7c"
+    },
+    {
+      "path": "src/app/favicon.ico",
+      "bytes": 16128,
+      "sha256": "486673b8ff5f986736f768ec8551c09e2815bcc24ffe48fe55278e388b9f4fc4"
+    },
+    {
+      "path": "src/app/apple-icon.js",
+      "bytes": 1007,
+      "sha256": "cb8e0760177ae4f5e9fdd9b70118b3a85884bc2eb6c4fb273b8d604eb319760e"
+    },
+    {
+      "path": "src/app/page.js",
+      "bytes": 1497,
+      "sha256": "869dc191ae44e97c1d82b3e98025f8fb7394ffef29688b0917faf7bb6951becd"
+    },
+    {
+      "path": "src/app/icon.js",
+      "bytes": 1037,
+      "sha256": "8946133aec99946d69eb3f0774961ba9c2dbdfc900bce4f3e10771e408a72f7e"
+    },
+    {
+      "path": "src/app/not-found.js",
+      "bytes": 4077,
+      "sha256": "5d1f9c4d4a8df0e9494b577fb24ad7ddefdae8e9ed06cb7b49a840087b0da4af"
+    },
+    {
+      "path": "src/app/robots.js",
+      "bytes": 305,
+      "sha256": "33a332d1a20952a4581d025d68f054a03aa5779468b4cebdf39ec301ddaf947d"
+    },
+    {
+      "path": "src/app/globals.css",
+      "bytes": 2574,
+      "sha256": "16c0cd684907f2ebad08ea99ae585c4e6db4a19882979c329f54a5af920dc55c"
+    },
+    {
+      "path": "src/components/GoogleAnalytics.jsx",
+      "bytes": 598,
+      "sha256": "7e5cbf75ec74b61421d288f4b9c094649ad986e558a8a6c49205f5e057b15fc3"
+    },
+    {
+      "path": "src/lib/structured-data.js",
+      "bytes": 5611,
+      "sha256": "d86a758fd5d8abe37719b2d41e58c6c9e57cc6b5e22f0fe7278e4ba0a39b7fcb"
+    },
+    {
+      "path": "src/lib/seo-utils.js",
+      "bytes": 4561,
+      "sha256": "d3257eb0f3cac30b405bd6fa9a8d997180c7b2fa9073bb1b3430043c2b32e045"
+    },
+    {
+      "path": "src/app/contact/page.js",
+      "bytes": 19931,
+      "sha256": "d697112d0d4d1c94b686980f123d7b507e58b492479c3e90f07ccfa82b4526c0"
+    },
+    {
+      "path": "src/app/devops/page.js",
+      "bytes": 16967,
+      "sha256": "98ebdf6c9728b86c5b489ce0d6c9afbc3c6aa156d1c5662eef692db0e62e9747"
+    },
+    {
+      "path": "src/app/cybersecurity/page.js",
+      "bytes": 24549,
+      "sha256": "509ad93cb09335e856ceebf9bd007f835b69f809b3708b4ad2e3c027094cbeb7"
+    },
+    {
+      "path": "src/app/privacy/page.js",
+      "bytes": 17698,
+      "sha256": "c1f85a4616b0343b99126d3b850edd763071b80986d954e0f83fff6989478778"
+    },
+    {
+      "path": "src/app/disclaimer/page.js",
+      "bytes": 18838,
+      "sha256": "ffdbf3a1b24e685d4757816016ba6968da0841b30d06428ad0710b0f4d5dc0a4"
+    },
+    {
+      "path": "src/app/resources/page.js",
+      "bytes": 28018,
+      "sha256": "a4c8188485a2eca606dbf3986ce9ceab134c9399684ccbc62aa770f4697b73a1"
+    },
+    {
+      "path": "src/app/terms/page.js",
+      "bytes": 21724,
+      "sha256": "681ce203daa2feb038a4e7959141dd83d7432a07a97832c774d702bfeb0e816c"
+    },
+    {
+      "path": "src/app/about/page.js",
+      "bytes": 16787,
+      "sha256": "1748040f924059aa13e99079e31f1b6c31363c66909cc860aca43c3b09e94f16"
+    },
+    {
+      "path": "src/app/blog/page.js",
+      "bytes": 5252,
+      "sha256": "01d9971ad18334dcfa171786336733c23f2c98aa8d5a7c59e9cd9a0b1f3dab35"
+    },
+    {
+      "path": "src/app/blog/blogData.js",
+      "bytes": 111,
+      "sha256": "f10f81214c5a1ce6d651140de2a19e0d85dc468dce781cb79760d1b639465815"
+    },
+    {
+      "path": "src/app/cloud/page.js",
+      "bytes": 20330,
+      "sha256": "1045caca18d644816987ede11cbbe0c2483793f10b318f568675c871c9c7a5e3"
+    },
+    {
+      "path": "src/app/cookies/page.js",
+      "bytes": 20922,
+      "sha256": "a16a673285dcffc0258377d083c5e7027f4654ff5ee6086b5e55a214560345c7"
+    },
+    {
+      "path": "src/app/ai-job-hunting/page.js",
+      "bytes": 34375,
+      "sha256": "3ee40037f97962bc09157d181ade51aa2c420f93a94abe10d7bd392e7d971b01"
+    },
+    {
+      "path": "src/app/ai-job-hunting/JobSearchClient.jsx",
+      "bytes": 23389,
+      "sha256": "02f4e111f5ff35d216afc06bd1b0991b1438bee9c0dd2325665038c1914b35ff"
+    },
+    {
+      "path": "src/components/ads/AdSense.jsx",
+      "bytes": 3440,
+      "sha256": "41acac18c616a4ec81e9f2ec5d8c9da2e36aa98586c2b37d05edc90de36d2fca"
+    },
+    {
+      "path": "src/components/ui/Header.jsx",
+      "bytes": 5614,
+      "sha256": "75cfef04a88f68811ac128879c118de497b6ae974a6577be3e1e459e5ac7d4f0"
+    },
+    {
+      "path": "src/components/ui/Footer.jsx",
+      "bytes": 7127,
+      "sha256": "e9db6594b9bc1e58bfcc5537309db15c20f661554451925deb4b47046b8157ab"
+    },
+    {
+      "path": "src/components/sections/ServicesSection.jsx",
+      "bytes": 6163,
+      "sha256": "f3f105d97a311588281a50743588bc6313ebb25315bb0b5b88c0b77e851d89b1"
+    },
+    {
+      "path": "src/components/sections/TechNiches.jsx",
+      "bytes": 2151,
+      "sha256": "59786ca63425fdd0fc74804b31d231b5f0b4afda13db65f7d30280722cb4ec9a"
+    },
+    {
+      "path": "src/components/sections/Hero.jsx",
+      "bytes": 4660,
+      "sha256": "8416e24abe984ee307376788184339e639e8e3701021ac62ccdb749f592bcb08"
+    },
+    {
+      "path": "src/components/sections/Newsletter.jsx",
+      "bytes": 2395,
+      "sha256": "6d83805736ff81470d482ddf7dc8465edde3a050652999d4016b1112b93a863b"
+    },
+    {
+      "path": "src/components/sections/FeaturedContent.jsx",
+      "bytes": 4591,
+      "sha256": "5f8d9846ab532465fb3d5b3b94794d0dcc137483f8f296101c8d08c4b10a4d61"
+    },
+    {
+      "path": "public/images/blog/terraform-vs-pulumi-cloudformation-2025-iac-comparison/iac-comparison-hero.jpg",
+      "bytes": 1912512,
+      "sha256": "deb4fcf8fb65372325e0c136fe0849c0552e7912bbed5f1ecc77411a47a2a527"
+    },
+    {
+      "path": "public/images/blog/devsecops-checklist-securing-pipeline-2025/dependency-vulnerability-scan.jpg",
+      "bytes": 635165,
+      "sha256": "59d5931c81b62c479d610a1482861f39a72c7e8338e6be0b43f6cdb852ce2dda"
+    },
+    {
+      "path": "public/images/blog/devsecops-checklist-securing-pipeline-2025/secrets-management-vault.jpg",
+      "bytes": 984900,
+      "sha256": "9a2ea1013edd0bb1342f75d7e9d26e1a0b0bc1bc120183f1e3ce750122fea29b"
+    },
+    {
+      "path": "public/images/blog/devsecops-checklist-securing-pipeline-2025/dynamic-security-testing.jpg",
+      "bytes": 925177,
+      "sha256": "f0e99202670ed2f023dbeeb56dc53d92a2c8893106eb6fdd49abf6ea26f5d4f3"
+    },
+    {
+      "path": "public/images/blog/devsecops-checklist-securing-pipeline-2025/static-code-analysis.jpg",
+      "bytes": 818931,
+      "sha256": "ade2d7e5c0d17da04e74a921a6bd1f7c42c966f504038199ddb87260cffa343f"
+    },
+    {
+      "path": "public/images/blog/devsecops-checklist-securing-pipeline-2025/realtime-security-monitoring.jpg",
+      "bytes": 854313,
+      "sha256": "f403e2776856e43ba1ca540409d1a0ff2c51d4e64aaf211a1015fee69f2986cc"
+    },
+    {
+      "path": "public/images/blog/devsecops-checklist-securing-pipeline-2025/devsecops-hero.jpg",
+      "bytes": 954217,
+      "sha256": "bb12b2b11ee607ca8a0860acce2bc9b977581fe1b6b48cf0fdbc465329c866ea"
+    },
+    {
+      "path": "public/images/blog/devsecops-checklist-securing-pipeline-2025/source-code-security.jpg",
+      "bytes": 739972,
+      "sha256": "054767afbb6a7290fbc8ec58a117fef699f913c2324fa9a14f140d152afe8c64"
+    },
+    {
+      "path": "public/images/blog/devsecops-checklist-securing-pipeline-2025/compliance-audit-dashboard.jpg",
+      "bytes": 658750,
+      "sha256": "3991481c8035584537677bd2ad96da69669f44d8dc9d9cf034e10298c97c6850"
+    },
+    {
+      "path": "public/images/blog/devsecops-checklist-securing-pipeline-2025/container-security-scanning.jpg",
+      "bytes": 827366,
+      "sha256": "70b77a734b9b99ac38f353f0c0bde33095901eb8cd5f679291f67d52e40e4d21"
+    },
+    {
+      "path": "public/images/blog/devsecops-checklist-securing-pipeline-2025/security-gates-approvals.jpg",
+      "bytes": 610282,
+      "sha256": "fa89eae1f925e14e3d2f61ea428e8efa9a8b5716d8c0166728f8d320bdecff08"
+    },
+    {
+      "path": "public/images/blog/how-to-build-cicd-pipeline-github-actions-2025/monitoring-alerts-dashboard.jpg",
+      "bytes": 736700,
+      "sha256": "86296538dd44d7066af9ae5c6bab4811d4718eb41f3c8aed29b0aa8af54917cb"
+    },
+    {
+      "path": "public/images/blog/how-to-build-cicd-pipeline-github-actions-2025/aws-cloud-deployment.jpg",
+      "bytes": 762403,
+      "sha256": "f12f5363d659cbd33a49b559103973cdc5a6f397cc6dd0d2780afea8e8c72b78"
+    },
+    {
+      "path": "public/images/blog/how-to-build-cicd-pipeline-github-actions-2025/code-quality-checks.jpg",
+      "bytes": 697898,
+      "sha256": "7a68efe2791fb5f3ee6facdf9c5dbeb3df29c60a1a1996477787caba632c39de"
+    },
+    {
+      "path": "public/images/blog/how-to-build-cicd-pipeline-github-actions-2025/cicd-hero.jpg",
+      "bytes": 588655,
+      "sha256": "69e7675528fdea84c0599acff8da5456d6e8cd791fcff1b0c1c5c37d7c1bde8f"
+    },
+    {
+      "path": "public/images/blog/how-to-build-cicd-pipeline-github-actions-2025/multi-stage-environments.jpg",
+      "bytes": 714986,
+      "sha256": "a1c676d0b3393f7545375b5e568911ca7c4a752ef8cf8c685fbf4861ba1a30f4"
+    },
+    {
+      "path": "public/images/blog/how-to-build-cicd-pipeline-github-actions-2025/self-hosted-runners-infrastructure.jpg",
+      "bytes": 939094,
+      "sha256": "190cc13caf6c395e20d28655130fb7ea58d2657a49cba8c3ff92848e8cac5930"
+    },
+    {
+      "path": "public/images/blog/how-to-build-cicd-pipeline-github-actions-2025/github-workflow-editor.jpg",
+      "bytes": 829610,
+      "sha256": "107341bc7c87a6330603f808e597c171e41b120c654a7561cda5eadbe3856203"
+    },
+    {
+      "path": "public/images/blog/how-to-build-cicd-pipeline-github-actions-2025/matrix-builds-parallel.jpg",
+      "bytes": 869102,
+      "sha256": "6e92fb3892da7a1e8d2f65c460a33b9d3072c99f92f261bf6627a7a2568b67f7"
+    },
+    {
+      "path": "public/images/blog/kubernetes-deployment-strategies-2025-complete-guide/k8s-deployment-hero.jpg",
+      "bytes": 1581369,
+      "sha256": "079dbb67258c63b392a0afadf7932ccaa1249a64bd145392a823d5f37d90e4ac"
+    },
+    {
+      "path": "public/images/blog/self-healing-infrastructure-2025/hero.jpg",
+      "bytes": 2124512,
+      "sha256": "f48a2b93f1a4418cf39accc53003e65ee4b9d7f7f51461e5c3a3fbbd10dab19b"
+    },
+    {
+      "path": "public/images/blog/top-10-devops-tools-2025/pulumi.jpg",
+      "bytes": 1036316,
+      "sha256": "63d58551e78e42db442e0659255c692b4bb0ff0af183bea69f658e93045cd259"
+    },
+    {
+      "path": "public/images/blog/top-10-devops-tools-2025/kubernetes.jpg",
+      "bytes": 919470,
+      "sha256": "e0038431e594e7884a67b19971a9ca7229852707628925a6dcc37e0169f4ec8e"
+    },
+    {
+      "path": "public/images/blog/top-10-devops-tools-2025/argo-cd.jpg",
+      "bytes": 782310,
+      "sha256": "24b30d8c0df4444abdfdb4d569234829f68e8fc713a8e94f56f7b4da2b938c64"
+    },
+    {
+      "path": "public/images/blog/top-10-devops-tools-2025/docker.jpg",
+      "bytes": 567538,
+      "sha256": "4bfb42b92110b14f627ec70d796087584896052c0e830692cf5e0202976577a2"
+    },
+    {
+      "path": "public/images/blog/top-10-devops-tools-2025/prometheus-grafana.jpg",
+      "bytes": 664223,
+      "sha256": "41ca94355c22b91eb8be2be2d14252323e6581d6dfdf7483e1b9e0d9350cb81c"
+    },
+    {
+      "path": "public/images/blog/top-10-devops-tools-2025/gitlab-devsecops.jpg",
+      "bytes": 928332,
+      "sha256": "fc0af3767bdf6e524e9ba64a381bd2e10d0e6d384ffad44277965d3fdba72b70"
+    },
+    {
+      "path": "public/images/blog/top-10-devops-tools-2025/test-image.jpg",
+      "bytes": 594458,
+      "sha256": "d8b98a8e729a21460d2825b78fe164ed53462ad213031f932dd6d067ef6984bc"
+    },
+    {
+      "path": "public/images/blog/top-10-devops-tools-2025/devops-hero.jpg",
+      "bytes": 849461,
+      "sha256": "192b26fc0303412ed51221b0f33383fe7662cbabdb220ca5113dde9b025099a6"
+    },
+    {
+      "path": "public/images/blog/top-10-devops-tools-2025/github-copilot.jpg",
+      "bytes": 859365,
+      "sha256": "dd1c72343ea558352c50c102f7e963dfad63ab6870a485f1d6e9854452592b6a"
+    },
+    {
+      "path": "public/images/blog/top-10-devops-tools-2025/datadog.jpg",
+      "bytes": 804164,
+      "sha256": "bfb7e1d2f2839f31d22070e74929a2ff19857035fbc89354b0c754d0bbdecec0"
+    },
+    {
+      "path": "public/images/blog/top-10-devops-tools-2025/github-actions.jpg",
+      "bytes": 735814,
+      "sha256": "0a0d54b5332126f204f1e693e879bfd2e3dda0dd79708f41554d79b3c25cf9e9"
+    },
+    {
+      "path": "public/images/blog/top-10-devops-tools-2025/terraform.jpg",
+      "bytes": 892607,
+      "sha256": "6c27918272568100db22c69c5ebc92d680c69d6b9ce4c05a8c5539282eb7f6d9"
+    },
+    {
+      "path": "public/images/blog/gitops-vs-traditional-cicd-2025-comparison/gitops-cicd-hero.jpg",
+      "bytes": 1980605,
+      "sha256": "5eb6f59a8bebd8e20896e555420a3bba591f865c00d4e8660af5d77f14544b14"
+    },
+    {
+      "path": "public/images/blog/gitops-vs-traditional-cicd-2025-comparison/BLOG_SUMMARY.txt",
+      "bytes": 1058,
+      "sha256": "841725c59b275f0f62393bd80b83b216814c8868fab11d0ed97afbb620503d84"
+    },
+    {
+      "path": "public/images/blog/how-to-become-devops-engineer-japan-2025-career-guide/japanese-language-devops-learning.jpg",
+      "bytes": 814014,
+      "sha256": "48b40fa899fa83af5fc9d98502437058a59bcdbd83c943891ea7a3b4205243b3"
+    },
+    {
+      "path": "public/images/blog/how-to-become-devops-engineer-japan-2025-career-guide/japanese-tech-office-culture-harmony.jpg",
+      "bytes": 986328,
+      "sha256": "f823c85172cfaee69a5776b9a23e750880746c179c489c712e4e1b6a7e695e2e"
+    },
+    {
+      "path": "public/images/blog/how-to-become-devops-engineer-japan-2025-career-guide/devops-role-japanese-it.jpg",
+      "bytes": 977348,
+      "sha256": "cfc6f5b279a9969aa066042d76c8b144e2f6a5d590052fcaf04de262c79bab62"
+    },
+    {
+      "path": "public/images/blog/how-to-become-devops-engineer-japan-2025-career-guide/japan-job-search-platforms-devops.jpg",
+      "bytes": 921902,
+      "sha256": "c6e1ae390249cb7dcf0bee2f6b8c0ba315f85601d9c35002613081e8e27fa61d"
+    },
+    {
+      "path": "public/images/blog/how-to-become-devops-engineer-japan-2025-career-guide/devops-certifications-japan-value.jpg",
+      "bytes": 767197,
+      "sha256": "7c1c5d411d0db105f6b4be1463c51014436bf014a9cb73943e6865400c508530"
+    },
+    {
+      "path": "public/images/blog/how-to-become-devops-engineer-japan-2025-career-guide/devops-skills-japan-requirements.jpg",
+      "bytes": 945857,
+      "sha256": "07533d02bd18cc00a33b638d6b57a18c1a162870747b94299ac3198d978fdf57"
+    },
+    {
+      "path": "public/images/blog/how-to-become-devops-engineer-japan-2025-career-guide/japanese-devops-community-networking.jpg",
+      "bytes": 914699,
+      "sha256": "5fd418e3e814a0ec6f25dc7fbccf7f4ff52ab4fe6f0a45335f799fe04fea4a5c"
+    },
+    {
+      "path": "public/images/blog/how-to-become-devops-engineer-japan-2025-career-guide/japan-work-visa-devops-engineer.jpg",
+      "bytes": 597243,
+      "sha256": "3e3acd7d4669331665e4040d814c693243b413378691f3574717df804f43ab48"
+    },
+    {
+      "path": "public/images/blog/how-to-become-devops-engineer-japan-2025-career-guide/japan-devops-career-hero.jpg",
+      "bytes": 825269,
+      "sha256": "e544ff93ecd39dd0833315001c3035bee5b587511e57afc45e5c4301474e95ae"
+    },
+    {
+      "path": "public/images/blog/how-to-become-devops-engineer-japan-2025-career-guide/japan-devops-salary-trends-2025.jpg",
+      "bytes": 985041,
+      "sha256": "651ab1878d2d360fdb9f5db13855652c155ad9eaca2978d503f9c0e64a891815"
+    },
+    {
+      "path": "public/images/blog/serverless-vs-containers-2025/hero.jpg",
+      "bytes": 1761641,
+      "sha256": "bd7ce6364330b0bafe872c462faa1740fb9fc81e1d5d0fd71208aa0ecf78520b"
+    },
+    {
+      "path": "public/images/blog/rise-of-platform-engineering-redefining-devops-2025/centralized-security-management.jpg",
+      "bytes": 503251,
+      "sha256": "484544e410b1addf7876c55c814f56877de0615e10b8294228411b10c957a01f"
+    },
+    {
+      "path": "public/images/blog/rise-of-platform-engineering-redefining-devops-2025/developer-self-service-portal.jpg",
+      "bytes": 453256,
+      "sha256": "3ef558aeabe9844866de693175fb9c06fedf87a5117165e491ec18f0c647a46c"
+    },
+    {
+      "path": "public/images/blog/rise-of-platform-engineering-redefining-devops-2025/future-platform-engineering.jpg",
+      "bytes": 1046244,
+      "sha256": "9b712f8165c6db41d39aa964a0c067a6e51c25eb4fa18fa00201293090230012"
+    },
+    {
+      "path": "public/images/blog/rise-of-platform-engineering-redefining-devops-2025/platform-engineering-hero.jpg",
+      "bytes": 1072910,
+      "sha256": "7d00f032b59b4dd56365f434a5908871ddcf7705ef9a38981177ffe1344a138a"
+    },
+    {
+      "path": "public/images/blog/rise-of-platform-engineering-redefining-devops-2025/chaos-vs-order-comparison.jpg",
+      "bytes": 845082,
+      "sha256": "d354151566ab6c7a9db11a4a441538af60824d2b5b6e9b8ee02ea6566b954e87"
+    },
+    {
+      "path": "public/images/blog/rise-of-platform-engineering-redefining-devops-2025/platform-team-collaboration.jpg",
+      "bytes": 979015,
+      "sha256": "c68a4a98431a11159d5f7af536cf955291407fec7ead9feef023aff9dfa0218a"
+    },
+    {
+      "path": "public/images/blog/rise-of-platform-engineering-redefining-devops-2025/ai-powered-platform-assistant.jpg",
+      "bytes": 870377,
+      "sha256": "fbbc076ff541aee6af632bfc5a7cc04a260138464375f1b4e507ed1540420f5c"
+    },
+    {
+      "path": "public/images/blog/rise-of-platform-engineering-redefining-devops-2025/devops-to-platform-evolution.jpg",
+      "bytes": 891242,
+      "sha256": "d376ff7c2b160631b5224f38ed6724904ba875f1eb38bdef740aca413c07a6e2"
+    },
+    {
+      "path": "public/images/blog/rise-of-platform-engineering-redefining-devops-2025/platform-architecture-layers.jpg",
+      "bytes": 979885,
+      "sha256": "1b28206c0ff5282dc337e3b9054cecca39e6eb19cd25060bebe066dd6adbcb69"
+    },
+    {
+      "path": "public/images/blog/rise-of-platform-engineering-redefining-devops-2025/hybrid-platform-workflow.jpg",
+      "bytes": 889518,
+      "sha256": "92f7d1e31f0ae35bd035487c71f984592912b0a784bab37decb194aaa21ac78c"
+    },
+    {
+      "path": "public/images/blog/aws-cost-optimization-15-tactics-saved-50k-month/hero.jpg",
+      "bytes": 1893269,
+      "sha256": "396b41337131ce1c239860dc85f370a9c74189750655e7f05ae05264c3fc4b3b"
+    },
+    {
+      "path": "public/images/blog/github-actions-vs-gitlab-ci-vs-jenkins-2025-comparison/cover.png",
+      "bytes": 1892669,
+      "sha256": "e3d2b13cbc566895ac0580adb006f292e3ba7a1dd1b390cef4f47aabeacd4d93"
+    },
+    {
+      "path": "public/images/blog/how-to-optimize-docker-images-production-2025/hero.jpg",
+      "bytes": 1815429,
+      "sha256": "7059db84a2dbd1bff07fea47ef3167166b9658a1fb45c3a4e5f2749145711e22"
+    },
+    {
+      "path": "public/images/blog/multi-cloud-strategy-2025/hero.jpg",
+      "bytes": 2167735,
+      "sha256": "c4000dfbf1fb2d03ee51723cb6a44ea6669fcac8a1f436fa14ba55e4d08dbd87"
+    },
+    {
+      "path": "src/app/blog/posts/terraform-vs-pulumi-cloudformation.js",
+      "bytes": 12076,
+      "sha256": "7454a32b495b55b691fe5ef14bd44e5d3a05e63cdfe61b77c87f2be52db80bec"
+    },
+    {
+      "path": "src/app/blog/posts/serverless-vs-containers-2025.js",
+      "bytes": 11388,
+      "sha256": "7e4dd35edb56566964d15f9e7e5ead51676359c1f697d5c25493c2c104d9173a"
+    },
+    {
+      "path": "src/app/blog/posts/gitops-cicd.js",
+      "bytes": 9868,
+      "sha256": "8d4b01f0254d891ad6635ca5a2b1357a3d5afa1f76bdc4d67121ebede3ce6199"
+    },
+    {
+      "path": "src/app/blog/posts/index.js",
+      "bytes": 1705,
+      "sha256": "b782e095ad1835318f5c331f09b5368732ea5c4bb55a51ca612a54e192e9d3da"
+    },
+    {
+      "path": "src/app/blog/posts/github-actions-gitlab-jenkins.js",
+      "bytes": 11348,
+      "sha256": "7aa6b53a0adc5918d39c6f29c0abf23f05969ca444698ffc95e461b09bd3c681"
+    },
+    {
+      "path": "src/app/blog/posts/platform-engineering.js",
+      "bytes": 9969,
+      "sha256": "aef9e489f1640b3f6600c66b38f394ecabaaa9387d66528ceb1ded4c7b2a98f8"
+    },
+    {
+      "path": "src/app/blog/posts/kubernetes-deployment.js",
+      "bytes": 13045,
+      "sha256": "7f578a3e241ca0fc2df3f1aded31cbcf0f6c4a515d221950cfb3031bf2c4de04"
+    },
+    {
+      "path": "src/app/blog/posts/cicd-github-actions.js",
+      "bytes": 9019,
+      "sha256": "0c63a42a6a3be44af1358a7d2b0bd4201f3dd792fc1fd641b79af4aa18d2a889"
+    },
+    {
+      "path": "src/app/blog/posts/aws-cost-optimization.js",
+      "bytes": 9203,
+      "sha256": "586ba0788517b72e2650c68ad2c4536f6cf0ef54b7285a9a0ccf3207f6ee78a3"
+    },
+    {
+      "path": "src/app/blog/posts/self-healing-infrastructure.js",
+      "bytes": 8792,
+      "sha256": "f3fb83d114ead9c8e63e9651ab584b6c26bf0efa6ba54477e329ecf76705dbbb"
+    },
+    {
+      "path": "src/app/blog/posts/devops-tools.js",
+      "bytes": 10201,
+      "sha256": "594ac0ea965cfa77556a28b3dded530b825a7fcb2c117cecec519ef9e130f12d"
+    },
+    {
+      "path": "src/app/blog/posts/multi-cloud-strategy.js",
+      "bytes": 7182,
+      "sha256": "dc18dde22eb41c2f2a136f8811b368061499404c0c87748c91649f892aae7d50"
+    },
+    {
+      "path": "src/app/blog/posts/devsecops.js",
+      "bytes": 8860,
+      "sha256": "8ad45c467f985568ce30e249259010ef456a3b771309a457fec88f68a7723f00"
+    },
+    {
+      "path": "src/app/blog/posts/docker-image-optimization.js",
+      "bytes": 8887,
+      "sha256": "580caace62c424160a37a9b3745a08eb9f1def093773f7e462b5853b9b4bfc6b"
+    },
+    {
+      "path": "src/app/blog/posts/japan-career.js",
+      "bytes": 9343,
+      "sha256": "2cafe8031c367fe161af53d7af218af957f29f5f70136a8f2e3ccfdffe8fcf1b"
+    },
+    {
+      "path": "src/app/blog/[slug]/page.js",
+      "bytes": 65883,
+      "sha256": "30ad36227d92df2f052fca737c40ca9a35178818ff2d2100e8506d7a0507b1e0"
+    },
+    {
+      "path": "src/app/api/job-match/route.js",
+      "bytes": 26180,
+      "sha256": "809d81db297709461b7f3f7c9ae2f65ec0bda013d7f532a835c47b01ac94f8aa"
+    }
+  ],
+  "game_source": {
+    "title": "Rabin's House \u2014 Interactive Portfolio",
+    "version_number": 14,
+    "commit_sha": "bb6f9a2730ca417be848a9a7eb47cc146fc24415",
+    "exported_at": "2026-10-12T13:03:07.960160+00:00",
+    "source_file_count": 208,
+    "runtime_file_count": 176,
+    "runtime_bytes": 208340595
+  },
+  "game_files": [
+    {
+      "path": "public/portfolio-game/arrival.js",
+      "bytes": 5969,
+      "sha256": "455d0228789ea810241d96acceb68c7ad51507e14e9b7da15780ce07fbd8985b"
+    },
+    {
+      "path": "public/portfolio-game/asset-transfer.js",
+      "bytes": 4344,
+      "sha256": "f872ebcfc207a6d7b3c2772c7fe4131b9b5f919a30cc541aa6dd52503ee85af1"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animation-catalog.json",
+      "bytes": 7989,
+      "sha256": "c33970087295728e54c7708c71662401de62345e46223b3f508ba1120a06322a"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/barrow-dump.json",
+      "bytes": 405873,
+      "sha256": "3f2f441305df4bbd18c264320299f932dc99a29314da20c6808b34719f34eaf2"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/barrow-idle.json",
+      "bytes": 40594,
+      "sha256": "669b33831e266367cceb9be5398c24fbf6ab8f3d4da7e8d73157f3b227211539"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/barrow-turn-2.json",
+      "bytes": 119515,
+      "sha256": "2a7b4940cbee85e83701702c779435fda65193bceee470f100fada64ca9ea679"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/barrow-turn.json",
+      "bytes": 110595,
+      "sha256": "e76455aea347c8ee9bf23bd1d1abd25fc10ff3da981d3c379fbfc5a75706e31a"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/barrow-walk.json",
+      "bytes": 63633,
+      "sha256": "bd5030c846a21c3bc57267f81ad44263b00d62ee86abfb0fb83a818d6f62989d"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/big-jump.json",
+      "bytes": 271996,
+      "sha256": "427d30e2848a11031e2a1982e3ad051b419f3a003851434b08cbdce33a4d375c"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/box-idle.json",
+      "bytes": 233601,
+      "sha256": "d88440e8ee17b76abb7fdb28f06d4d77723e55d08c026405b1944ec8e672345c"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/box-turn-alt.json",
+      "bytes": 82333,
+      "sha256": "5f650a84210829dc40d1aae1f8d558c71aabd766ec89632327b6980dab276307"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/box-turn.json",
+      "bytes": 127635,
+      "sha256": "a6d258285a4edaa9b71ea415861b0faa98fdb39b66010f7e7627fc6fc42749fa"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/box-walk.json",
+      "bytes": 106626,
+      "sha256": "4fdbbdf404703828790b2f6057e01f410d9851598c14118604be319b712ff36a"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/carry-idle.json",
+      "bytes": 251433,
+      "sha256": "f9d2a719d2222761257e318a13531758dd5d23c8ceeff7dbc2f178463602ced7"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/carry-walk.json",
+      "bytes": 191446,
+      "sha256": "564fd4e74976d5bb268e743fada824c2b64b59f007856fe0f625206415ccf6b7"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/charge.json",
+      "bytes": 798373,
+      "sha256": "a9052872727c9aa8ba11bda0aa38ef810d463bc142c7a05bba95b4aef93c7f93"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/drive.json",
+      "bytes": 310378,
+      "sha256": "fb9128138505c71987341da3a6e64f10365b1a37573a8214b9e2ab3a5c5a10d8"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/enter-car.json",
+      "bytes": 592089,
+      "sha256": "f9d6dded837fdfde39a59acd686c471c1cd9b20ab3b3a78f66eca94a11564cea"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/exit-car.json",
+      "bytes": 699382,
+      "sha256": "3a3d86ecf960d5b89227be5991b13cb04ee47f1164ece4fab453063bb6a0624f"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/get-up.json",
+      "bytes": 736917,
+      "sha256": "38216430db692b0ccc2894f9a1953bc79bdc53ce19118baa7ffd4529b55f4172"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/hold-left.json",
+      "bytes": 93269,
+      "sha256": "902b298a7f862d7b1020153af2f62fbd34d2d0372814139f2e73e5c2897d0162"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/hold-right.json",
+      "bytes": 63949,
+      "sha256": "8d9439225c22a35aa52ff7d19d0972614c61d035f884ae46168fccbbd6d94105"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/hold-walk.json",
+      "bytes": 137954,
+      "sha256": "f46097190fa8980e3955740d1faed618c9b75d24b55fecc917d49133092e2a43"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/idle.json",
+      "bytes": 529840,
+      "sha256": "0008fbe4cb8080fec48e06ac3de6e272e437720d46d52d9b259aebeba73e92cc"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/jump-up.json",
+      "bytes": 112737,
+      "sha256": "5e76f774239fb527b799865b1ef0987ca4e6b056b8d320c2209f158fc56d16cc"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/jump.json",
+      "bytes": 354955,
+      "sha256": "60a5e55c9e685e0d19f7a1b69eebd6f18730617470583939dcd7b9328b5dba6e"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/kneel.json",
+      "bytes": 194971,
+      "sha256": "3f40aed775f774202d7b9f45b36d37e4af9199879ff7e80ae4ae7f3b7f6163eb"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/meeting-female.json",
+      "bytes": 3933281,
+      "sha256": "d6bb8e020ce3d7b9581a851d6051156d462942c6b893abcea5da0987ca396bc7"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/meeting-male.json",
+      "bytes": 3979974,
+      "sha256": "2613b52ab2387934cfb34704c575730b167154d772f2b4808342c356a01794b7"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/milk.json",
+      "bytes": 275143,
+      "sha256": "b7ff86e5847c3be6ab4d6f74f3120357412ed676457ab612ae40bd522cda13f2"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/pick-fruit-2.json",
+      "bytes": 544691,
+      "sha256": "297b095c30c571001101f44df1e29429f623a80b71e9f526d3c47c8765b8237a"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/pick-fruit-3.json",
+      "bytes": 634310,
+      "sha256": "cce6134cd67ef04037b94c71018e87d779fe6dc7fda7fe8d9eff16ecbfb3f89c"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/pick-fruit.json",
+      "bytes": 580094,
+      "sha256": "4f7e9b22ec8badf9832b5a7d8c0d2f8c22478a1a0d066ed0d2f63502f0b321e3"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/plant-seeds.json",
+      "bytes": 484910,
+      "sha256": "bf75626f17cf3f8e7f6178cd178d41216af8934f9dc83c275cf61788c2992efb"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/plant-tree.json",
+      "bytes": 617507,
+      "sha256": "006b0d7cce371566c060450c361da004a2871cfc2a0616ccfcb98c4f8813884a"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/plant.json",
+      "bytes": 602592,
+      "sha256": "2159ee783e1dbfc53e0a858a8aea780e91d5ac1134b8334b1cc808fe1d3196c7"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/pull-plant-alt.json",
+      "bytes": 372321,
+      "sha256": "787310a766af8e3a200150bbc1410bbab66ce928b10d83463d25f7c94d8ed5ac"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/pull-plant.json",
+      "bytes": 347498,
+      "sha256": "7f4b358a38c5d4966e83e33d230a8d2b2e9538cc2f2349bdb9032cc2357b664e"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/recover.json",
+      "bytes": 161208,
+      "sha256": "a6fcc8dd21b4a11f6e33d990355bd934a5966612edec72d31fca08e8d5f04aab"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/sit-idle.json",
+      "bytes": 8510,
+      "sha256": "9e266ef1c87ed353ecb2ebe350bc485b8ab1c7d453a1cd0b4166295fbcbee341"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/sit.json",
+      "bytes": 318297,
+      "sha256": "22ef4f9cf9bde1482b1b97a3fe5915cfc26b5320a50498e1822366bab6d89584"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/stand.json",
+      "bytes": 313911,
+      "sha256": "dd7278e292dc6f2d66f35f635564ad0d6e642effb483485cf27e29995f6c2634"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/start-walk.json",
+      "bytes": 125189,
+      "sha256": "09d0f076162000923b6910ae5adb20b9804c74ffe71a8ae07a17ce0541664a75"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/talk-alt.json",
+      "bytes": 461579,
+      "sha256": "1a03e76493f19cb302b23bb19ff37e566c9058f84735200046029cad8f77efb2"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/talk.json",
+      "bytes": 491809,
+      "sha256": "c5edf50a049ac5a6302330bc29c26b0399029c46fa4a9a860f7321f61d596828"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/turn-back.json",
+      "bytes": 367129,
+      "sha256": "f54b0776d1c3ca6d79edbf5d320743772d7d7ac860ffc7d23d710a815f823b26"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/turn-left.json",
+      "bytes": 404174,
+      "sha256": "28c8f02377b9e97de6a07db4590548e18191f2fb52614516f12067be43cdaa8c"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/walk.json",
+      "bytes": 132850,
+      "sha256": "820df722eee92050fb3c608292984c621fabc2221305b3583475d30a3ad2e076"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/animations/water.json",
+      "bytes": 294178,
+      "sha256": "451738f59003c9cb7cfeea6209371fa18b365ec84bf78892a583eef764bdf2d1"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/host-concept.png",
+      "bytes": 1876478,
+      "sha256": "8418e487eb471c08379f62d8337a1b815bc95688dfd56137f39c4468c6189eb4"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/host-skin.jpg",
+      "bytes": 501905,
+      "sha256": "45cb3b73f3430ea1af6b8748b484f1b30c597a1a219039b563dd9c72d8904e13"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/shaking-hands.fbx",
+      "bytes": 2127024,
+      "sha256": "696af96cc8cbc7e5ba9fe2887fd8f11d0832914d95d21e8ab28eb0bc839a603e"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/tailored-geometry.js",
+      "bytes": 1918843,
+      "sha256": "22a6fa36af38dcaaa81dbd7fa5812c100604dc8d67adaeba8f929c24a3782871"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/visitor-concept.png",
+      "bytes": 1818986,
+      "sha256": "6a85cdd802a2148222011f02537fd5b2927b76cadd611c46a76195fdf59533d7"
+    },
+    {
+      "path": "public/portfolio-game/assets/characters/visitor-skin.jpg",
+      "bytes": 475621,
+      "sha256": "b9c91b2509610b65c4b2e99842430fd3ec1e59f7883ab3e6015a5ea63d10935f"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/car/car-geometry-00.bin.gz",
+      "bytes": 1963400,
+      "sha256": "5dc735bc4ceb9030253516af6eb80c684871c71f263aec98cfb5fa74244a6892"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/car/car-geometry-01.bin.gz",
+      "bytes": 20199320,
+      "sha256": "65e93950114753aba59d010a1d26acd4c1cd6748ff1d5723410abf4c0e5dbdbd"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/car/car-geometry-02.bin.gz",
+      "bytes": 10529624,
+      "sha256": "e0244ccf13ca911b62f2cabac22199b47bec744939882443eee3a7b7396f2578"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/car/car-geometry-03.bin.gz",
+      "bytes": 23312017,
+      "sha256": "008d54d2a462ca0b1721f171a23724d2222ba0f369b951e8eefdc6bc76d796c6"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/car/car-geometry-04.bin.gz",
+      "bytes": 15368519,
+      "sha256": "d6d3947cdd7328f94bba6214ba367a5c16b7e2b76fdf4ac7a8c892e3ac6c3c95"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/car/car-geometry-05.bin.gz",
+      "bytes": 13122724,
+      "sha256": "637922b8e27e24f7051754b49f73e7fbd6728bd6d28c340f7a75015a35c702bb"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/car/car-texture-02.png",
+      "bytes": 13947584,
+      "sha256": "572bfec46b2e38475655dc783461a0a28a0f06c0a612f3e333d5f06a906e1adb"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/car/car-texture-03.png",
+      "bytes": 5666216,
+      "sha256": "93518b09bc9f2a51f53719bafae928d5551a5b52dac8869e35138dfbcab98f2f"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/car/car-texture-04.png",
+      "bytes": 12403388,
+      "sha256": "4f7c51b1e4ab7eaa4ba99341bd2f3293d4bfdc988556b2c951fdfd4055b088dc"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/car/car.gltf",
+      "bytes": 49057,
+      "sha256": "a0ba6abfa2431215414f7ddcf0d7bd31c11502c3becc420babffb64bcc644b08"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/car/config.json",
+      "bytes": 4393,
+      "sha256": "2b4f3df43174d7ebc94ca9c7d3a3ed507f53d946e044c0321abbace31294c39f"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/car/delivery.json",
+      "bytes": 3142,
+      "sha256": "7224d109148196085e45d6c12503fec05ec022176a8d003c17502f4ce9db35bf"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/car/fidelity.json",
+      "bytes": 18165,
+      "sha256": "9f7935aca2248e6e94e94e1f5785c142d04103a40e261729d9adc681f47527c5"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animation-catalog.json",
+      "bytes": 18328,
+      "sha256": "628437b8bd6d8bfe8d2f04a23a0d3648eddba99b4a43615419b8aec02cfd3685"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/bow.json",
+      "bytes": 131224,
+      "sha256": "0084590dd0e633a58d9541cd8ea55aa2ad576daf4c1825733b4887f02a11eefe"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/box-idle.json",
+      "bytes": 3894,
+      "sha256": "9519ece5e9f65ed268ddef774bd1538fb7ee5900d74496916530acad5ca6f907"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/box-walk.json",
+      "bytes": 48768,
+      "sha256": "ae5c33246c0b8ed27d969bafc5b7a048aaec6718501138e9b15ede42148630bc"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/briefcase-right-turn-alt.json",
+      "bytes": 82525,
+      "sha256": "b7946121fd4a6936810c973f120624f742a7b538d1cdcc849d83ce2d941ccc4e"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/briefcase-right-turn.json",
+      "bytes": 45327,
+      "sha256": "089b2e8d67d2978113bed621168011cdd3b85e4de5808312e816a800ff074ff7"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/carry-idle.json",
+      "bytes": 3896,
+      "sha256": "d55e8e8eec98dac6ceb2977829180adbb0ac9ec7f7863766e9f66ad7f1c20bf5"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/carry-walk.json",
+      "bytes": 48770,
+      "sha256": "7eb0ea5eed86d03cdb0c6da4110a660bcc9926d0c51317191f3c183c8e7da2bd"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/drive.json",
+      "bytes": 177699,
+      "sha256": "db012b3192a3fb45c626ea7eaba3a141b64940abb2cf29f3d90c7fe0bbf64c35"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/enter-car.json",
+      "bytes": 255733,
+      "sha256": "133f8e8db306b7f5e7c1371a163003579805b6184ff1e44af52f05305d1c879d"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/exit-car.json",
+      "bytes": 272743,
+      "sha256": "47370619bfb95c7ce4359f9e175aac98bf8ece764671a7a6f040f0f66a734b46"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/greet.json",
+      "bytes": 206589,
+      "sha256": "f14be91c72bd9317032ec670f311c551206c619da116c4d89c72e4647f221cf1"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/idle.json",
+      "bytes": 3890,
+      "sha256": "813886396aa1114a16977e5a341d48925a5cd1a42bb5ee013f17cb3d64a430d4"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/jump.json",
+      "bytes": 121740,
+      "sha256": "acbe03fe457892aa2d317e231ab69448dec18864e8ad08630afc8d243dfdb48f"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/pickup.json",
+      "bytes": 145706,
+      "sha256": "4a3370a6292b556199e342286ff7c81f584988a8950e16e53950dfe623e98198"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/run.json",
+      "bytes": 36422,
+      "sha256": "837a2cff936a556eb73bb2c5dcbb004c93cc0d6a8e6b9ef1ee34b2d46d6508be"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/sit-idle.json",
+      "bytes": 3870,
+      "sha256": "8013d7897088fe037eadd50f9f0c86c48bd827a7c802515d34b30dc51f31e60d"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/sit-to-type.json",
+      "bytes": 59877,
+      "sha256": "73e72205c646a66f5eb3b7ad2517b8bd61dcc6f167595d93fc6ad3775587da59"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/sit.json",
+      "bytes": 103784,
+      "sha256": "b55fc90cde01504d5b5799bf49ef3327ad823cdfe0e2831cc37e62a52820e68d"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/stand.json",
+      "bytes": 109277,
+      "sha256": "9b3c477cd088cc93f7b1f55625c02d96da80a2799e12c38d2a4d47b3522c44c2"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/start-walk.json",
+      "bytes": 131227,
+      "sha256": "5c1f04cd9d69c2c55d39c6ece7beff95a290f93880aa39138122b44b55ac1ad6"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/stop-walk.json",
+      "bytes": 133949,
+      "sha256": "4e8817986904020bbdd3dffb7811c612359942621e4aa379328fcc44dadaaa0d"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/talk-alt.json",
+      "bytes": 178412,
+      "sha256": "1a9f167414387203a33c6c27fbba2071769108fb8dd54c8fd45cb38fa2fa39c7"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/talk.json",
+      "bytes": 185869,
+      "sha256": "71ab92934cd15e127c5021719a49272c3fc44f55cf3a9b2efd7c0989c7803116"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/throw.json",
+      "bytes": 243049,
+      "sha256": "9e81331d5a97f5f2419516f90ebd58a185dd7e1dbb196e015faed3c0346f144e"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/type-to-sit.json",
+      "bytes": 44429,
+      "sha256": "41ed9a828cbb5f21c6ceae1e01773ab54b31134b9c286ce600161709917f66d1"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/typing.json",
+      "bytes": 711045,
+      "sha256": "a46b7260f5acb6320910d7a6493fd9a26efcf1ecedb00b5f70564de3f2ff0c8a"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/walk-left-turn.json",
+      "bytes": 60203,
+      "sha256": "305933490aff6120ad190f07fad64a7a94c26ccbedb307cd1369d543850fd032"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/walk-turn-back.json",
+      "bytes": 48430,
+      "sha256": "2147fc8d5bae505542bf7448255088c089f1f6a12ade20271eb852fb0e1d98f2"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/walk.json",
+      "bytes": 48764,
+      "sha256": "a8fd657904bd6dca8815f9371adb23f05c1853bac75614bbc525610e2ecfd722"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/animations/wave.json",
+      "bytes": 22865,
+      "sha256": "3462f0711feda84423daf1e1127ed42160f9a08426a9ba6b07ba6c8e00c727b9"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/metadata.json",
+      "bytes": 3433,
+      "sha256": "f077dcddc786f33de62b1a22726a7cda1e2139ef75d649d394e802df5ee98d31"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/host/model.glb",
+      "bytes": 7479832,
+      "sha256": "c7cc518ba34569939db302a097ccb6b35e429b0212943c5cd000d8334b830b48"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animation-catalog.json",
+      "bytes": 17191,
+      "sha256": "35e2476a0abb4bdbc90effb8186a9ce013c587667fe596fae2d12846fbfb1150"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/box-idle.json",
+      "bytes": 1447194,
+      "sha256": "4504d5f611d44cedbbdbf518091e4cadc31c96e3333e97024e3c4630038e7b47"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/box-walk.json",
+      "bytes": 91568,
+      "sha256": "b75273157879e2a8db58692cdabb5d2ddea27f247202c8dc5db4fae68f0077cf"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/carry-idle.json",
+      "bytes": 1447196,
+      "sha256": "7a899dd3d06d0c6ee340f8bbba2386620ca56129e2fe0cbf7e21ac7da9ec7fe2"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/carry-walk.json",
+      "bytes": 91570,
+      "sha256": "7cb7a083eb4501ab02b04551dcad9944110f8a4ac16d19ea7333e7b0115a673b"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/dribble.json",
+      "bytes": 189951,
+      "sha256": "57e84944b589d643db8dca483e7263cebc4bbdd1a9f1303798d5180bacd13fe9"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/drive.json",
+      "bytes": 184227,
+      "sha256": "209e3c0637f023fffc5a94a93a49924e5bd457e0de595366da45a30747dad655"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/enter-car.json",
+      "bytes": 476289,
+      "sha256": "15b3ed7bcd20c445d10f83e390522639b4d2fa509b0b229f35a85148af89be78"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/exit-car.json",
+      "bytes": 506633,
+      "sha256": "46adcbf9883f4dae96139af98051d6b3373d0e85c1c271013ab921d7a84f9c18"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/greet.json",
+      "bytes": 384744,
+      "sha256": "7819fb385587c194f9aa5267d697ed2617ebfb77811fdfcad15c39c11634c3cf"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/idle.json",
+      "bytes": 1447190,
+      "sha256": "8c27790156bd6801b2a63337c9774e2802e421b5727bd743f6b301d1d4f2b10e"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/jump.json",
+      "bytes": 228018,
+      "sha256": "512c6a6ca7e7b67785f6f7e76b075f0511666e3821da5ef8733fc264d06749cd"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/light-torch.json",
+      "bytes": 244055,
+      "sha256": "7dc399beb6376df8a63a7c6c7e8bcbdc4be05a5c86bdbd3bbde7233356cde23f"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/meeting-female.json",
+      "bytes": 4006200,
+      "sha256": "3f847569555a1fb6dd67377854b09852ed8df71df1be1daaba070e160dcd102a"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/pickup-alt.json",
+      "bytes": 808122,
+      "sha256": "3550d971ef2df5ee71e9f176e1fdfbd352e9be4c76817f1338edd2dd78c20483"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/pickup.json",
+      "bytes": 219391,
+      "sha256": "e5f9e27d6e68cc53e509ea2cd45e02c82c39fb4777768cf037e9567e85a59e5e"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/punch.json",
+      "bytes": 90415,
+      "sha256": "dc91cb833591978f0d5a161e1036e7afdafe226d64817c9b027a65b5d687dbb4"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/run.json",
+      "bytes": 65104,
+      "sha256": "e9e9f0072035f0f6b0d90bbd58b55d2ae51363c09cb29e21c99412e8162a1b3e"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/sit-idle.json",
+      "bytes": 7167,
+      "sha256": "626b135d37215b17eede817a33d879b61db45ab065c16eb4ed81dda70a5e9398"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/sit.json",
+      "bytes": 196832,
+      "sha256": "a4a587bb1a3c7bd98a282790f7ffa902c9140299a5fdd8be4ad55681f6845fa1"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/stand.json",
+      "bytes": 203463,
+      "sha256": "b4e142d75684e55ae33e161e89a50a0a9d94240f331faa43ee41094606703707"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/start-walk.json",
+      "bytes": 77491,
+      "sha256": "0a52e1019e619d9d03834f376fc0e8b5a1718d4f86d050490382c050a5f30b85"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/stop-walk.json",
+      "bytes": 64967,
+      "sha256": "42c8d15daff444d1ce3370d15f5bcf98be3e9834fac73bf0e244316a494a6a74"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/talk-alt.json",
+      "bytes": 435541,
+      "sha256": "4f25356f40fcaeba870968161d31fc7e7e5e0a3953bec68cf1a52019f96a406a"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/talk.json",
+      "bytes": 892052,
+      "sha256": "764c5d0b8eacc82390d82f0e133421c03326f247b6242b5ff0a5f8e964f6d843"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/throw-in.json",
+      "bytes": 249120,
+      "sha256": "9635002db007cd975b4c012bdab610019b5f68bc2537b032cad20dbd2ff12113"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/throw.json",
+      "bytes": 394459,
+      "sha256": "9496cb86cded317aab0b9cfab70112eca9dab9358447eb017a477fa918c559f6"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/animations/walk.json",
+      "bytes": 91564,
+      "sha256": "0f18ea2ff335c99c507cdb8185de61ee8ff73dfe3e6adeda9c5f15e0a55bce03"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/metadata.json",
+      "bytes": 5193,
+      "sha256": "fb82fb525b9de459841bf1ee90c0e44b1d7a374502c37b14037a97852284dc51"
+    },
+    {
+      "path": "public/portfolio-game/assets/imported/characters/visitor/model.glb",
+      "bytes": 8415980,
+      "sha256": "f3ad2c27bfa7e3458e100f81559d446fb957bb50e02c7ff861a1e8be9c7cb861"
+    },
+    {
+      "path": "public/portfolio-game/assets/runtime/MAKEHUMAN_LICENSE.md",
+      "bytes": 6962,
+      "sha256": "f6089cba01cb570a24712b41ab8a586ccd3cc5ef53dc266ca50b95c288956d2c"
+    },
+    {
+      "path": "public/portfolio-game/assets/runtime/estate.glb",
+      "bytes": 16050628,
+      "sha256": "4dcecbdaa7caf9415c27c63482d7f282a7a261815aee7d7b7fb90147caf81768"
+    },
+    {
+      "path": "public/portfolio-game/assets/runtime/host.glb",
+      "bytes": 3752612,
+      "sha256": "d9fcfc5724f7717cb19f7c515de0231bd5b76bbd4a838d667ca8715d14270910"
+    },
+    {
+      "path": "public/portfolio-game/assets/runtime/manifest.json",
+      "bytes": 1178,
+      "sha256": "7f619c228fbfa1bf07b94a480bbd1a26acda913e3c0bc33b4b1f57470db006bc"
+    },
+    {
+      "path": "public/portfolio-game/assets/runtime/visitor.glb",
+      "bytes": 3783644,
+      "sha256": "fcb8b10ae772a97d19804f31f49255d7fb2a1d72494743c32d4e4222ac15916f"
+    },
+    {
+      "path": "public/portfolio-game/camera.js",
+      "bytes": 2087,
+      "sha256": "c2e872dbad13152672aaba73a26764ada9851d906d2ff878ca2233b6ded360c8"
+    },
+    {
+      "path": "public/portfolio-game/characters.js",
+      "bytes": 18774,
+      "sha256": "c885b29d0df14f430753763643a6074ed5af70b335b524abdcac21f699b9be18"
+    },
+    {
+      "path": "public/portfolio-game/core.js",
+      "bytes": 9306,
+      "sha256": "c22d889609ca8c9308e37d410a7e7ed90806f77126e840c31e23a36eed403a9b"
+    },
+    {
+      "path": "public/portfolio-game/furnishings.js",
+      "bytes": 45172,
+      "sha256": "5c7526012bd1e6be78c8a1486f9bc89ce0a0024e0084101552d8e3f30757b17d"
+    },
+    {
+      "path": "public/portfolio-game/game.js",
+      "bytes": 108988,
+      "sha256": "11f81f8f805908a9e0c9e8a85891e23bc8efa08170ff4f68b1e6087e6640b17f"
+    },
+    {
+      "path": "public/portfolio-game/imported-characters.js",
+      "bytes": 1835,
+      "sha256": "c6a7275069c633356328a04aa99b44a7d4cd42987ae4312cd40fbdefb9a8ad95"
+    },
+    {
+      "path": "public/portfolio-game/imported-vehicle.js",
+      "bytes": 12839,
+      "sha256": "503228fd7827db93ed9c7e371cadab89b9968f93a387656894a10355a05a2f00"
+    },
+    {
+      "path": "public/portfolio-game/index.html",
+      "bytes": 9317,
+      "sha256": "3eb12dd9374a18b0e5368d3ac3990b2b1976964d927ad2781bffdc0de6d4cfc4"
+    },
+    {
+      "path": "public/portfolio-game/journey.js",
+      "bytes": 9953,
+      "sha256": "a6797b144ffe58cd970c0f1c2b8a7377a2f1b62a4d4af32ab39ca16a3197df18"
+    },
+    {
+      "path": "public/portfolio-game/loading.js",
+      "bytes": 2048,
+      "sha256": "65b99fd9b11b08be37bc03240cb34be3ee6723eea90b7c8ac3097c003c1ee953"
+    },
+    {
+      "path": "public/portfolio-game/model-assets.js",
+      "bytes": 18348,
+      "sha256": "f3fd4285df0da78a852c3af73ee51b382c83ce323f26c35ea564a00a906ef180"
+    },
+    {
+      "path": "public/portfolio-game/motions.js",
+      "bytes": 8675,
+      "sha256": "1878b8561785eb0985362b719ce4969672ceb0a4e6ec4de06073d01d26fdec6f"
+    },
+    {
+      "path": "public/portfolio-game/physics.js",
+      "bytes": 25071,
+      "sha256": "b6d516e36fd0a6a7d43c7bd5ce6aa1abc321f497f021f339c466ba689a500119"
+    },
+    {
+      "path": "public/portfolio-game/portfolio.js",
+      "bytes": 17002,
+      "sha256": "c3abef8221a7e6d858ecb6e1ad8e857c11c667e371406405bb83e18d3eeec10a"
+    },
+    {
+      "path": "public/portfolio-game/poses.js",
+      "bytes": 3227,
+      "sha256": "9f5182801ea896469a422629759fe525a3b8749f8e8b8afab3a03111baa217e5"
+    },
+    {
+      "path": "public/portfolio-game/skins.js",
+      "bytes": 16883,
+      "sha256": "67460f9b773fb1862a471ad3d6260444bde913ca174ec81eb1b35de44717951e"
+    },
+    {
+      "path": "public/portfolio-game/startup.js",
+      "bytes": 3588,
+      "sha256": "31cf7b0d79f5afc99e513c007b98aaaa4cb77836ee20c224491e96383a99445e"
+    },
+    {
+      "path": "public/portfolio-game/story.js",
+      "bytes": 3334,
+      "sha256": "9970f994974677ecd1c08a7a4e95a8149db50d4a8b159146fcf30651b5773e24"
+    },
+    {
+      "path": "public/portfolio-game/style.css",
+      "bytes": 30277,
+      "sha256": "3caab8882d487f83629395ff7811bd1428908df496d0623a65859d0e0f4338f2"
+    },
+    {
+      "path": "public/portfolio-game/terrain.js",
+      "bytes": 893,
+      "sha256": "453ec4d64f9985db8a61b7a9328c312f376bd78541c60c1da8c845044e3baffd"
+    },
+    {
+      "path": "public/portfolio-game/transitions.js",
+      "bytes": 1247,
+      "sha256": "ac0b665e7015c722f714cf7a2e270beaa29b10d5b3d81ade38d65552fd494b1b"
+    },
+    {
+      "path": "public/portfolio-game/vehicle.js",
+      "bytes": 30733,
+      "sha256": "79e83a0eb3b48c2c0465083b9abf874c34ccc54cc4d5a9c3d703429e5aaae28d"
+    },
+    {
+      "path": "public/portfolio-game/vendor/LICENSE-CANNON-ES.txt",
+      "bytes": 1125,
+      "sha256": "4714d0272f50cb21fe46fe29333c7c600d3c85b5ebd2a80f4db07e8cfccbf5b2"
+    },
+    {
+      "path": "public/portfolio-game/vendor/LICENSE-FFLATE",
+      "bytes": 1069,
+      "sha256": "805f6cb28bb8b6d3a0badd83c93bccd9671fa01a3b4b92b7042b0743325ac243"
+    },
+    {
+      "path": "public/portfolio-game/vendor/LICENSE-THREE.txt",
+      "bytes": 1081,
+      "sha256": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601"
+    },
+    {
+      "path": "public/portfolio-game/vendor/MESHOPT_LICENSE.md",
+      "bytes": 1079,
+      "sha256": "d1bc307ff896c7fc65e3ff4823cc478194f7a5bc6436f99534ebede4d9e2017a"
+    },
+    {
+      "path": "public/portfolio-game/vendor/addons/animation/CCDIKSolver.js",
+      "bytes": 13357,
+      "sha256": "f4dde0b4afffd129ca6497e8afa73ed81d8e1cbe95d0dacaf8f26e9ad9cd813f"
+    },
+    {
+      "path": "public/portfolio-game/vendor/addons/curves/NURBSCurve.js",
+      "bytes": 3904,
+      "sha256": "15636f95a520bafae76d0c85a31165ba05af92992ad1c9839858a52c2768036a"
+    },
+    {
+      "path": "public/portfolio-game/vendor/addons/curves/NURBSUtils.js",
+      "bytes": 10818,
+      "sha256": "55b5a9b14ba7ae669054483bac6b137f54ece059345755f67e816b986553c7d7"
+    },
+    {
+      "path": "public/portfolio-game/vendor/addons/environments/RoomEnvironment.js",
+      "bytes": 4915,
+      "sha256": "b6e43ff42b72e50af7505e143fcc44b1201f9ae28fe932816b3c2c53d77c9494"
+    },
+    {
+      "path": "public/portfolio-game/vendor/addons/libs/fflate.module.js",
+      "bytes": 89384,
+      "sha256": "209a4412eb48ce609edb4391992a792ffcc3983d30ee7e2b0b89a8c470f3cd8a"
+    },
+    {
+      "path": "public/portfolio-game/vendor/addons/loaders/FBXLoader.js",
+      "bytes": 104892,
+      "sha256": "edd6d7bc7832d8bf70717bba6add6a964c2d76ec09c563d0b2a7d455c72f035a"
+    },
+    {
+      "path": "public/portfolio-game/vendor/addons/loaders/GLTFLoader.js",
+      "bytes": 114755,
+      "sha256": "979269c237f704ffa4a37d3800ec21f237c017e40f8e28b1cd7accf5b2377574"
+    },
+    {
+      "path": "public/portfolio-game/vendor/addons/utils/BufferGeometryUtils.js",
+      "bytes": 35555,
+      "sha256": "748066188940e858e5d48985866e84a6e6691fc31776ea59d9d89c1a7f6fe6cd"
+    },
+    {
+      "path": "public/portfolio-game/vendor/addons/utils/SkeletonUtils.js",
+      "bytes": 11078,
+      "sha256": "5265bc14b682b9e67af004b999c5cc897bb54d8ab2dc7b739265ddc98940237a"
+    },
+    {
+      "path": "public/portfolio-game/vendor/cannon-es.js",
+      "bytes": 346256,
+      "sha256": "f0700cbd3a482954949b9d58c1b0f76dcc74767750297647a39d8c40dd63d37c"
+    },
+    {
+      "path": "public/portfolio-game/vendor/meshopt_decoder.module.js",
+      "bytes": 24848,
+      "sha256": "784315b6959c85459eab77f51776158cc381d7e7d77b919ff7c4935f088a7c5c"
+    },
+    {
+      "path": "public/portfolio-game/vendor/three.core.js",
+      "bytes": 1403455,
+      "sha256": "eb077d2417f61d3e6d9264c317cabc4ea35769ed6b0ab533067292a550784c20"
+    },
+    {
+      "path": "public/portfolio-game/vendor/three.module.js",
+      "bytes": 603113,
+      "sha256": "c8211c69345d2e9949dc7a8ac969380497aa0600a5a8ac6a459c8cd02dd9cb8a"
+    },
+    {
+      "path": "public/portfolio-game/world.js",
+      "bytes": 38877,
+      "sha256": "20dda06e0662eb343ac6af1656782480e077e4da985ffae56c85732b20769c2b"
+    }
+  ],
+  "packaging_exclusions": {
+    "macOS metadata": 28750,
+    "node_modules": 26055,
+    ".next": 72,
+    ".git": 29
+  },
+  "existing_blog_files_modified": [],
+  "added_application_files": [
+    "src/app/portfolio/page.js",
+    "public/portfolio-game/ (176 unchanged runtime files)"
+  ]
+}

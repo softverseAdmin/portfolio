@@ -12,6 +12,7 @@ export default function Header() {
     { name: 'Blog', href: '/blog' },
     { name: 'Resources', href: '/resources' },
     { name: 'About', href: '/about' },
+    { name: 'Portfolio', href: '/portfolio' },
     { name: '🤖 AI Job Hunt', href: '/ai-job-hunting', badge: 'NEW', special: true },
   ]
 

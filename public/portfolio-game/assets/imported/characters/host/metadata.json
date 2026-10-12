@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "role": "host",
+  "source": "uploaded",
+  "sourceFile": "Walking.fbx",
+  "sourceSHA256": "93e7f8533b65ce324a4bc982f0c00fcc690bb6ec6afd1a4f2de4b3ed9fdc7f07",
+  "nativeUnit": "centimeter",
+  "nativeHeight": 180.0000048615039,
+  "height": 1.8,
+  "scale": 0.01,
+  "offset": [
+    -3.5553086519257705e-9,
+    2.222656495818991e-16,
+    3.1732897198821777e-10
+  ],
+  "nativeBounds": {
+    "min": [
+      -40.99311343586238,
+      -2.222656495818991e-14,
+      -17.036466661976526
+    ],
+    "max": [
+      40.99311414692411,
+      180.00000486150387,
+      17.03646659851073
+    ]
+  },
+  "boneNames": [
+    "mixamorigHips",
+    "mixamorigRightUpLeg",
+    "mixamorigRightLeg",
+    "mixamorigRightFoot",
+    "mixamorigRightToeBase",
+    "mixamorigRightToe_End",
+    "mixamorigSpine",
+    "mixamorigSpine1",
+    "mixamorigSpine2",
+    "mixamorigNeck",
+    "mixamorigHead",
+    "mixamorigHeadTop_End",
+    "mixamorigLeftShoulder",
+    "mixamorigLeftArm",
+    "mixamorigLeftForeArm",
+    "mixamorigLeftHand",
+    "mixamorigLeftHandIndex1",
+    "mixamorigLeftHandIndex2",
+    "mixamorigLeftHandIndex3",
+    "mixamorigLeftHandIndex4",
+    "mixamorigRightShoulder",
+    "mixamorigRightArm",
+    "mixamorigRightForeArm",
+    "mixamorigRightHand",
+    "mixamorigRightHandIndex1",
+    "mixamorigRightHandIndex2",
+    "mixamorigRightHandIndex3",
+    "mixamorigRightHandIndex4",
+    "mixamorigLeftUpLeg",
+    "mixamorigLeftLeg",
+    "mixamorigLeftFoot",
+    "mixamorigLeftToeBase",
+    "mixamorigLeftToe_End"
+  ],
+  "weightedBoneNames": [
+    "mixamorigLeftArm",
+    "mixamorigLeftForeArm",
+    "mixamorigLeftHand",
+    "mixamorigLeftHandIndex1",
+    "mixamorigLeftHandIndex2",
+    "mixamorigLeftHandIndex3",
+    "mixamorigSpine2",
+    "mixamorigLeftShoulder",
+    "mixamorigLeftToeBase",
+    "mixamorigLeftFoot",
+    "mixamorigSpine1",
+    "mixamorigLeftUpLeg",
+    "mixamorigLeftLeg",
+    "mixamorigHips",
+    "mixamorigSpine",
+    "mixamorigNeck",
+    "mixamorigHead",
+    "mixamorigRightUpLeg",
+    "mixamorigRightHandIndex1",
+    "mixamorigRightHandIndex2",
+    "mixamorigRightHandIndex3",
+    "mixamorigRightHand",
+    "mixamorigRightLeg",
+    "mixamorigRightFoot",
+    "mixamorigRightToeBase",
+    "mixamorigRightArm",
+    "mixamorigRightForeArm",
+    "mixamorigRightShoulder"
+  ],
+  "meshTopology": "original uploaded 80000 triangles, no decimation",
+  "meshes": [
+    {
+      "name": "Character",
+      "triangles": 80000,
+      "sourceCornerVertices": 240000,
+      "indexedVertices": 69007,
+      "sourceNormals": false,
+      "losslessIndexing": true,
+      "exactAttributes": [
+        "position",
+        "uv",
+        "skinIndex",
+        "skinWeight"
+      ],
+      "addedSmoothNormals": true
+    }
+  ],
+  "skinning": {
+    "runtimeInfluences": 4,
+    "originalHasMoreThanFourInfluences": true,
+    "conversion": "Official Three.js FBXLoader selects the strongest four influences and normalizes them. The original source archive is unchanged."
+  },
+  "materialDesign": "Original embedded JPEG atlas; no recoloring or generated clothing.",
+  "uvConvention": "Original UV attributes preserved; KHR_texture_transform converts the FBX texture origin.",
+  "colorAtlas": {
+    "sha256": "81382e9ce74cbb1e2eb6225338b29bcb84322ebb396acadf60a11efa4591892a",
+    "bytes": 2640911,
+    "mimeType": "image/jpeg",
+    "width": 4096,
+    "height": 4096,
+    "embedded": true,
+    "byteIdentical": true
+  },
+  "glbBytes": 7479832
+}
