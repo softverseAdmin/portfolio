@@ -266,7 +266,7 @@ function updatePresentation(dt){
   const p=session.story.seatingProgress,hostPose=session.stage.pose(0,p),visitorPose=session.stage.pose(1,p);hostPose.talking=session.story.phase==='presenting';
   playerPos={x:player.position.x,y:player.position.y,z:player.position.z};
   animateCharacter(host,session.story.time,0,false,true,hostPose);animateCharacter(player,session.story.time,0,false,true,visitorPose);
-  const view=presentationCamera(camera.aspect);camera.position.copy(view.position);camera.fov=view.fov;camera.updateProjectionMatrix();lookTarget.copy(view.target);camera.lookAt(lookTarget);world.roof.forEach(mesh=>mesh.visible=false);
+  const view=presentationCamera(camera.aspect,world.cameraBlockers??world.blockers);camera.position.copy(view.position);camera.fov=view.fov;camera.updateProjectionMatrix();lookTarget.copy(view.target);camera.lookAt(lookTarget);world.roof.forEach(mesh=>mesh.visible=false);
 }
 function chapterChoices(chapter){return [...(CONVERSATIONS[chapter.id]??[]),...(chapter.id==='fun'?[{question:'Take a garden break',action:()=>{pauseTour();toast('Enjoy the garden. Continue the guided story from YOUR VISIT when you’re ready.',5500);}}]:[])];}
 function showChapter(chapter){
@@ -779,7 +779,7 @@ async function boot({useBasic=false}={}){
   });
   const downloads=Array.from({length:3},()=>new AbortController());
   const simpleAsset=()=>{const error=new Error('Simpler models requested.');error.code='simple-models';return Promise.reject(error);};
-  const startCharacters=()=>useBasic?simpleAsset():loadCharacterAsset({onProgress:progress.update,signal:downloads[0].signal,maxTextureSize:profile.maxTextureSize,sequential:profile.mobile,initialMotions:['idle','walk','start-walk','drive','exit-car','enter-car','sit','stand','sit-idle','jump','pickup','throw','punch','wave']});
+  const startCharacters=()=>useBasic?simpleAsset():loadCharacterAsset({onProgress:progress.update,signal:downloads[0].signal,maxTextureSize:profile.maxTextureSize,sequential:profile.mobile,initialMotions:['idle','walk','start-walk','drive','exit-car','enter-car','sit','stand','sit-idle','talk','jump','pickup','throw','punch','wave']});
   const startCar=()=>useBasic?simpleAsset():loadImportedVehicle(e=>{progress.update('car',e);if(e.total>0)$('load-car').textContent=e.phase==='prepare'?'Preparing':`${Math.round(e.loaded/e.total*100)}%`;},{signal:downloads[2].signal,maxTextureSize:profile.maxTextureSize,concurrency:profile.mobile?1:2});
   const startHouse=()=>useBasic?simpleAsset():loadEnvironmentAsset(e=>{if(e.total>0)$('load-house').textContent=`${Math.round(e.loaded/e.total*100)}%`;},{signal:downloads[1].signal,maxTextureSize:profile.maxTextureSize});
   const assets=prepareVisitAssets(loadVisitAssets({sequential:profile.mobile,character:startCharacters,vehicle:startCar,environment:startHouse}),statuses=>{

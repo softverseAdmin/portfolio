@@ -3,6 +3,7 @@ import {CHAPTERS} from './portfolio.js';
 import {chairPose,chairContact} from './poses.js';
 import {floorAt} from './core.js';
 import {actionPosition} from './transitions.js';
+import {cameraFraction} from './camera.js';
 
 const introduction=CHAPTERS[0].text.match(/[^.!?]+[.!?]+/g).map(line=>line.trim());
 export const INTRO_SLIDES=[
@@ -88,8 +89,10 @@ export function createStoryStage({world,physics,host,player}){
   return {restore,pose,actors,seats};
 }
 
-export function presentationCamera(aspect){
-  const position=new THREE.Vector3(-6.4,1.55,8.85),target=new THREE.Vector3(-7,1.5,.22);
-  const height=Math.max(5,11.8/Math.max(.8,aspect));
+export function presentationCamera(aspect,blockers=[]){
+  // The loaded house's inner front wall is at z=8.62; stay inside it.
+  const desired=new THREE.Vector3(-7.3,1.3,8.2),target=new THREE.Vector3(-7,1.9,.65);
+  const position=target.clone().lerp(desired,cameraFraction(target,desired,blockers,{radius:.2}));
+  const height=Math.max(6,11.8/Math.max(.8,aspect));
   return {position,target,fov:THREE.MathUtils.radToDeg(2*Math.atan(height/(2*position.distanceTo(target))))};
 }
