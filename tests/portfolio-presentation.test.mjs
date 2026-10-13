@@ -79,7 +79,7 @@ test('the projector title is visible in front of the original wall art and room 
   const f=stageFixture(),stage=createStoryStage(f);stage.pose(0,1);stage.pose(1,1);f.world.projector.root.visible=true;f.world.roof.forEach(mesh=>mesh.visible=false);f.world.root.updateMatrixWorld(true);
   const view=presentationCamera(16/9),point=f.world.projector.screen.localToWorld(new THREE.Vector3(0,.65,0)),ray=new THREE.Raycaster(view.position,point.clone().sub(view.position).normalize());
   const visible=ray.intersectObject(f.world.root,true).filter(hit=>{for(let node=hit.object;node;node=node.parent)if(!node.visible)return false;return true;});
-  assert.equal(visible[0].object,f.world.projector.screen);assert.equal(f.world.projector.screen.material.toneMapped,false);stage.restore();
+  assert.ok(visible[0]?.object===f.world.projector.screen);assert.equal(f.world.projector.screen.material.toneMapped,false);stage.restore();
 });
 
 test('seated talking reuses the talk clip without applying its standing hips or legs',()=>{

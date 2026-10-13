@@ -8,7 +8,7 @@ import {loadMotion,actionDuration,endGreeting,warmMotionLibrary} from './motions
 import {loadEnvironmentAsset,applyEnvironmentAsset,setAssetQuality} from './model-assets.js';
 import {RoomEnvironment} from './vendor/addons/environments/RoomEnvironment.js';
 import {prepareVisitAssets,createAssetProgress,loadVisitAssets} from './loading.js';
-import {resolveCamera,characterCameraTarget} from './camera.js';
+import {resolveCamera,resolveVisitorCamera,characterCameraTarget} from './camera.js';
 import {chairPose,chairExit,chairContact,driverPose} from './poses.js';
 import {actionPosition,carCameraBlend} from './transitions.js';
 import {ROAD_START,HOUSE_PARKING,ROAD_SAMPLES,journeyDirections} from './journey.js';
@@ -19,7 +19,7 @@ import {paintTouchControls} from './controls.js';
 import {createArrival,arrivalSpawn,VISIT_OBJECTIVES,actorBlocker,greetingApproach,walkArrivalRoute,carExitSpot} from './arrival.js';
 import {PORTFOLIO as copy,STORY_PREVIEWS,CONVERSATIONS,TECH_TOPICS,INVITATION,portfolioSummary} from './portfolio.js';
 import {readVisit,writeVisit,freshVisit,createInvitation,tourRouteFrom,guideShouldWait,surfaceAt} from './story.js';
-import {INTRO_SLIDES,createPresentationStory,createStoryStage,createStudyStage,presentationCamera,studyCamera} from './presentation.js';
+import {INTRO_SLIDES,createPresentationStory,createStoryStage,createStudyStage,presentationCamera,studyCamera,subtitleCues,subtitleAt} from './presentation.js';
 import {STUDY_SLIDES,desktopPage} from './desktop.js';
 
 const $=id=>document.getElementById(id);
@@ -31,7 +31,7 @@ let savedVisit;try{savedVisit=readVisit(localStorage);}catch{savedVisit=readVisi
 Object.assign(state,{sound:savedVisit.settings.sound,volume:savedVisit.settings.volume,night:savedVisit.settings.night,quality:savedVisit.settings.quality,reducedMotion:savedVisit.settings.reducedMotion??state.reducedMotion,reducedMotionChoice:savedVisit.settings.reducedMotion,visited:new Set(savedVisit.visited),actions:new Set(savedVisit.actions),completed:savedVisit.completed,guideCheckpoint:savedVisit.checkpoint,guidePausedByDistance:false,hostReturnRoute:[],invitation:null});
 const keys=new Set();
 let renderer,scene,camera,world,player,host,sun,ambient,physics,trajectory,previousTime=performance.now(),elapsed=0,yaw=0,pitch=0,cameraDistance=5.3,toastTimer,cinematicTime=0,drag=null,audioContext=null,memoryToken=0;
-let frameRequest=null,stopped=false,resizeTimer;
+let frameRequest=null,stopped=false,resizeTimer,movementYaw=null;
 let playerPos={x:0,y:.02,z:18.8},joystick={x:0,y:0},joystickPointer=null;
 const lookTarget=new THREE.Vector3(),cameraTarget=new THREE.Vector3(),cameraDesired=new THREE.Vector3();
 let lastRoom='',mapTick=0,mouseCaptured=false,intentionalMouseRelease=false,arrivalLayout;
@@ -43,6 +43,7 @@ function toast(text,duration=3300){clearTimeout(toastTimer);$('toast').textConte
 function clearInput(){
   keys.clear();joystickPointer=null;joystick={x:0,y:0};$('joystick-knob').style.transform='translate(0,0)';drag=null;actionPointer=null;runPointer=null;
   state.touchRun=state.touchBrake=state.charging=state.aiming=state.running=false;state.moveVX=state.moveVZ=0;
+  movementYaw=null;
 }
 function saveProgress(){
   const value={version:1,visited:[...state.visited],actions:[...state.actions],welcomed:visit?.progress.stage==='welcomed'||(state.phase==='welcome'&&savedVisit.welcomed),completed:state.completed,checkpoint:state.guideCheckpoint,settings:{sound:state.sound,volume:state.volume,night:state.night,quality:state.quality,reducedMotion:state.reducedMotionChoice}};
@@ -107,7 +108,7 @@ function controlsModal(){
   openModal('Make yourself at home.','CONTROLS & SETTINGS',`<div class="content-grid"><div class="content-block"><h3>On a computer</h3><p>Click the scene: capture mouse-look<br>WASD / arrows: move · Shift: run<br>Space: jump · C: crouch<br>E: use / pick up · F: enter / exit car<br>Click / J: punch, kick, or throw<br>Right mouse: aim · Q: drop<br>G: wave · Enter: next dialogue<br>M: map · Escape: pause<br>Scroll: camera distance</p></div><div class="content-block"><h3>Driving & touch</h3><p>W/S: accelerate / reverse<br>A/D: steer · Space: handbrake<br>H: horn · R: start a timed lap<br>On touch: joystick to move; drag the scene to look. Hold ACT to charge a throw; tap AIM to aim. E to use; DROP to put an object down.</p></div></div><div class="setting-row"><span>Lighting</span><button id="lighting-setting">${state.night?'Evening':'Daylight'} →</button></div><div class="setting-row"><span>Graphics</span><button id="quality-setting">${state.quality==='balanced'?'Balanced':'Low power'} →</button></div><div class="setting-row"><span>Camera</span><button id="camera-setting">Reset view</button></div><div class="setting-row"><span>Broken or displaced objects</span><button id="repair-setting">Repair & reset scene</button></div><div class="setting-row"><span>Lost your way?</span><button id="reset-setting">Return to the entrance</button></div><p class="small-note">Explore freely. Glass and small objects react to impacts; repair the scene here at any time. Narration uses your browser’s voice.</p>`);
   $('lighting-setting').onclick=()=>{state.night=!state.night;updateLighting();saveProgress();$('lighting-setting').textContent=state.night?'Evening →':'Daylight →';};
   $('quality-setting').onclick=()=>{state.quality=state.quality==='balanced'?'low':'balanced';setQuality();saveProgress();$('quality-setting').textContent=state.quality==='balanced'?'Balanced →':'Low power →';};
-  $('camera-setting').onclick=()=>{yaw=0;pitch=0;cameraDistance=5.3;toast('Camera reset.');};
+  $('camera-setting').onclick=()=>{yaw=player.rotation.y-Math.PI;pitch=0;cameraDistance=5.3;toast('Camera reset behind the visitor.');};
   $('repair-setting').onclick=()=>{repairScene();closeModal();};
   $('reset-setting').onclick=()=>{if(!renderer)return;closeModal();if(state.phase==='welcome')beginVisit();else resetPosition();};
   const settings=document.createElement('div');settings.className='story-settings';
@@ -223,11 +224,16 @@ function narratePresentation(session){
   session.story.setNarrating(state.sound&&state.volume>0&&'speechSynthesis' in window);
   try{session.utterance=speak(session.caption,()=>{if(state.presentation===session&&session.narrationToken===token)session.story.finishNarration();},()=>{if(state.presentation===session&&session.narrationToken===token)session.story.setNarrating(false);});}
   catch{session.utterance=null;}
+  if(session.utterance)session.utterance.onboundary=event=>{if(state.presentation===session&&session.narrationToken===token&&!session.story.paused&&Number.isFinite(event.charIndex)){session.speechChar=event.charIndex;session.speechAt=session.story.time;}};
   if(!session.utterance)session.story.setNarrating(false);
 }
+function setPresentationCaption(session,text){
+  session.caption=text;session.cues=subtitleCues(text);session.captionStarted=session.story.time;session.speechChar=null;
+  $('story-caption').textContent=subtitleAt(session.cues);
+}
 function showPresentationSlide(session,slide,index){
-  if('speechSynthesis' in window)window.speechSynthesis.cancel();session.narrationStarted=false;session.utterance=null;session.narrationToken++;session.caption=slide.caption;
-  session.display.showSlide(slide);$('story-title').textContent=slide.title;$('story-details').textContent=slide.subtitle;$('story-caption').textContent=slide.caption;
+  if('speechSynthesis' in window)window.speechSynthesis.cancel();session.narrationStarted=false;session.utterance=null;session.narrationToken++;setPresentationCaption(session,slide.caption);
+  session.display.showSlide(slide);$('story-title').textContent=slide.title;$('story-details').textContent=slide.subtitle+' '+slide.caption;
   $('story-count').textContent=`${index+1} / ${session.story.count}`;$('story-count').setAttribute('aria-label',`Slide ${index+1} of ${session.story.count}`);$('story-next').disabled=false;$('desktop-browse').disabled=false;
   if(session.initialPage){const page=session.initialPage;session.initialPage=null;selectDesktopPage(page);return;}
   narratePresentation(session);
@@ -267,8 +273,8 @@ function selectDesktopPage(id){
   const resume=closeDesktopMenu({resume:false}),index=STUDY_SLIDES.findIndex(slide=>slide.page===id);
   if(index>=0)session.story.goTo(index);
   else{
-    if('speechSynthesis' in window)window.speechSynthesis.cancel();session.story.holdReading();session.story.setNarrating(false);session.display.showPage(id);session.caption=page.caption;session.narrationStarted=false;session.utterance=null;session.narrationToken++;
-    $('story-title').textContent=page.title;$('story-details').textContent=page.blocks.map(block=>block.text).join(' ');$('story-caption').textContent=page.caption;if(copy[id])discover(id);narratePresentation(session);
+    if('speechSynthesis' in window)window.speechSynthesis.cancel();session.story.holdReading();session.story.setNarrating(false);session.display.showPage(id);setPresentationCaption(session,page.caption);session.narrationStarted=false;session.utterance=null;session.narrationToken++;
+    $('story-title').textContent=page.title;$('story-details').textContent=page.blocks.map(block=>block.text).join(' ');if(copy[id])discover(id);narratePresentation(session);
   }
   if(resume&&session.story.paused)togglePresentationPause();updatePresentation(0);return true;
 }
@@ -301,6 +307,7 @@ function updatePresentation(dt){
   const p=session.story.seatingProgress,hostPose=session.stage.pose(0,p),visitorPose=session.stage.pose(1,p);hostPose.talking=session.story.phase==='presenting';
   playerPos={x:player.position.x,y:player.position.y,z:player.position.z};
   animateCharacter(host,session.story.time,0,false,true,hostPose);animateCharacter(player,session.story.time,0,false,true,visitorPose);
+  if(session.story.phase==='presenting')$('story-caption').textContent=subtitleAt(session.cues,session.story.time-session.captionStarted,session.story.time-session.speechAt<2.5?session.speechChar:null);
   const view=session.study?studyCamera(camera.aspect,world.cameraBlockers??world.blockers,session.display.page.detail):presentationCamera(camera.aspect,world.cameraBlockers??world.blockers);camera.position.copy(view.position);camera.fov=view.fov;camera.updateProjectionMatrix();lookTarget.copy(view.target);camera.lookAt(lookTarget);world.roof.forEach(mesh=>mesh.visible=false);
 }
 function chapterChoices(chapter){return [...(CONVERSATIONS[chapter.id]??[]),...(chapter.id==='fun'?[{question:'Take a garden break',action:()=>{pauseTour();toast('Enjoy the garden. Continue the guided story from YOUR VISIT when you’re ready.',5500);}}]:[])];}
@@ -358,7 +365,7 @@ function resetPosition(){
   if(state.phase==='invitation'||state.journey)skipInvitation();
   if(state.phase==='greeting')finishArrival();
   if(state.phase==='approach')cancelGreetingApproach();
-  if(state.held)dropObject();physics.occupy(state.seatToy,false);state.seatToy=null;state.seatTarget=null;state.transition=null;state.driving=false;state.sitting=false;state.vehicle.vx=state.vehicle.vz=0;state.carSpeed=0;state.jumpVelocity=0;state.grounded=true;for(const door of world.carDoors)door.open=false;playerPos=entrancePosition();player.position.set(playerPos.x,playerPos.y,playerPos.z);yaw=0;pitch=0;if(visit.progress.stage==='welcomed')openDoor();hideDialogue();$('game-badge').hidden=true;toast('Back at the entrance.');
+  if(state.held)dropObject();physics.occupy(state.seatToy,false);state.seatToy=null;state.seatTarget=null;state.transition=null;state.driving=false;state.sitting=false;state.vehicle.vx=state.vehicle.vz=0;state.carSpeed=0;state.jumpVelocity=0;state.grounded=true;for(const door of world.carDoors)door.open=false;playerPos=entrancePosition();player.position.set(playerPos.x,playerPos.y,playerPos.z);player.rotation.y=Math.PI;yaw=0;pitch=0;movementYaw=null;if(visit.progress.stage==='welcomed')openDoor();hideDialogue();$('game-badge').hidden=true;toast('Back at the entrance.');
   state.gesture=null;state.jumpStarted=null;
   if(state.invitation?.progress.stage==='exiting')state.invitation.finish();updateVehicleLights();updateVisitUI(true);
 }
@@ -676,7 +683,7 @@ function use(){
     if(!chairContact(player,target,world.blockers)){toast('Move the object in front of the chair before sitting.');return;}
     state.seatReturn={...playerPos};state.seatTarget=target;state.seatToy=toy;physics.occupy(toy,true);target.mesh.updateMatrixWorld(true);
     const seat=chairPose(player,target).root;
-    beginAction('sit',seat,target.mesh.rotation.y+target.heading,Math.min(actionDuration(player,'sit',.85),3),null,()=>{state.sitting=true;yaw=player.rotation.y+.5;pitch=.03;toast('E to stand up.');});
+    beginAction('sit',seat,target.mesh.rotation.y+target.heading,Math.min(actionDuration(player,'sit',.85),3),null,()=>{state.sitting=true;yaw=player.rotation.y-Math.PI;pitch=.03;toast('E to stand up.');});
   }else previewStory(i.action);
 }
 
@@ -697,7 +704,12 @@ function captureMouse(){
   if(!canvas.requestPointerLock){toast('Drag to look; J to act.');return;}
   try{const result=canvas.requestPointerLock();result?.catch(()=>toast('Mouse capture is unavailable here. Drag to look; J to act.',4500));}catch{toast('Drag to look; J to act.');}
 }
-function look(dx,dy){if(state.presentation)return;yaw-=dx*.004;pitch=clamp(pitch+dy*.0035,-.7,.8);state.lookUntil=elapsed+2.2;}
+function look(dx,dy){
+  if(state.presentation)return;
+  const turn=-dx*.004;
+  if(!state.sitting&&!state.transition){yaw+=turn;if(state.driving){const rear=world.car.rotation.y+Math.PI;const offset=Math.atan2(Math.sin(yaw-rear),Math.cos(yaw-rear));yaw=rear+clamp(offset,-.5,.5);}else{player.rotation.y=yaw+Math.PI;if(movementYaw!==null)movementYaw+=turn;}}
+  pitch=clamp(pitch+dy*.0035,-.7,.8);state.lookUntil=elapsed+2.2;
+}
 function bindEvents(){
   $('gestures').onclick=gesturesModal;
   $('enter').onclick=beginVisit;$('portfolio').onclick=portfolioModal;$('quick-view').onclick=portfolioModal;$('fallback-portfolio').onclick=portfolioModal;$('loading-portfolio').onclick=portfolioModal;$('skip-drive').onclick=skipInvitation;
@@ -906,8 +918,12 @@ function movePlayer(dt){
   state.running=sprint&&len>.1&&!state.crouching&&!state.aiming;
   const speed=state.crouching?1.25:state.aiming?1.6:sprint?4.6:2.2;
   const acceleration=1-Math.exp(-(len>.05?10:15)*dt);
-  state.moveVX+=((-Math.sin(yaw)*forward+Math.cos(yaw)*side)*speed-state.moveVX)*acceleration;
-  state.moveVZ+=((-Math.cos(yaw)*forward-Math.sin(yaw)*side)*speed-state.moveVZ)*acceleration;
+  // Keep one input basis until the stick/keys are released. Following the new
+  // facing direction every frame would make a held sideways input spiral.
+  if(len>.05)movementYaw??=yaw;else movementYaw=null;
+  const inputYaw=state.aiming||state.charging?yaw:movementYaw??yaw;
+  state.moveVX+=((-Math.sin(inputYaw)*forward+Math.cos(inputYaw)*side)*speed-state.moveVX)*acceleration;
+  state.moveVZ+=((-Math.cos(inputYaw)*forward-Math.sin(inputYaw)*side)*speed-state.moveVZ)*acceleration;
   const dx=state.moveVX*dt,dz=state.moveVZ*dt,previous={...playerPos};
   physics.nudgeFurniture(playerPos,{x:state.moveVX,z:state.moveVZ},dt);
   const hostBlocker={...world.hostBlocker,...actorBlocker(host.position,HOST_RADIUS),maxY:host.position.y+actorHeight(host)};
@@ -923,6 +939,7 @@ function movePlayer(dt){
   if(state.grounded&&travelled>.002){footstepTravel+=travelled;if(footstepTravel>(sprint?.85:.65)){footstepTravel=0;footstepSound(surfaceAt(playerPos.x,playerPos.z,playerPos.y));}}else if(!state.grounded)footstepTravel=0;
   if(state.aiming||state.charging||state.punch)player.rotation.y=angleLerp(player.rotation.y,yaw+Math.PI,1-Math.exp(-18*dt));
   else if(travelled>.001)player.rotation.y=angleLerp(player.rotation.y,Math.atan2(dx,dz),1-Math.exp(-14*dt));
+  yaw=player.rotation.y-Math.PI;
   return travelled/dt;
 }
 
@@ -1092,14 +1109,6 @@ function updateDoors(dt){
 }
 
 function followCamera(dt){
-  if(state.gesture){
-    const actor=state.gesture.actor==='host'?host:player;
-    const center=actor.position,angle=actor.rotation.y+.45;
-    cameraTarget.copy(characterCameraTarget(actor,{sitting:actor===player&&state.sitting,crouching:actor===player&&state.crouching}));
-    cameraDesired.set(center.x+Math.sin(angle)*3.4,cameraTarget.y+.6,center.z+Math.cos(angle)*3.4);
-    world.roof.forEach(r=>r.visible=!(Math.abs(center.x)<12.1&&center.z>=-10&&center.z<=9.5));
-    camera.position.copy(resolveCamera(camera.position,cameraTarget,cameraDesired,world.cameraBlockers,dt,{smoothing:6,driving:state.driving}));camera.lookAt(cameraTarget);return;
-  }
   const indoor=Math.abs(playerPos.x)<12.1&&playerPos.z>=-10&&playerPos.z<=9.5;
   const action=state.transition,progress=action?clamp(action.time/action.duration,0,1):0;
   const vehicleBlend=action?.type.includes('car')?carCameraBlend(action.type,progress):state.driving?1:0;
@@ -1108,13 +1117,15 @@ function followCamera(dt){
   const shoulder=state.aiming?.5:0,tilt=.2+pitch*.85;
   cameraTarget.copy(characterCameraTarget(player,{sitting:state.sitting,crouching:state.crouching})).lerp(carLocal(...(world.vehicle.cameraTargetLocal??new THREE.Vector3(0,1.15,-.4)).toArray()),vehicleBlend);
   if(action?.type==='enter-car')yaw=angleLerp(yaw,world.car.rotation.y+Math.PI,1-Math.exp(-4*dt*vehicleBlend));
-  if(action?.type==='sit'){yaw=angleLerp(yaw,action.heading+.5,1-Math.exp(-4*dt*progress));pitch+=(.03-pitch)*(1-Math.exp(-4*dt));}
+  if(vehicleBlend){const rear=world.car.rotation.y+Math.PI,offset=Math.atan2(Math.sin(yaw-rear),Math.cos(yaw-rear));yaw=rear+clamp(offset,-.5,.5);}else yaw=player.rotation.y-Math.PI;
+  if(action?.type==='sit')pitch+=(.03-pitch)*(1-Math.exp(-4*dt));
   cameraDesired.set(cameraTarget.x+Math.sin(yaw)*dist*Math.cos(tilt)+Math.cos(yaw)*shoulder,cameraTarget.y+dist*Math.sin(tilt),cameraTarget.z+Math.cos(yaw)*dist*Math.cos(tilt)-Math.sin(yaw)*shoulder);
   cameraDesired.y=Math.max(cameraDesired.y,floorAt(cameraDesired.x,cameraDesired.z)+.28);
   if(state.aiming){cameraTarget.x+=Math.cos(yaw)*shoulder;cameraTarget.z-=Math.sin(yaw)*shoulder;}
   const options={driving:state.driving||!!state.transition?.type.includes('car')};
-  camera.position.copy(resolveCamera(camera.position,cameraTarget,cameraDesired,world.cameraBlockers,dt,options));lookTarget.lerp(cameraTarget,1-Math.exp(-14*dt));
-  if(state.shake>.002&&!state.reducedMotion){cameraDesired.copy(camera.position);cameraDesired.x+=Math.sin(elapsed*75)*state.shake;cameraDesired.y+=Math.cos(elapsed*88)*state.shake*.5;camera.position.copy(resolveCamera(camera.position,cameraTarget,cameraDesired,world.cameraBlockers,dt,options));}state.shake*=Math.exp(-12*dt);camera.lookAt(lookTarget);
+  const resolve=(from,to)=>vehicleBlend?resolveCamera(from,cameraTarget,to,world.cameraBlockers,dt,options):resolveVisitorCamera(from,cameraTarget,to,player.rotation.y,world.cameraBlockers,dt,options);
+  camera.position.copy(resolve(camera.position,cameraDesired));lookTarget.lerp(cameraTarget,1-Math.exp(-14*dt));
+  if(state.shake>.002&&!state.reducedMotion){cameraDesired.copy(camera.position);cameraDesired.x+=Math.sin(elapsed*75)*state.shake;cameraDesired.y+=Math.cos(elapsed*88)*state.shake*.5;camera.position.copy(resolve(camera.position,cameraDesired));}state.shake*=Math.exp(-12*dt);camera.lookAt(lookTarget);
   const fov=state.aiming?44:THREE.MathUtils.lerp(48,52+(state.reducedMotion?0:Math.min(Math.abs(state.carSpeed),12)*.45),vehicleBlend);camera.fov+=(fov-camera.fov)*(1-Math.exp(-7*dt));camera.updateProjectionMatrix();
   // The solid roof becomes a cutaway while the visitor is indoors.
   world.roof.forEach(r=>r.visible=!indoor);
@@ -1152,9 +1163,7 @@ function frame(time){
   }else if(state.phase==='greeting'&&!state.modal){
     cinematicTime+=dt;
     if(!animateHandshake(host,player,cinematicTime)){animateCharacter(host,elapsed);animateCharacter(player,elapsed);animateFallbackHandshake(host,player,cinematicTime);}
-    const centerX=(host.position.x+player.position.x)/2,centerZ=(host.position.z+player.position.z)/2;
-    cameraDesired.set(centerX+2.4,2.2,centerZ+2.8);camera.position.lerp(cameraDesired,1-Math.exp(-4*dt));lookTarget.set(centerX,1.25,centerZ);camera.lookAt(lookTarget);
-    camera.fov+=(48-camera.fov)*(1-Math.exp(-4*dt));camera.updateProjectionMatrix();
+    followCamera(dt);
     if(cinematicTime>=arrivalLayout.duration)finishArrival();
   }else if(state.presentation&&!state.modal){
     updatePresentation(dt);

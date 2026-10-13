@@ -150,7 +150,8 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
   }
 
   // A modest explorable estate, with a porch and a rear courtyard.
-  visuals.ground=box(110,.15,200,0,-.055,34,m.grass);
+  // Ground stays below the court and paving; equal heights flicker on phones.
+  visuals.ground=box(110,.15,200,0,-.08,34,m.grass);
   const roadDistrict=createRoadDistrict();root.add(roadDistrict.root);blockers.push(...roadDistrict.blockers);visuals.road=roadDistrict.root;
   sign(['RABIN’S HOUSE','FOLLOW THE ROAD →'], -21,1.7,73,3,1.15);
   sign(['RABIN’S HOUSE','DRIVEWAY ↗'], -4,1.5,30,2.5,1);

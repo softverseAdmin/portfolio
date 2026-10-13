@@ -50,7 +50,7 @@ export async function controllerFixture(t,saved=null,production={}){
   const sourceURL=new URL('../../public/portfolio-game/game.js',import.meta.url);let source=readFileSync(sourceURL,'utf8');
   source=source.replace(/from\s+(['"])(\.\/[^'"]+)\1/g,(_,quote,path)=>'from '+quote+new URL(path,sourceURL).href+quote).replace(/\nboot\(\);\s*$/,'\n');
   source='const setTimeout=()=>0,clearTimeout=()=>{},requestAnimationFrame=()=>null,cancelAnimationFrame=()=>{};\n'+source;
-  source+=`\n// Controller fixture ${++fixtureId}\nexport {state,beginVisit,skipInvitation,updateDoors,moveHost,movePlayer,resetPosition,hideDialogue,showChapter,previewStory,hostConversation,updatePresentation,finishPresentation,repairScene,selectDesktopPage};
+  source+=`\n// Controller fixture ${++fixtureId}\nexport {state,beginVisit,skipInvitation,updateDoors,moveHost,movePlayer,resetPosition,hideDialogue,showChapter,previewStory,hostConversation,updatePresentation,finishPresentation,repairScene,selectDesktopPage,look,followCamera};
     export function mountFixture(f){renderer=f.renderer;scene=f.scene;camera=f.camera;world=f.world;physics=f.physics;player=f.player;host=f.host;sun=f.sun;ambient=f.ambient;trajectory=new THREE.Line(new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute(new Float32Array(32*3),3)),new THREE.LineDashedMaterial());world.cameraBlockers=[...world.blockers];visit=createArrival(world,host);canvas.tabIndex=0;bindEvents();}
     export function getVisit(){return visit;}
     export function placeVisitor(p){playerPos={...p};player.position.set(p.x,p.y,p.z);}

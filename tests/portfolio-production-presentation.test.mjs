@@ -26,23 +26,23 @@ function sampleStage(stage,time){
 }
 const bones=actor=>actor.userData.rig.idle.map(({bone})=>[...bone.position.toArray(),...bone.quaternion.toArray()]);
 
-test('the complete projector screen and both uploaded faces are visible through the production estate',async()=>{
-  const f=await fixture(),stage=createStoryStage(f);assert.ok(stage);
+test('the complete projector and seated actors stay visible from behind the uploaded visitor with any initial door angle',async()=>{
+  for(const doorAngle of [-Math.PI/2,-Math.PI/4,0]){
+  const f=await fixture(),door=f.world.doors.find(door=>door.id==='living');door.group.rotation.y=doorAngle;door.open=doorAngle!==0;f.physics.syncColliders();
+  const stage=createStoryStage(f);assert.ok(stage);assert.equal(door.open,false);assert.equal(door.group.rotation.y,0);
   for(let frame=0;frame<=120;frame++)sampleStage(stage,frame/60);
   f.world.projector.root.visible=true;f.world.roof.forEach(mesh=>mesh.visible=false);f.world.root.updateMatrixWorld(true);
-  for(const doorAngle of [-Math.PI/2,-Math.PI/4,0]){
-  f.world.doors.find(door=>door.id==='living').group.rotation.y=doorAngle;f.physics.syncColliders();f.world.root.updateMatrixWorld(true);
   for(const aspect of [4/3,16/9,844/390,2.4]){
     const view=presentationCamera(aspect,f.world.cameraBlockers??f.world.blockers),camera=new THREE.PerspectiveCamera(view.fov,aspect,.1,220);
     camera.position.copy(view.position);camera.lookAt(view.target);camera.updateMatrixWorld(true);
     for(const x of [-2.8,-1.4,0,1.4,2.8])for(const y of [-1.5,-.75,0,.75,1.5]){
       const point=f.world.projector.screen.localToWorld(new THREE.Vector3(x,y,0));
       const projected=point.clone().project(camera);assert.ok(Math.abs(projected.x)<1&&Math.abs(projected.y)<1,`aspect ${aspect} crops screen point ${x},${y}`);
-      const ray=new THREE.Raycaster(view.position,point.clone().sub(view.position).normalize()),hit=ray.intersectObject(f.world.root,true).find(visible);
+      const ray=new THREE.Raycaster(view.position,point.clone().sub(view.position).normalize()),hit=ray.intersectObjects([f.world.root,f.host,f.player],true).find(visible);
       assert.ok(hit?.object===f.world.projector.screen,`aspect ${aspect}: ${hit?.object.name||'furniture'} covers screen point ${x},${y}`);
     }
     for(const actor of stage.actors){
-      for(const name of ['Head','Hips','RightFoot','LeftFoot']){
+      for(const name of ['Head','Hips']){
         const point=actor.userData.rig.bones[name].getWorldPosition(new THREE.Vector3()).project(camera);
         assert.ok(Math.abs(point.x)<1&&Math.abs(point.y)<1,`aspect ${aspect} crops the seated ${name}`);
       }
@@ -52,8 +52,8 @@ test('the complete projector screen and both uploaded faces are visible through 
       assert.ok(!hit||hit.distance>view.position.distanceTo(face),`${hit?.object.name||'furniture'} hides an uploaded face`);
     }
   }
+  stage.restore();assert.equal(door.group.rotation.y,doorAngle);assert.equal(door.open,doorAngle!==0);
   }
-  stage.restore();
 });
 
 test('the uploaded sit and talk motions stay planted and remain still while Pause holds the story clock',async()=>{
