@@ -19,7 +19,8 @@ import {paintTouchControls} from './controls.js';
 import {createArrival,arrivalSpawn,VISIT_OBJECTIVES,actorBlocker,greetingApproach,walkArrivalRoute,carExitSpot} from './arrival.js';
 import {PORTFOLIO as copy,STORY_PREVIEWS,CONVERSATIONS,TECH_TOPICS,INVITATION,portfolioSummary} from './portfolio.js';
 import {readVisit,writeVisit,freshVisit,createInvitation,tourRouteFrom,guideShouldWait,surfaceAt} from './story.js';
-import {INTRO_SLIDES,createIntroStory,createStoryStage,presentationCamera} from './presentation.js';
+import {INTRO_SLIDES,createPresentationStory,createStoryStage,createStudyStage,presentationCamera,studyCamera} from './presentation.js';
+import {STUDY_SLIDES,desktopPage} from './desktop.js';
 
 const $=id=>document.getElementById(id);
 const actorHeight=actor=>actor?.userData.rig?.asset.height??actor?.userData.rig?.model?.userData.appearance?.height??1.76;
@@ -218,32 +219,66 @@ function hideDialogue(){ if(state.presentation)finishPresentation();$('dialogue'
 
 function narratePresentation(session){
   if(session.story.phase!=='presenting'||session.story.paused||session.narrationStarted)return;
-  session.narrationStarted=true;const index=session.story.index;
+  session.narrationStarted=true;const token=session.narrationToken;
   session.story.setNarrating(state.sound&&state.volume>0&&'speechSynthesis' in window);
-  try{session.utterance=speak(session.story.slide.caption,()=>{if(state.presentation===session&&session.story.index===index)session.story.finishNarration();},()=>{if(state.presentation===session&&session.story.index===index)session.story.setNarrating(false);});}
+  try{session.utterance=speak(session.caption,()=>{if(state.presentation===session&&session.narrationToken===token)session.story.finishNarration();},()=>{if(state.presentation===session&&session.narrationToken===token)session.story.setNarrating(false);});}
   catch{session.utterance=null;}
   if(!session.utterance)session.story.setNarrating(false);
 }
 function showPresentationSlide(session,slide,index){
-  if('speechSynthesis' in window)window.speechSynthesis.cancel();session.narrationStarted=false;session.utterance=null;
-  world.projector.showSlide(slide);$('story-title').textContent=slide.title;$('story-details').textContent=slide.subtitle;$('story-caption').textContent=slide.caption;
-  $('story-count').textContent=`${index+1} / ${INTRO_SLIDES.length}`;$('story-count').setAttribute('aria-label',`Slide ${index+1} of ${INTRO_SLIDES.length}`);$('story-next').disabled=false;
+  if('speechSynthesis' in window)window.speechSynthesis.cancel();session.narrationStarted=false;session.utterance=null;session.narrationToken++;session.caption=slide.caption;
+  session.display.showSlide(slide);$('story-title').textContent=slide.title;$('story-details').textContent=slide.subtitle;$('story-caption').textContent=slide.caption;
+  $('story-count').textContent=`${index+1} / ${session.story.count}`;$('story-count').setAttribute('aria-label',`Slide ${index+1} of ${session.story.count}`);$('story-next').disabled=false;$('desktop-browse').disabled=false;
+  if(session.initialPage){const page=session.initialPage;session.initialPage=null;selectDesktopPage(page);return;}
   narratePresentation(session);
 }
-function startPresentation(onComplete=null){
+function startPresentation(onComplete=null,id='about',initialPage=null){
   if(state.presentation)return true;
-  if(!world?.projector||state.phase!=='playing'||state.driving||state.transition)return false;
+  const study=id==='experience',display=study?world?.study?.desktop:world?.projector,slides=study?STUDY_SLIDES:INTRO_SLIDES;
+  if(!display||state.phase!=='playing'||state.driving||state.transition)return false;
   stopGesture({resume:false,notice:null});hideDialogue();if(state.held)dropObject();
-  const previous={position:{...playerPos},sitting:state.sitting,seatTarget:state.seatTarget,seatToy:state.seatToy,crouching:state.crouching,grounded:state.grounded,jumpVelocity:state.jumpVelocity,brand:$('brand-room').textContent,hud:$('hud').hidden,projector:world.projector.root.visible,hostName:host.userData.nameSprite.visible,cameraPosition:camera.position.clone(),cameraQuaternion:camera.quaternion.clone(),fov:camera.fov,lookTarget:lookTarget.clone(),roof:world.roof.map(mesh=>[mesh,mesh.visible])};
-  const stage=createStoryStage({world,physics,host,player});
-  if(!stage){toast('Clear the space around the lounge chairs, or use Repair & reset before the seated story.');return false;}
-  clearInput();releaseMouse();discover('about');
-  const session={stage,previous,onComplete,narrationStarted:false,utterance:null};
-  session.story=createIntroStory({seatingDuration:state.reducedMotion?0:1.2,onSlide:(slide,index)=>showPresentationSlide(session,slide,index),onEnd:reason=>{if(state.presentation!==session)return;if(reason==='completed')finishPresentation(true);else{finishPresentation();pauseTour();}}});
+  const previous={position:{...playerPos},sitting:state.sitting,seatTarget:state.seatTarget,seatToy:state.seatToy,crouching:state.crouching,grounded:state.grounded,jumpVelocity:state.jumpVelocity,brand:$('brand-room').textContent,hud:$('hud').hidden,display:display.root.visible,hostName:host.userData.nameSprite.visible,canvasLabel:canvas.getAttribute('aria-label'),cameraPosition:camera.position.clone(),cameraQuaternion:camera.quaternion.clone(),fov:camera.fov,lookTarget:lookTarget.clone(),roof:world.roof.map(mesh=>[mesh,mesh.visible])};
+  const stage=(study?createStudyStage:createStoryStage)({world,physics,host,player});
+  if(!stage){toast('Clear the space around the chairs, or use Repair & reset before the seated story.');return false;}
+  clearInput();releaseMouse();discover(id);
+  const session={stage,previous,onComplete,display,study,initialPage,narrationStarted:false,narrationToken:0,caption:slides[0].caption,utterance:null};
+  session.story=createPresentationStory({slides,seatingDuration:state.reducedMotion?0:1.2,onSlide:(slide,index)=>showPresentationSlide(session,slide,index),onEnd:reason=>{if(state.presentation!==session)return;if(reason==='completed')finishPresentation(true);else{finishPresentation();pauseTour();}}});
   state.presentation=session;state.sitting=true;state.seatTarget=null;state.seatToy=null;state.crouching=false;state.grounded=true;state.jumpVelocity=0;state.near=null;
-  $('hud').hidden=true;$('dialogue').hidden=true;$('presentation').hidden=false;$('story-next').disabled=true;$('story-title').textContent=INTRO_SLIDES[0].title;$('story-details').textContent=INTRO_SLIDES[0].subtitle;$('story-caption').textContent='Make yourself comfortable.';$('story-count').textContent=`1 / ${INTRO_SLIDES.length}`;$('story-count').setAttribute('aria-label',`Slide 1 of ${INTRO_SLIDES.length}`);
-  $('brand-room').textContent='Living room · Story mode';host.userData.nameSprite.visible=false;world.projector.root.visible=true;world.projector.showSlide(INTRO_SLIDES[0]);
-  document.body.classList.add('story-mode');updatePresentationPause(session);updatePresentation(0);$('story-pause').focus();return true;
+  $('hud').hidden=true;$('dialogue').hidden=true;$('presentation').hidden=false;$('story-next').disabled=true;$('story-title').textContent=slides[0].title;$('story-details').textContent=slides[0].subtitle;$('story-caption').textContent='Make yourself comfortable.';$('story-count').textContent=`1 / ${slides.length}`;$('story-count').setAttribute('aria-label',`Slide 1 of ${slides.length}`);
+  $('brand-room').textContent=study?'Study · Project showcase':'Living room · Story mode';host.userData.nameSprite.visible=false;display.root.visible=true;display.showSlide(slides[0]);
+  $('desktop-browse').hidden=!study;$('desktop-browse').disabled=true;$('desktop-browse').setAttribute('aria-expanded','false');$('desktop-menu').hidden=true;
+  canvas.setAttribute('aria-label',study?'A seated study presentation. Use Browse desktop to select a project or section.':'A seated living-room presentation.');
+  document.body.classList.add('story-mode');document.body.classList.toggle('study-mode',study);updatePresentationPause(session);updatePresentation(0);$('story-pause').focus();return true;
+}
+function closeDesktopMenu({resume=true}={}){
+  const session=state.presentation;if(!session?.study)return false;
+  const returnFocus=document.activeElement?.closest('#desktop-menu');
+  const shouldResume=!$('desktop-menu').hidden&&session.menuResume;$('desktop-menu').hidden=true;$('desktop-browse').setAttribute('aria-expanded','false');session.menuResume=false;
+  if(returnFocus)$('desktop-browse').focus();
+  if(resume&&shouldResume&&session.story.paused)togglePresentationPause();return shouldResume;
+}
+function toggleDesktopMenu(){
+  const session=state.presentation;if(!session?.study||session.story.phase!=='presenting')return;
+  if(!$('desktop-menu').hidden){closeDesktopMenu();$('desktop-browse').focus();return;}
+  session.menuResume=!session.story.paused;if(session.menuResume)togglePresentationPause();$('desktop-menu').hidden=false;$('desktop-browse').setAttribute('aria-expanded','true');$('desktop-menu').querySelectorAll('button')[0]?.focus();
+}
+function selectDesktopPage(id){
+  const session=state.presentation,page=desktopPage(id);if(!session?.study||session.story.phase!=='presenting'||!page)return false;
+  const resume=closeDesktopMenu({resume:false}),index=STUDY_SLIDES.findIndex(slide=>slide.page===id);
+  if(index>=0)session.story.goTo(index);
+  else{
+    if('speechSynthesis' in window)window.speechSynthesis.cancel();session.story.holdReading();session.story.setNarrating(false);session.display.showPage(id);session.caption=page.caption;session.narrationStarted=false;session.utterance=null;session.narrationToken++;
+    $('story-title').textContent=page.title;$('story-details').textContent=page.blocks.map(block=>block.text).join(' ');$('story-caption').textContent=page.caption;if(copy[id])discover(id);narratePresentation(session);
+  }
+  if(resume&&session.story.paused)togglePresentationPause();updatePresentation(0);return true;
+}
+function nextPresentationSlide(){closeDesktopMenu();state.presentation?.story.next();}
+function desktopPointer(e){
+  const session=state.presentation;if(!session?.study||session.story.phase!=='presenting'||e.button!==undefined&&e.button!==0)return;
+  const size=landscapeSize(innerWidth,innerHeight,deviceProfile().mobile),rect=canvas.getBoundingClientRect();
+  const delta=landscapeDelta(e.clientX-rect.left-rect.width/2,e.clientY-rect.top-rect.height/2,size.rotated),pointer=new THREE.Vector2(2*delta.x/size.width,-2*delta.y/size.height),ray=new THREE.Raycaster();
+  camera.updateMatrixWorld(true);session.display.root.updateMatrixWorld(true);ray.setFromCamera(pointer,camera);const hit=ray.intersectObject(session.display.screen,false)[0],id=hit?.uv?session.display.hit(hit.uv):null;
+  if(id){e.preventDefault();selectDesktopPage(id);}else closeDesktopMenu();
 }
 function updatePresentationPause(session){
   const paused=session.story.paused;$('story-pause').setAttribute('aria-pressed',String(paused));$('story-pause').setAttribute('aria-label',paused?'Resume the story':'Pause the story');$('story-pause-label').textContent=paused?'Resume':'Pause';$('story-pause-icon').textContent=paused?'▶':'Ⅱ';
@@ -256,9 +291,9 @@ function finishPresentation(advance=false){
   const session=state.presentation;if(!session)return;state.presentation=null;
   if('speechSynthesis' in window){window.speechSynthesis.cancel();window.speechSynthesis.resume();}
   session.stage.restore();const saved=session.previous;playerPos={...saved.position};state.sitting=saved.sitting;state.seatTarget=saved.seatTarget;state.seatToy=saved.seatToy;state.crouching=saved.crouching;state.grounded=saved.grounded;state.jumpVelocity=saved.jumpVelocity;
-  host.userData.nameSprite.visible=saved.hostName;world.projector.root.visible=saved.projector;for(const [mesh,visible] of saved.roof)mesh.visible=visible;
+  host.userData.nameSprite.visible=saved.hostName;session.display.root.visible=saved.display;canvas.setAttribute('aria-label',saved.canvasLabel);for(const [mesh,visible] of saved.roof)mesh.visible=visible;
   camera.position.copy(saved.cameraPosition);camera.quaternion.copy(saved.cameraQuaternion);camera.fov=saved.fov;camera.updateProjectionMatrix();lookTarget.copy(saved.lookTarget);endGreeting(host);endGreeting(player);clearInput();
-  $('presentation').hidden=true;$('hud').hidden=saved.hud;$('brand-room').textContent=saved.brand;document.body.classList.remove('story-mode');if(!stopped)canvas.focus();updateVisitUI(true);
+  $('presentation').hidden=true;$('hud').hidden=saved.hud;$('brand-room').textContent=saved.brand;document.body.classList.remove('story-mode','study-mode');$('desktop-browse').hidden=true;$('desktop-menu').hidden=true;$('desktop-browse').setAttribute('aria-expanded','false');if(!stopped)canvas.focus();updateVisitUI(true);
   if(advance)session.onComplete?.();
 }
 function updatePresentation(dt){
@@ -266,12 +301,12 @@ function updatePresentation(dt){
   const p=session.story.seatingProgress,hostPose=session.stage.pose(0,p),visitorPose=session.stage.pose(1,p);hostPose.talking=session.story.phase==='presenting';
   playerPos={x:player.position.x,y:player.position.y,z:player.position.z};
   animateCharacter(host,session.story.time,0,false,true,hostPose);animateCharacter(player,session.story.time,0,false,true,visitorPose);
-  const view=presentationCamera(camera.aspect,world.cameraBlockers??world.blockers);camera.position.copy(view.position);camera.fov=view.fov;camera.updateProjectionMatrix();lookTarget.copy(view.target);camera.lookAt(lookTarget);world.roof.forEach(mesh=>mesh.visible=false);
+  const view=session.study?studyCamera(camera.aspect,world.cameraBlockers??world.blockers,session.display.page.detail):presentationCamera(camera.aspect,world.cameraBlockers??world.blockers);camera.position.copy(view.position);camera.fov=view.fov;camera.updateProjectionMatrix();lookTarget.copy(view.target);camera.lookAt(lookTarget);world.roof.forEach(mesh=>mesh.visible=false);
 }
 function chapterChoices(chapter){return [...(CONVERSATIONS[chapter.id]??[]),...(chapter.id==='fun'?[{question:'Take a garden break',action:()=>{pauseTour();toast('Enjoy the garden. Continue the guided story from YOUR VISIT when you’re ready.',5500);}}]:[])];}
 function showChapter(chapter){
   discover(chapter.id);state.guideCheckpoint=Math.max(state.guideCheckpoint,state.chapter+1);saveProgress();
-  if(chapter.id==='about'&&startPresentation(nextChapter)){updateVisitUI(true);return;}
+  if(['about','experience'].includes(chapter.id)&&startPresentation(nextChapter,chapter.id)){updateVisitUI(true);return;}
   dialogue(chapter.text,`RABIN · ${chapter.title.toUpperCase()}`,chapter.id==='contact'?finishVisit:nextChapter,chapter.id==='contact'?'Finish the visit →':chapter.id==='fun'?'Skip games · continue →':'Next room →',chapterChoices(chapter));
   updateVisitUI(true);
 }
@@ -280,6 +315,7 @@ function hostConversation(){
   const room=roomAt(host.position.x,host.position.z,host.position.y).name;
   const context=room==='The study'?'experience':room==='The project studio'?'projects':room==='The technology room'?'skills':room==='The upstairs retreat'?'future':room==='The rear terrace'?'contact':'about';
   if(room==='The living room'&&startPresentation())return;
+  if(room==='The study'&&startPresentation(null,'experience'))return;
   dialogue(STORY_PREVIEWS[context],'RABIN · YOUR HOST',startTour,state.guideCheckpoint>0&&!state.completed?'Continue the guided story →':'Take the guided tour →',CONVERSATIONS[context]);
 }
 function startTour({restart=false}={}){
@@ -596,6 +632,7 @@ function cancelRace(){state.race=null;if(world)world.raceGate.visible=false;}
 function updateRaceGate(){const r=state.race,p=world.checkpoints[r.checkpoint];world.raceGate.position.set(p.x,.02,p.z);world.raceGate.rotation.y=Math.atan2(world.car.position.x-p.x,world.car.position.z-p.z);}
 
 function previewStory(id){
+  if(['experience','healthcare'].includes(id)&&roomAt(playerPos.x,playerPos.z,playerPos.y).name==='The study'&&startPresentation(null,'experience',id==='healthcare'?id:null))return;
   if(id==='about'&&roomAt(playerPos.x,playerPos.z,playerPos.y).name==='The living room'&&startPresentation())return;
   const topic=id.startsWith('tech-')?TECH_TOPICS[id.slice(5)]:null;
   if(topic){discover('skills');beginAction('inspect',null,player.rotation.y,.4,null,()=>dialogue(topic.text,'RABIN · '+topic.title.toUpperCase(),()=>contentModal('skills'),'Read the engineering approach →',CONVERSATIONS.skills));return;}
@@ -668,7 +705,8 @@ function bindEvents(){
   $('objective-open').onclick=mapModal;
   $('modal').onclick=e=>{if(e.target===$('modal'))closeModal();};
   $('dialogue-close').onclick=()=>pauseTour();$('dialogue-next').onclick=()=>state.dialogueAction?.();
-  $('story-pause').onclick=togglePresentationPause;$('story-next').onclick=()=>state.presentation?.story.next();$('story-exit').onclick=()=>state.presentation?.story.exit();
+  $('story-pause').onclick=togglePresentationPause;$('story-next').onclick=nextPresentationSlide;$('story-exit').onclick=()=>state.presentation?.story.exit();$('desktop-browse').onclick=toggleDesktopMenu;
+  for(const button of $('desktop-menu').querySelectorAll('button'))button.onclick=()=>selectDesktopPage(button.dataset.desktopPage);
   $('interact').onclick=use;$('gesture-stop').onclick=()=>{if(!state.modal)stopGesture();};
   $('invitation-next').onclick=advanceInvitation;$('skip-invitation').onclick=skipInvitation;$('replay-entry').onclick=replayVisit;
   $('skip-greeting').onclick=()=>{if(['approach','greeting'].includes(state.phase))finishArrival();};
@@ -692,11 +730,11 @@ function bindEvents(){
     if(e.code!=='Escape'&&(e.target.matches('input,select,textarea')||(['Enter','Space'].includes(e.code)&&e.target.closest('button,a'))))return;
     if(state.presentation){
       if(e.repeat)return;
-      if(e.code==='Escape'){e.preventDefault();state.presentation.story.exit();}
+      if(e.code==='Escape'){e.preventDefault();if(!$('desktop-menu').hidden)closeDesktopMenu();else state.presentation.story.exit();}
       else if(e.code==='Space'){e.preventDefault();togglePresentationPause();}
-      else if(['Enter','KeyN','ArrowRight'].includes(e.code)){e.preventDefault();state.presentation.story.next();}
+      else if(['Enter','KeyN','ArrowRight'].includes(e.code)){e.preventDefault();nextPresentationSlide();}
       else if(e.code==='Tab'){
-        const focusable=[...$('presentation').querySelectorAll('button')].filter(button=>!button.disabled),first=focusable[0],last=focusable.at(-1);
+        const focusable=[...$('presentation').querySelectorAll('button')].filter(button=>!button.disabled&&!button.closest('[hidden]')),first=focusable[0],last=focusable.at(-1);
         if(e.shiftKey&&document.activeElement===first){e.preventDefault();last?.focus();}else if(!e.shiftKey&&(document.activeElement===last||!focusable.includes(document.activeElement))){e.preventDefault();first?.focus();}
       }else if(e.code.startsWith('Arrow'))e.preventDefault();
       return;
@@ -732,6 +770,7 @@ function bindEvents(){
   window.addEventListener('blur',clearInput);
   canvas.addEventListener('contextmenu',e=>e.preventDefault());
   canvas.addEventListener('pointerdown',e=>{
+    if(state.presentation){desktopPointer(e);return;}
     if(state.phase!=='playing'||state.modal||state.presentation)return;
     if(mouseCaptured){if(e.button===0){actionPointer=e.pointerId;actionPress();}if(e.button===2)state.aiming=!!state.held;return;}
     if(e.pointerType==='mouse'){captureMouse();}

@@ -162,6 +162,6 @@ test('reset and fatal recovery release both chairs and story input locks',async 
 });
 
 test('other rooms retain their existing dialogue behavior',async t=>{
-  const f=await livingFixture(t);f.host.position.set(-7,.13,-4.5);f.api.placeVisitor({x:-6,y:floorAt(-6,-4.5),z:-4.5});f.api.hostConversation();
+  const f=await livingFixture(t);f.host.position.set(7,.13,4.5);f.api.placeVisitor({x:6,y:floorAt(6,4.5),z:4.5});f.api.hostConversation();
   assert.equal(f.api.state.presentation,null);assert.equal(button(f,'dialogue').hidden,false);assert.equal(button(f,'presentation').hidden,true);
 });

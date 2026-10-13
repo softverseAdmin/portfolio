@@ -6,6 +6,15 @@
 .presentation button:disabled{opacity:.55;cursor:default}
 .presentation .story-exit{position:absolute;right:calc(22px + var(--safe-right,0px));top:calc(16px + var(--safe-top,0px));min-width:124px}
 .story-exit>span{font-size:26px;line-height:20px}
+.presentation .desktop-browse{position:absolute;right:calc(164px + var(--safe-right,0px));top:calc(16px + var(--safe-top,0px))}
+.desktop-menu{position:absolute;right:calc(22px + var(--safe-right,0px));top:calc(70px + var(--safe-top,0px));width:min(470px,64%);max-height:calc(100% - 176px - var(--safe-top,0px) - var(--safe-bottom,0px));overflow:auto;padding:14px;border:1px solid #dfc58b66;border-radius:14px;background:#173b32f5;pointer-events:auto;box-shadow:0 12px 34px #071a1670}
+.desktop-menu p{margin:0 0 10px;color:#dfc58b;font-size:12px;letter-spacing:.7px}
+.desktop-menu .desktop-sections{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:12px}
+.desktop-projects{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.desktop-questions{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:12px}
+.presentation .desktop-menu button{border-radius:8px;padding:8px;font-size:12px;min-height:44px;line-height:1.4}
+.study-mode .brand{max-width:calc(100% - 320px)}
+.desktop-menu[hidden],.presentation .desktop-browse[hidden]{display:none}
 .story-subtitles{position:absolute;left:50%;bottom:calc(82px + var(--safe-bottom,0px));transform:translateX(-50%);width:min(960px,86%);display:flex;align-items:center;gap:20px;border-radius:14px;padding:14px 22px;background:#173b32eb;font-size:clamp(12px,1.15cqw,18px);line-height:1.5}
 .story-subtitles strong{color:#dfc58b;flex-shrink:0;font-weight:500;padding-right:20px;border-right:1px solid #dfc58b66}
 .story-subtitles p{margin:0;min-width:0}
@@ -26,4 +35,5 @@
   .story-subtitles,.mobile-landscape .story-subtitles{bottom:calc(62px + var(--safe-bottom,0px));font-size:11px;padding:7px 12px;line-height:1.4}
   .story-controls,.mobile-landscape .story-controls{bottom:calc(6px + var(--safe-bottom,0px))}
   .story-mode .brand small{font-size:10px}
+  .desktop-menu{padding:10px;max-height:calc(100% - 150px - var(--safe-top,0px) - var(--safe-bottom,0px))}
 }
