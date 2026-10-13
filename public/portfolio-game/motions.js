@@ -147,9 +147,19 @@ export function animateSeatedTalk(character,time,weight=.8){
   const rig=character.userData.rig,clip=rig?.asset.motions?.clips.get('talk');if(!clip)return false;
   let cached=rig.motion.seatedTalk;
   if(cached?.clip!==clip){
-    const tracks=clip.tracks.filter(track=>/((Left|Right)(Arm|ForeArm|Hand[^.]*)|Spine[12]?|Neck|Head)\.quaternion$/.test(track.name)).map(track=>({bone:rig.idle.find(entry=>entry.bone.name===track.name.slice(0,-11))?.bone,sample:track.createInterpolant(),rotation:new THREE.Quaternion()})).filter(track=>track.bone);
+    const tracks=clip.tracks.filter(track=>/((Left|Right)(Arm|ForeArm|Hand[^.]*)|Spine[12]?|Neck|Head)\.quaternion$/.test(track.name)).map(track=>({bone:rig.idle.find(entry=>entry.bone.name===track.name.slice(0,-11))?.bone,sample:track.createInterpolant(),rotation:new THREE.Quaternion(),reference:new THREE.Quaternion().fromArray(track.values),additive:/Spine|Neck|Head/.test(track.name)})).filter(track=>track.bone);
     cached=rig.motion.seatedTalk={clip,tracks};
   }
-  for(const track of cached.tracks)track.bone.quaternion.slerp(track.rotation.fromArray(track.sample.evaluate(time%clip.duration)),weight);
+  for(const track of cached.tracks){
+    track.rotation.fromArray(track.sample.evaluate(time%clip.duration));
+    if(track.additive){
+      // Keep the original seated spine; add the talk clip's small nods rather
+      // than its standing rest rotation, which can lower the head into the lap.
+      const delta=track.reference.clone().invert().multiply(track.rotation),angle=new THREE.Quaternion().angleTo(delta),limit=/Spine/.test(track.bone.name)?.09:.16;
+      if(angle>limit)delta.slerp(new THREE.Quaternion(),1-limit/angle);
+      track.rotation.copy(track.bone.quaternion).multiply(delta);
+    }
+    track.bone.quaternion.slerp(track.rotation,weight);
+  }
   return cached.tracks.length>0;
 }

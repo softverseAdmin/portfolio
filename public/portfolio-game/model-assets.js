@@ -210,7 +210,7 @@ export function applyEnvironmentAsset(world,source){
   v.ground.removeFromParent();
   const pool=world.pool;
   for(const [x0,x1,z0,z1] of [[-55,pool.minX,-66,134],[pool.maxX,55,-66,134],[pool.minX,pool.maxX,-66,pool.minZ],[pool.minX,pool.maxX,pool.maxZ,134]]){
-    const ground=new THREE.Mesh(new THREE.BoxGeometry(x1-x0,.15,z1-z0),palette.get('Lawn'));ground.position.set((x0+x1)/2,-.055,(z0+z1)/2);ground.receiveShadow=true;tileGeometry(ground,3);world.root.add(ground);
+    const ground=new THREE.Mesh(new THREE.BoxGeometry(x1-x0,.15,z1-z0),palette.get('Lawn'));ground.name='Lawn below the paved surfaces';ground.position.set((x0+x1)/2,-.08,(z0+z1)/2);ground.receiveShadow=true;tileGeometry(ground,3);world.root.add(ground);
   }
   // The west-side lap follows the clear strip between the pool and house.
   for(const i of [3,4,5])world.checkpoints[i].x=-13.8;

@@ -159,6 +159,13 @@ export function animateRiggedCharacter(character,time,speed=0,wave=false,sitting
   }
   if(pose.kick){rotateBone(b.RightUpLeg,-1.4*Math.sin(Math.PI*pose.kick));rotateBone(b.RightLeg,-.15);}
   if(sitting&&pose.talking)animateSeatedTalk(character,time);
+  if(sitting&&pose.lookTarget&&b.Head){
+    character.updateMatrixWorld(true);
+    const head=b.Head,worldRotation=head.getWorldQuaternion(new THREE.Quaternion()),forward=new THREE.Vector3(0,0,1).applyQuaternion(worldRotation),desired=pose.lookTarget.clone().sub(head.getWorldPosition(new THREE.Vector3())).normalize();
+    const delta=new THREE.Quaternion().setFromUnitVectors(forward,desired),angle=new THREE.Quaternion().angleTo(delta);
+    delta.slerp(new THREE.Quaternion(),1-Math.min(.85,THREE.MathUtils.degToRad(28)/Math.max(angle,1e-6)));
+    head.quaternion.copy(head.parent.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(delta.multiply(worldRotation)));
+  }
   if(crouching)crouchPose(character,crouching,time,speed);
   const running=!rig.asset.preserveMaterials&&pose.running&&rig.motion.id==='run'&&!pose.action&&!sitting&&!pose.airborne&&!pose.carry;
   if(running){

@@ -30,6 +30,18 @@ export function resolveCamera(position,target,desired,blockers,dt,options={}){
   return target.clone().lerp(next,cameraFraction(target,next,blockers,options));
 }
 
+// A turn must not smooth the camera through the visitor's face. Keep the arm
+// in the rear third of the view, then sweep again against the room geometry.
+export function resolveVisitorCamera(position,target,desired,heading,blockers,dt,options={}){
+  const next=resolveCamera(position,target,desired,blockers,dt,options),arm=next.clone().sub(target);
+  const rear=heading+Math.PI,angle=Math.atan2(arm.x,arm.z);
+  const offset=Math.atan2(Math.sin(angle-rear),Math.cos(angle-rear)),limit=Math.PI/6;
+  if(Math.abs(offset)<=limit)return next;
+  const distance=Math.hypot(arm.x,arm.z),safeAngle=rear+THREE.MathUtils.clamp(offset,-limit,limit);
+  next.set(target.x+Math.sin(safeAngle)*distance,next.y,target.z+Math.cos(safeAngle)*distance);
+  return target.clone().lerp(next,cameraFraction(target,next,blockers,options));
+}
+
 export function characterCameraTarget(character,{sitting=false,crouching=false}={}){
   const chest=character.userData.rig?.bones.Spine2;
   if(chest){character.updateMatrixWorld(true);return chest.getWorldPosition(new THREE.Vector3()).add(new THREE.Vector3(0,.08,0));}
