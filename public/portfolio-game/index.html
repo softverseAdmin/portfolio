@@ -7,9 +7,9 @@
   <meta name="description" content="Meet Rabin Adhikari. Explore a playable home filled with stories about full-stack development, healthcare, cloud, and AI.">
   <title>Rabin’s House — A portfolio you can explore</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23192b29'/%3E%3Cpath d='M12 31 32 14 52 31M20 29v23h24V29M29 52V38h6v14' fill='none' stroke='%23e9c58b' stroke-width='4'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=21">
-  <link rel="stylesheet" href="./mobile.css?v=21">
-  <link rel="stylesheet" href="./presentation.css?v=21">
+  <link rel="stylesheet" href="./style.css?v=22">
+  <link rel="stylesheet" href="./mobile.css?v=22">
+  <link rel="stylesheet" href="./presentation.css?v=22">
 </head>
 <body class="preparing">
   <div id="game-viewport">
@@ -77,6 +77,43 @@
   <div id="fatal" class="fatal" hidden><h2>Your visit needs a browser with WebGL 2.</h2><p>You can still explore Rabin’s work below.</p><button id="fallback-portfolio" class="primary">View portfolio →</button><button id="fatal-retry" class="text-button">Retry loading →</button></div>
   <noscript><div class="fatal"><h2>Rabin Adhikari</h2><p>Full-stack engineer and project lead based in Tokyo. Experience in healthcare applications, cloud systems, and AI integration.</p><p>Enable JavaScript to explore the house, or <a href="https://www.linkedin.com/in/rabin-adhikari-52573320b/">visit LinkedIn</a>.</p></div></noscript>
   </div>
-  <script type="module" src="./startup.js?v=21"></script>
+  <script type="importmap">
+{
+  "imports": {
+    "./arrival.js": "./arrival.js?v=22",
+    "./asset-transfer.js": "./asset-transfer.js?v=22",
+    "./camera.js": "./camera.js?v=22",
+    "./characters.js": "./characters.js?v=22",
+    "./controls.js": "./controls.js?v=22",
+    "./core.js": "./core.js?v=22",
+    "./desktop.js": "./desktop.js?v=22",
+    "./furnishings.js": "./furnishings.js?v=22",
+    "./game.js": "./game.js?v=22",
+    "./imported-characters.js": "./imported-characters.js?v=22",
+    "./imported-vehicle.js": "./imported-vehicle.js?v=22",
+    "./journey.js": "./journey.js?v=22",
+    "./loading.js": "./loading.js?v=22",
+    "./mobile.js": "./mobile.js?v=22",
+    "./model-assets.js": "./model-assets.js?v=22",
+    "./motions.js": "./motions.js?v=22",
+    "./physics.js": "./physics.js?v=22",
+    "./portfolio.js": "./portfolio.js?v=22",
+    "./poses.js": "./poses.js?v=22",
+    "./presentation.js": "./presentation.js?v=22",
+    "./projector.js": "./projector.js?v=22",
+    "./skins.js": "./skins.js?v=22",
+    "./startup.js": "./startup.js?v=22",
+    "./story.js": "./story.js?v=22",
+    "./terrain.js": "./terrain.js?v=22",
+    "./texture-budget.js": "./texture-budget.js?v=22",
+    "./transitions.js": "./transitions.js?v=22",
+    "./vehicle-motion.js": "./vehicle-motion.js?v=22",
+    "./vehicle.js": "./vehicle.js?v=22",
+    "./wheel-geometry.js": "./wheel-geometry.js?v=22",
+    "./world.js": "./world.js?v=22"
+  }
+}
+  </script>
+  <script type="module" src="./startup.js?v=22"></script>
 </body>
 </html>
