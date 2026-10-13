@@ -3,6 +3,7 @@ import {createFurniture,createSmallProp} from './furnishings.js';
 import {createVehicle} from './vehicle.js';
 import {updateCollider} from './physics.js';
 import {createRoadDistrict} from './journey.js';
+import {createProjector} from './projector.js';
 
 const geometries=new Map();
 const boxes=(w,h,d)=>{const key=[w,h,d].join(',');if(!geometries.has(key))geometries.set(key,new THREE.BoxGeometry(w,h,d));return geometries.get(key);};
@@ -283,6 +284,7 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
   const art=canvasTexture((c,w,h)=>{c.fillStyle='#dbd4bd';c.fillRect(0,0,w,h);c.fillStyle='#909f81';c.beginPath();c.moveTo(0,h);c.lineTo(0,h*.7);c.lineTo(w*.3,h*.3);c.lineTo(w*.6,h*.8);c.lineTo(w,h*.5);c.lineTo(w,h);c.fill();c.fillStyle='#4c6d62';c.beginPath();c.moveTo(0,h);c.lineTo(w*.48,h*.44);c.lineTo(w,h);c.closePath();c.fill();c.fillStyle='#ecd0a0';c.beginPath();c.arc(w*.75,h*.24,35,0,Math.PI*2);c.fill();},512,256);
   plane(2.9,1.4,-7,2.7,.12,new THREE.MeshBasicMaterial({map:art,color:art?0xffffff:'#94a488'}));
   for(const yy of [1.96,3.44])box(3.04,.08,.06,-7,yy,.1,m.oak);for(const x of [-8.52,-5.48])box(.08,1.56,.06,x,2.7,.1,m.oak);
+  const projector=createProjector();root.add(projector.root);
   const piano=furnish('piano',-4.6,1,.13);interact('about','Read Rabin’s story',-7,2.1,'about');interact('fireplace','Toggle the fireplace',-10.55,3,'fireplace');interact('piano','Play the piano',-4.6,2.3,'piano');
 
   const bookshelf=furnish('bookcase',-7,-9.35,.13,{width:7.5,height:2.8,depth:.72});
@@ -404,5 +406,5 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
 
   root.updateMatrixWorld(true);for(const b of blockers)if(b.mesh)updateCollider(b);
   const hostBlocker={minX:-.3,maxX:.3,minZ:7.1,maxZ:7.7,minY:.13,maxY:1.9,navOnly:true,host:true};
-  return {root,blockers,interactions,markers,door,doorBlocker,doors,doorbell,entranceLights,fireGroup,fireLight,bulbs,roof,car,carDoors,carWheels,vehicle,carBlocker,hostBlocker,ball,rim,hoop:{x:-19,y:2.98,z:-16.82},toys,breakables,seats,piano,arcade,pool,physicsFloors,checkpoints,raceGate,rope,visuals,registerFragile:fragile};
+  return {root,blockers,interactions,markers,door,doorBlocker,doors,doorbell,entranceLights,fireGroup,fireLight,bulbs,roof,car,carDoors,carWheels,vehicle,carBlocker,hostBlocker,ball,rim,hoop:{x:-19,y:2.98,z:-16.82},toys,breakables,seats,piano,projector,arcade,pool,physicsFloors,checkpoints,raceGate,rope,visuals,registerFragile:fragile};
 }
