@@ -105,6 +105,30 @@ function bendLimb(character,side,target,orientation,arm=false){
   foot.quaternion.copy(foot.parent.getWorldQuaternion(new THREE.Quaternion()).invert().multiply(orientation));
 }
 
+function groundGait(character,speed,sitting,pose){
+  const rig=character.userData.rig;
+  if(!rig.asset.preserveMaterials||speed<=.12||sitting||pose.action||pose.preview||pose.airborne||!/^(walk|run|carry-walk|box-walk)$/.test(rig.motion.id??'')){rig.gait=null;return;}
+  const gait=rig.gait??={feet:[null,null],position:character.position.clone()},teleported=gait.position.distanceTo(character.position)>.4;
+  gait.position.copy(character.position);character.updateMatrixWorld(true);
+  const raw=['Right','Left'].map(side=>{
+    const foot=rig.bones[side+'Foot'],world=foot.getWorldPosition(new THREE.Vector3());
+    return {world,local:character.worldToLocal(world.clone()),rotation:foot.getWorldQuaternion(new THREE.Quaternion())};
+  });
+  for(const [i,side] of ['Right','Left'].entries()){
+    const old=teleported?null:gait.feet[i],now=raw[i],low=now.world.y-floorAt(now.world.x,now.world.z,character.position.y)<=rig.standingAnkleHeight+.04;
+    const stance=low&&(!old||(now.local.z-old.local.z)*rig.motion.gaitDirection<.005),turned=old&&Math.abs(Math.atan2(Math.sin(character.rotation.y-old.heading),Math.cos(character.rotation.y-old.heading)))>.5;
+    let planted=stance&&!turned,target=planted&&old?.planted?old.target:now.world.clone();
+    if(planted){
+      target.y=floorAt(target.x,target.z,character.position.y)+rig.standingAnkleHeight;
+      const hip=rig.bones[side+'UpLeg'].getWorldPosition(new THREE.Vector3()),knee=rig.bones[side+'Leg'].getWorldPosition(new THREE.Vector3()),reach=hip.distanceTo(knee)+knee.distanceTo(now.world)-.001;
+      // Release at push-off rather than dragging an unreachable planted foot.
+      if(hip.distanceTo(target)>reach){planted=false;target=now.world.clone();}
+      else bendLimb(character,side,target,now.rotation);
+    }
+    gait.feet[i]={local:now.local,target,planted,heading:planted&&old?.planted?old.heading:character.rotation.y};
+  }
+}
+
 function crouchPose(character,amount,time,speed){
   const {bones:b}=character.userData.rig;
   character.updateMatrixWorld(true);
@@ -207,6 +231,7 @@ export function animateRiggedCharacter(character,time,speed=0,wave=false,sitting
   }else if(sitting&&!pose.driving&&!pose.action&&pose.seatFootTargets){
     moveFoot(character,'Right',pose.seatFootTargets[0]);moveFoot(character,'Left',pose.seatFootTargets[1]);
   }
+  groundGait(character,speed,sitting,pose);
   character.updateMatrixWorld(true);
 }
 
