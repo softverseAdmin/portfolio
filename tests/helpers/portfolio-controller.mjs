@@ -8,6 +8,7 @@ import {PROGRESS_KEY} from '../../public/portfolio-game/story.js';
 class Element {
   constructor(doc,tag){this.doc=doc;this.tag=tag;this.children=[];this.parentElement=null;this.attributes={};this.style={};this.events={};this.hidden=false;this.disabled=false;this.dataset={};}
   get id(){return this.attributes.id??'';}
+  getAttribute(name){return this.attributes[name]??null;}
   get className(){return this.attributes.class??'';}
   set className(value){this.attributes.class=value;}
   get classList(){const self=this;return {add(...names){self.className=[...new Set([...self.className.split(/\s+/).filter(Boolean),...names])].join(' ');},remove(...names){self.className=self.className.split(/\s+/).filter(n=>!names.includes(n)).join(' ');},toggle(name,force){const on=force??!self.className.split(/\s+/).includes(name);this[on?'add':'remove'](name);return on;}};}
@@ -49,7 +50,7 @@ export async function controllerFixture(t,saved=null,production={}){
   const sourceURL=new URL('../../public/portfolio-game/game.js',import.meta.url);let source=readFileSync(sourceURL,'utf8');
   source=source.replace(/from\s+(['"])(\.\/[^'"]+)\1/g,(_,quote,path)=>'from '+quote+new URL(path,sourceURL).href+quote).replace(/\nboot\(\);\s*$/,'\n');
   source='const setTimeout=()=>0,clearTimeout=()=>{},requestAnimationFrame=()=>null,cancelAnimationFrame=()=>{};\n'+source;
-  source+=`\n// Controller fixture ${++fixtureId}\nexport {state,beginVisit,skipInvitation,updateDoors,moveHost,movePlayer,resetPosition,hideDialogue,showChapter,previewStory,hostConversation,updatePresentation,finishPresentation,repairScene};
+  source+=`\n// Controller fixture ${++fixtureId}\nexport {state,beginVisit,skipInvitation,updateDoors,moveHost,movePlayer,resetPosition,hideDialogue,showChapter,previewStory,hostConversation,updatePresentation,finishPresentation,repairScene,selectDesktopPage};
     export function mountFixture(f){renderer=f.renderer;scene=f.scene;camera=f.camera;world=f.world;physics=f.physics;player=f.player;host=f.host;sun=f.sun;ambient=f.ambient;trajectory=new THREE.Line(new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute(new Float32Array(32*3),3)),new THREE.LineDashedMaterial());world.cameraBlockers=[...world.blockers];visit=createArrival(world,host);canvas.tabIndex=0;bindEvents();}
     export function getVisit(){return visit;}
     export function placeVisitor(p){playerPos={...p};player.position.set(p.x,p.y,p.z);}
@@ -61,6 +62,7 @@ export async function controllerFixture(t,saved=null,production={}){
     //# sourceURL=portfolio-controller-fixture-${fixtureId}.mjs
   `;
   const api=await import('data:text/javascript,'+encodeURIComponent(source));const scene=new THREE.Scene();scene.fog=new THREE.Fog('#c1cfb8',46,100);
-  api.mountFixture({world,physics,host,player,scene,camera:new THREE.PerspectiveCamera(48,1000/700,.1,160),sun:new THREE.DirectionalLight(),ambient:new THREE.HemisphereLight(),renderer:{shadowMap:{enabled:true},setPixelRatio(){},setSize(){},dispose(){},render(){}}});
-  return {api,world,physics,host,player,doc,data,window,keydown(code,target=doc.getElementById('world')){const e={code,target,repeat:false,preventDefault(){}};for(const fn of window.events.keydown)fn(e);}};
+  const camera=new THREE.PerspectiveCamera(48,1000/700,.1,160);
+  api.mountFixture({world,physics,host,player,scene,camera,sun:new THREE.DirectionalLight(),ambient:new THREE.HemisphereLight(),renderer:{shadowMap:{enabled:true},setPixelRatio(){},setSize(){},dispose(){},render(){}}});
+  return {api,world,physics,host,player,scene,camera,doc,data,window,keydown(code,target=doc.getElementById('world')){const e={code,target,repeat:false,preventDefault(){}};for(const fn of window.events.keydown)fn(e);}};
 }

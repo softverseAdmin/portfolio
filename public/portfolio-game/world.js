@@ -4,6 +4,7 @@ import {createVehicle} from './vehicle.js';
 import {updateCollider} from './physics.js';
 import {createRoadDistrict} from './journey.js';
 import {createProjector} from './projector.js';
+import {createStudyDesktop} from './desktop.js';
 
 const geometries=new Map();
 const boxes=(w,h,d)=>{const key=[w,h,d].join(',');if(!geometries.has(key))geometries.set(key,new THREE.BoxGeometry(w,h,d));return geometries.get(key);};
@@ -290,6 +291,7 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
   const bookshelf=furnish('bookcase',-7,-9.35,.13,{width:7.5,height:2.8,depth:.72});
   const desk=furnish('desk',-7,-5.9,.13,{width:4.7,height:.83,depth:1.55});
   const monitor=furnish('monitor',-7,-6.04,.972,{width:1.4,height:.94,depth:.3,screenMaterial:signMaterial(['RABIN ADHIKARI','ENGINEER / PROJECT LEAD'])});
+  const study={desk,monitor,desktop:createStudyDesktop(monitor)};
   const studyChair=movableChair('study-chair','chair',-8.35,-4.3,.13,{rotation:Math.PI,height:1.05});seat('study-seat','Sit at the desk',studyChair.mesh,[1.2,0,.25],studyChair.toy);
   loose('keyboard','study-keyboard','keyboard',-7,.978,-5.4,{kind:'electronics',mass:.65});loose('mouse','study-mouse','mouse',-6.43,.978,-5.38,{kind:'electronics',mass:.09});
   loose('pens','study-pens','pens',-8.08,.978,-5.35,{mass:.025});loose('books','study-books','books',-8.4,.978,-5.9,{mass:.9});
@@ -406,5 +408,5 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
 
   root.updateMatrixWorld(true);for(const b of blockers)if(b.mesh)updateCollider(b);
   const hostBlocker={minX:-.3,maxX:.3,minZ:7.1,maxZ:7.7,minY:.13,maxY:1.9,navOnly:true,host:true};
-  return {root,blockers,interactions,markers,door,doorBlocker,doors,doorbell,entranceLights,fireGroup,fireLight,bulbs,roof,car,carDoors,carWheels,vehicle,carBlocker,hostBlocker,ball,rim,hoop:{x:-19,y:2.98,z:-16.82},toys,breakables,seats,piano,projector,arcade,pool,physicsFloors,checkpoints,raceGate,rope,visuals,registerFragile:fragile};
+  return {root,blockers,interactions,markers,door,doorBlocker,doors,doorbell,entranceLights,fireGroup,fireLight,bulbs,roof,car,carDoors,carWheels,vehicle,carBlocker,hostBlocker,ball,rim,hoop:{x:-19,y:2.98,z:-16.82},toys,breakables,seats,piano,projector,study,arcade,pool,physicsFloors,checkpoints,raceGate,rope,visuals,registerFragile:fragile};
 }

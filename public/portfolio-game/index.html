@@ -7,9 +7,9 @@
   <meta name="description" content="Meet Rabin Adhikari. Explore a playable home filled with stories about full-stack development, healthcare, cloud, and AI.">
   <title>Rabin’s House — A portfolio you can explore</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23192b29'/%3E%3Cpath d='M12 31 32 14 52 31M20 29v23h24V29M29 52V38h6v14' fill='none' stroke='%23e9c58b' stroke-width='4'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=18">
-  <link rel="stylesheet" href="./mobile.css?v=18">
-  <link rel="stylesheet" href="./presentation.css?v=18">
+  <link rel="stylesheet" href="./style.css?v=19">
+  <link rel="stylesheet" href="./mobile.css?v=19">
+  <link rel="stylesheet" href="./presentation.css?v=19">
 </head>
 <body class="preparing">
   <div id="game-viewport">
@@ -58,9 +58,17 @@
   <button id="skip-greeting" class="skip-greeting" hidden>Skip greeting · Esc</button>
   <section id="invitation" class="invitation" hidden aria-labelledby="invitation-title"><span class="tiny-label">00 / THE INVITATION · BEFORE THE DRIVE</span><h2 id="invitation-title">An invitation</h2><p id="invitation-text" aria-live="polite"></p><div class="invitation-actions"><button id="invitation-next" class="gold-button">Answer & drive →</button><button id="skip-invitation" class="text-button">Skip to the house</button></div><small>E or Space to continue · Esc for settings</small></section>
   <section id="dialogue" class="dialogue" hidden><div class="avatar-mark">RA</div><div class="dialogue-body"><span class="tiny-label" id="dialogue-label">RABIN · YOUR HOST</span><p id="dialogue-text" aria-live="polite"></p><div id="dialogue-choices" class="dialogue-choices" aria-label="Questions for Rabin"></div><div class="dialogue-actions"><button id="dialogue-next" class="gold-button">Next room →</button><button id="dialogue-read" class="text-button" hidden>Read the project →</button><button id="dialogue-close" class="text-button">Keep exploring</button></div></div></section>
-  <section id="presentation" class="presentation" role="dialog" aria-modal="true" aria-labelledby="story-title" hidden>
+  <section id="presentation" class="presentation" role="dialog" aria-modal="true" aria-labelledby="story-title" aria-describedby="story-details" hidden>
     <h2 id="story-title" class="story-accessible">Rabin Adhikari</h2><p id="story-details" class="story-accessible">Software Engineer & Project Lead</p>
     <button id="story-exit" class="story-exit" aria-label="Exit story and return to movement"><span aria-hidden="true">×</span> Exit story</button>
+    <button id="desktop-browse" class="desktop-browse" aria-expanded="false" aria-controls="desktop-menu" hidden>Browse desktop</button>
+    <div id="desktop-menu" class="desktop-menu" aria-label="Desktop sections and projects" hidden>
+      <p>Browse the desktop</p>
+      <div class="desktop-sections"><button data-desktop-page="projects">Projects</button><button data-desktop-page="experience">Experience</button><button data-desktop-page="skills">Skills</button><button data-desktop-page="about">About</button></div>
+      <p>View a project</p>
+      <div class="desktop-projects"><button data-desktop-page="healthcare">Healthcare</button><button data-desktop-page="ai">AI applications</button><button data-desktop-page="softlearn">SoftLearn</button></div>
+      <div class="desktop-questions"><button data-desktop-page="question-0">What did you do at PERSOL?</button><button data-desktop-page="question-1">What is your healthcare experience?</button></div>
+    </div>
     <div class="story-subtitles"><strong>Rabin</strong><p id="story-caption" aria-live="polite" aria-atomic="true">Make yourself comfortable.</p></div>
     <div class="story-controls"><button id="story-pause" aria-pressed="false" aria-label="Pause the story"><span id="story-pause-icon" aria-hidden="true">Ⅱ</span><span id="story-pause-label">Pause</span></button><span id="story-count" aria-label="Slide 1 of 4">1 / 4</span><button id="story-next" disabled>Next <span aria-hidden="true">→</span></button></div>
   </section>
@@ -69,6 +77,6 @@
   <div id="fatal" class="fatal" hidden><h2>Your visit needs a browser with WebGL 2.</h2><p>You can still explore Rabin’s work below.</p><button id="fallback-portfolio" class="primary">View portfolio →</button><button id="fatal-retry" class="text-button">Retry loading →</button></div>
   <noscript><div class="fatal"><h2>Rabin Adhikari</h2><p>Full-stack engineer and project lead based in Tokyo. Experience in healthcare applications, cloud systems, and AI integration.</p><p>Enable JavaScript to explore the house, or <a href="https://www.linkedin.com/in/rabin-adhikari-52573320b/">visit LinkedIn</a>.</p></div></noscript>
   </div>
-  <script type="module" src="./startup.js?v=18"></script>
+  <script type="module" src="./startup.js?v=19"></script>
 </body>
 </html>
