@@ -923,8 +923,12 @@ function movePlayer(dt){
   // facing direction every frame would make a held sideways input spiral.
   if(len>.05)movementYaw??=yaw;else movementYaw=null;
   const inputYaw=state.aiming||state.charging?yaw:movementYaw??yaw;
-  state.moveVX+=((-Math.sin(inputYaw)*forward+Math.cos(inputYaw)*side)*speed-state.moveVX)*acceleration;
-  state.moveVZ+=((-Math.cos(inputYaw)*forward-Math.sin(inputYaw)*side)*speed-state.moveVZ)*acceleration;
+  const targetVX=(-Math.sin(inputYaw)*forward+Math.cos(inputYaw)*side)*speed;
+  const targetVZ=(-Math.cos(inputYaw)*forward-Math.sin(inputYaw)*side)*speed;
+  // A new direction must not keep carrying the visitor the opposite way.
+  if(len>.05&&state.moveVX*targetVX+state.moveVZ*targetVZ<0)state.moveVX=state.moveVZ=0;
+  state.moveVX+=(targetVX-state.moveVX)*acceleration;
+  state.moveVZ+=(targetVZ-state.moveVZ)*acceleration;
   const dx=state.moveVX*dt,dz=state.moveVZ*dt,previous={...playerPos};
   physics.nudgeFurniture(playerPos,{x:state.moveVX,z:state.moveVZ},dt);
   const hostBlocker={...world.hostBlocker,...actorBlocker(host.position,HOST_RADIUS),maxY:host.position.y+actorHeight(host)};
@@ -939,7 +943,11 @@ function movePlayer(dt){
   const travelled=Math.hypot(playerPos.x-previous.x,playerPos.z-previous.z);
   if(state.grounded&&travelled>.002){footstepTravel+=travelled;if(footstepTravel>(sprint?.85:.65)){footstepTravel=0;footstepSound(surfaceAt(playerPos.x,playerPos.z,playerPos.y));}}else if(!state.grounded)footstepTravel=0;
   if(state.aiming||state.charging||state.punch)player.rotation.y=angleLerp(player.rotation.y,yaw+Math.PI,1-Math.exp(-18*dt));
-  else if(travelled>.001)player.rotation.y=angleLerp(player.rotation.y,Math.atan2(dx,dz),1-Math.exp(-14*dt));
+  else if(travelled>.001){
+    const heading=Math.atan2(playerPos.x-previous.x,playerPos.z-previous.z);
+    const turn=Math.atan2(Math.sin(heading-player.rotation.y),Math.cos(heading-player.rotation.y));
+    player.rotation.y=angleLerp(player.rotation.y,heading,Math.abs(turn)>Math.PI/2?1:1-Math.exp(-14*dt));
+  }
   yaw=player.rotation.y-Math.PI;
   return travelled/dt;
 }

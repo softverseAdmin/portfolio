@@ -157,7 +157,6 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
   const roadDistrict=createRoadDistrict();root.add(roadDistrict.root);blockers.push(...roadDistrict.blockers);visuals.road=roadDistrict.root;
   sign(['RABIN’S HOUSE','FOLLOW THE ROAD →'], -21,1.7,73,3,1.15);
   sign(['RABIN’S HOUSE','DRIVEWAY ↗'], -4,1.5,30,2.5,1);
-  sign(['WELCOME','PARK HERE'],18,1.5,15.3,2,1);
   box(6.3,.04,17,0,.009,21,m.stone);
   for(let z=14;z<30;z+=2)box(6.25,.005,.016,0,.0315,z,mat('#959887'));
   box(7.9,.13,4,0,.065,10.9,m.stone);
