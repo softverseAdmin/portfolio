@@ -22,6 +22,7 @@ class Element {
   querySelectorAll(selector){const matches=[];const walk=node=>{for(const child of node.children){if(child.matches(selector))matches.push(child);walk(child);}};walk(this);return matches;}
   focus(){this.doc.activeElement=this;}
   setPointerCapture(){}
+  getContext(){return this.context??={save(){},restore(){},clearRect(){},fillRect(){},strokeRect(){},beginPath(){},moveTo(){},lineTo(){},closePath(){},fill(){},stroke(){},arc(){},fillText(){},setLineDash(){},translate(){},rotate(){}};}
   getBoundingClientRect(){return {left:0,top:0,width:105,height:105};}
 }
 function parse(doc,html,parent){
@@ -37,10 +38,10 @@ function documentFixture(){
 }
 
 let fixtureId=0;
-export async function controllerFixture(t,saved=null){
+export async function controllerFixture(t,saved=null,production={}){
   const keys=['document','window','matchMedia','localStorage','innerWidth','innerHeight','devicePixelRatio'];const originals=keys.map(key=>[key,Object.getOwnPropertyDescriptor(globalThis,key)]);
   delete globalThis.document;
-  const world=createWorld(),physics=createSandboxPhysics(world),host=createCharacter({host:true}),player=createCharacter();host.userData.nameSprite=new THREE.Group();
+  const world=production.world??createWorld(),physics=production.physics??createSandboxPhysics(world),host=production.host??createCharacter({host:true}),player=production.player??createCharacter();host.userData.nameSprite=new THREE.Group();
   const doc=documentFixture(),data=new Map([['rabin-house-lap','31.2']]);if(saved)data.set(PROGRESS_KEY,JSON.stringify(saved));
   const window={events:{},addEventListener(name,fn){(this.events[name]??=[]).push(fn);}};
   Object.assign(globalThis,{document:doc,window,matchMedia:()=>({matches:false}),localStorage:{getItem:key=>data.get(key)??null,setItem:(key,value)=>data.set(key,value)},innerWidth:1000,innerHeight:700,devicePixelRatio:1});
@@ -49,7 +50,7 @@ export async function controllerFixture(t,saved=null){
   source=source.replace(/from\s+(['"])(\.\/[^'"]+)\1/g,(_,quote,path)=>'from '+quote+new URL(path,sourceURL).href+quote).replace(/\nboot\(\);\s*$/,'\n');
   source='const setTimeout=()=>0,clearTimeout=()=>{},requestAnimationFrame=()=>null,cancelAnimationFrame=()=>{};\n'+source;
   source+=`\n// Controller fixture ${++fixtureId}\nexport {state,beginVisit,skipInvitation,updateDoors,moveHost,movePlayer,resetPosition,hideDialogue,showChapter,previewStory,hostConversation,updatePresentation,finishPresentation,repairScene};
-    export function mountFixture(f){renderer=f.renderer;scene=f.scene;camera=f.camera;world=f.world;physics=f.physics;player=f.player;host=f.host;sun=f.sun;ambient=f.ambient;world.cameraBlockers=[...world.blockers];visit=createArrival(world,host);canvas.tabIndex=0;bindEvents();}
+    export function mountFixture(f){renderer=f.renderer;scene=f.scene;camera=f.camera;world=f.world;physics=f.physics;player=f.player;host=f.host;sun=f.sun;ambient=f.ambient;trajectory=new THREE.Line(new THREE.BufferGeometry().setAttribute('position',new THREE.Float32BufferAttribute(new Float32Array(32*3),3)),new THREE.LineDashedMaterial());world.cameraBlockers=[...world.blockers];visit=createArrival(world,host);canvas.tabIndex=0;bindEvents();}
     export function getVisit(){return visit;}
     export function placeVisitor(p){playerPos={...p};player.position.set(p.x,p.y,p.z);}
     export function visitorPosition(){return {...playerPos};}
@@ -57,6 +58,7 @@ export async function controllerFixture(t,saved=null){
     export function cameraPosition(){return camera.position.clone();}
     export function advanceFrame(dt){frame(previousTime+dt*1000);}
     export function simulateLoading(){world=null;player=null;host=null;}
+    //# sourceURL=portfolio-controller-fixture-${fixtureId}.mjs
   `;
   const api=await import('data:text/javascript,'+encodeURIComponent(source));const scene=new THREE.Scene();scene.fog=new THREE.Fog('#c1cfb8',46,100);
   api.mountFixture({world,physics,host,player,scene,camera:new THREE.PerspectiveCamera(48,1000/700,.1,160),sun:new THREE.DirectionalLight(),ambient:new THREE.HemisphereLight(),renderer:{shadowMap:{enabled:true},setPixelRatio(){},setSize(){},dispose(){},render(){}}});

@@ -26,7 +26,7 @@ function pillars(c,y){
 
 // One reusable unlit texture keeps slide text clear without extra scene lighting.
 export function createProjector(){
-  const root=new THREE.Group();root.name='living-room-projector';root.position.set(-7,2.05,.22);root.visible=false;
+  const root=new THREE.Group();root.name='living-room-projector';root.position.set(-7,3,.22);root.visible=false;
   const canvas=typeof document==='undefined'?null:document.createElement('canvas');
   if(canvas){canvas.width=1536;canvas.height=864;}
   const context=canvas?.getContext?.('2d')??null,texture=context?new THREE.CanvasTexture(canvas):null;
