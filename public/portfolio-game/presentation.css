@@ -1,0 +1,29 @@
+/* Story controls share the same landscape surface as the rendered projector. */
+.presentation{position:absolute;inset:0;z-index:8;pointer-events:none;color:#f1eedc}
+.presentation button{pointer-events:auto;min-height:44px;border:1px solid #e6e2c77a;border-radius:30px;background:#173b32e8;color:#f1eedc;font-size:clamp(12px,1.2cqw,18px);padding:11px 20px;display:flex;align-items:center;justify-content:center;gap:10px}
+.presentation button:hover{background:#315344;transform:none}
+.presentation button:focus-visible{outline:3px solid #e8cd91;outline-offset:4px}
+.presentation button:disabled{opacity:.55;cursor:default}
+.presentation .story-exit{position:absolute;right:calc(22px + var(--safe-right,0px));top:calc(16px + var(--safe-top,0px));min-width:124px}
+.story-exit>span{font-size:26px;line-height:20px}
+.story-subtitles{position:absolute;left:50%;bottom:calc(82px + var(--safe-bottom,0px));transform:translateX(-50%);width:min(960px,86%);display:flex;align-items:center;gap:20px;border-radius:14px;padding:14px 22px;background:#173b32eb;font-size:clamp(12px,1.15cqw,18px);line-height:1.5}
+.story-subtitles strong{color:#dfc58b;flex-shrink:0;font-weight:500;padding-right:20px;border-right:1px solid #dfc58b66}
+.story-subtitles p{margin:0;min-width:0}
+.story-controls{position:absolute;left:50%;bottom:calc(16px + var(--safe-bottom,0px));transform:translateX(-50%);display:flex;gap:24px;align-items:center}
+.story-controls button{min-width:104px}
+#story-count{min-width:52px;text-align:center;white-space:nowrap;font-size:clamp(11px,1.2cqw,17px);text-shadow:0 1px 4px #11251a}
+.story-accessible{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);clip-path:inset(50%);white-space:nowrap}
+.story-mode #hud,.story-mode #dialogue,.story-mode #toast,.story-mode .top-actions,.story-mode .vignette{display:none}
+.story-mode .topbar{z-index:9;align-items:flex-start;pointer-events:none;padding:calc(16px + var(--safe-top,0px)) calc(22px + var(--safe-right,0px)) 0 calc(22px + var(--safe-left,0px))}
+.story-mode .brand{pointer-events:none;max-width:calc(100% - 150px);font-size:clamp(12px,1.4cqw,22px);gap:12px}
+.story-mode .brand small{display:block;font-size:clamp(11px,1.1cqw,17px);letter-spacing:.2px;white-space:nowrap;max-width:none}
+.story-mode .brand-icon{width:44px;height:44px;border-radius:14px;border:1px solid #f1eedc99;background:#173b3277;font-size:28px}
+.mobile-landscape .story-subtitles{bottom:calc(70px + var(--safe-bottom));padding:9px 14px;gap:12px;border-radius:11px}
+.mobile-landscape .story-subtitles strong{padding-right:12px}
+.mobile-landscape .story-controls{gap:16px;bottom:calc(10px + var(--safe-bottom))}
+.mobile-landscape .presentation button{padding:10px 16px;font-size:12px}
+@container game (max-height:350px){
+  .story-subtitles,.mobile-landscape .story-subtitles{bottom:calc(62px + var(--safe-bottom,0px));font-size:11px;padding:7px 12px;line-height:1.4}
+  .story-controls,.mobile-landscape .story-controls{bottom:calc(6px + var(--safe-bottom,0px))}
+  .story-mode .brand small{font-size:10px}
+}

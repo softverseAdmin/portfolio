@@ -4,7 +4,7 @@ import {CCDIKSolver} from './vendor/addons/animation/CCDIKSolver.js';
 import {floorAt} from './core.js';
 import {dressCharacter} from './skins.js';
 import {bindReviewedAppearance} from './model-assets.js';
-import {animateMotion,restoreSamplePose,rememberSamplePose} from './motions.js';
+import {animateMotion,animateSeatedTalk,restoreSamplePose,rememberSamplePose} from './motions.js';
 
 const axisX=new THREE.Vector3(1,0,0),rotation=new THREE.Quaternion();
 const smooth=(a,b,t)=>THREE.MathUtils.smoothstep(t,a,b);
@@ -158,6 +158,7 @@ export function animateRiggedCharacter(character,time,speed=0,wave=false,sitting
   if(pose.airborne){rotateBone(b.RightUpLeg,-.5);rotateBone(b.LeftUpLeg,.3);}
   }
   if(pose.kick){rotateBone(b.RightUpLeg,-1.4*Math.sin(Math.PI*pose.kick));rotateBone(b.RightLeg,-.15);}
+  if(sitting&&pose.talking)animateSeatedTalk(character,time);
   if(crouching)crouchPose(character,crouching,time,speed);
   const running=!rig.asset.preserveMaterials&&pose.running&&rig.motion.id==='run'&&!pose.action&&!sitting&&!pose.airborne&&!pose.carry;
   if(running){

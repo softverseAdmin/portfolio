@@ -78,22 +78,11 @@
 .mobile-landscape .toast{top:calc(112px + var(--safe-top));max-width:calc(100% - 280px);padding:9px 14px;font-size:10px;background:#173b32ef;backdrop-filter:none}
 .mobile-landscape .journey{top:calc(122px + var(--safe-top));left:calc(16px + var(--safe-left));max-width:230px;padding:10px;backdrop-filter:none}
 .mobile-landscape .journey p{font-size:10px}
-.mobile-landscape #loading{padding:16px 5%;gap:8px;min-height:100%;overflow:auto}
-.mobile-landscape .load-top{font-size:8px;letter-spacing:1.5px}
-.mobile-landscape .load-name{font-size:clamp(56px,13cqw,126px);margin:4px 0 10px}
-.mobile-landscape .load-bottom{width:min(620px,100%);padding:0}
-.mobile-landscape .load-counter strong{font-size:40px}
-.mobile-landscape .load-assets{font-size:10px;margin:10px 0}
-.mobile-landscape .load-assets b{font-size:10px}
-.mobile-landscape .load-actions{margin-top:12px}
-.mobile-landscape .load-orbit{width:180px;height:180px;filter:none}
 .mobile-landscape .fatal{padding:24px}
 .mobile-landscape .fatal h2{font-size:24px}
 @container game (max-height:350px){
   .mobile-landscape .welcome h1{font-size:30px;margin:10px 0}
   .mobile-landscape .welcome-note{display:none}
-  .mobile-landscape .load-name{font-size:64px;margin:0}
-  .mobile-landscape .load-counter strong{font-size:32px}
   .mobile-landscape .minimap-wrap{width:102px;height:118px}
   .mobile-landscape .minimap-wrap #minimap{width:90px;height:90px}
   .mobile-landscape .toast{top:104px}

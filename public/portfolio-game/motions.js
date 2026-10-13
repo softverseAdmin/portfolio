@@ -141,3 +141,15 @@ export function endGreeting(character){
   rig.action.enabled=false;
   rig.motion.id=null;rig.motion.lastTime=null;rig.motion.wasMoving=false;
 }
+
+// Use only the original talk clip's upper body over the supplied seated loop.
+export function animateSeatedTalk(character,time,weight=.8){
+  const rig=character.userData.rig,clip=rig?.asset.motions?.clips.get('talk');if(!clip)return false;
+  let cached=rig.motion.seatedTalk;
+  if(cached?.clip!==clip){
+    const tracks=clip.tracks.filter(track=>/((Left|Right)(Arm|ForeArm|Hand[^.]*)|Spine[12]?|Neck|Head)\.quaternion$/.test(track.name)).map(track=>({bone:rig.idle.find(entry=>entry.bone.name===track.name.slice(0,-11))?.bone,sample:track.createInterpolant(),rotation:new THREE.Quaternion()})).filter(track=>track.bone);
+    cached=rig.motion.seatedTalk={clip,tracks};
+  }
+  for(const track of cached.tracks)track.bone.quaternion.slerp(track.rotation.fromArray(track.sample.evaluate(time%clip.duration)),weight);
+  return cached.tracks.length>0;
+}

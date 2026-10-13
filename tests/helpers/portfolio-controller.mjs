@@ -47,17 +47,18 @@ export async function controllerFixture(t,saved=null){
   t.after(()=>{for(const [key,descriptor] of originals){if(descriptor)Object.defineProperty(globalThis,key,descriptor);else delete globalThis[key];}});
   const sourceURL=new URL('../../public/portfolio-game/game.js',import.meta.url);let source=readFileSync(sourceURL,'utf8');
   source=source.replace(/from\s+(['"])(\.\/[^'"]+)\1/g,(_,quote,path)=>'from '+quote+new URL(path,sourceURL).href+quote).replace(/\nboot\(\);\s*$/,'\n');
-  source='const setTimeout=()=>0,clearTimeout=()=>{},requestAnimationFrame=()=>{};\n'+source;
-  source+=`\n// Controller fixture ${++fixtureId}\nexport {state,beginVisit,skipInvitation,updateDoors,moveHost,movePlayer,resetPosition,hideDialogue};
+  source='const setTimeout=()=>0,clearTimeout=()=>{},requestAnimationFrame=()=>null,cancelAnimationFrame=()=>{};\n'+source;
+  source+=`\n// Controller fixture ${++fixtureId}\nexport {state,beginVisit,skipInvitation,updateDoors,moveHost,movePlayer,resetPosition,hideDialogue,showChapter,previewStory,hostConversation,updatePresentation,finishPresentation,repairScene};
     export function mountFixture(f){renderer=f.renderer;scene=f.scene;camera=f.camera;world=f.world;physics=f.physics;player=f.player;host=f.host;sun=f.sun;ambient=f.ambient;world.cameraBlockers=[...world.blockers];visit=createArrival(world,host);canvas.tabIndex=0;bindEvents();}
     export function getVisit(){return visit;}
     export function placeVisitor(p){playerPos={...p};player.position.set(p.x,p.y,p.z);}
     export function visitorPosition(){return {...playerPos};}
     export function cameraHeading(){return yaw;}
     export function cameraPosition(){return camera.position.clone();}
+    export function advanceFrame(dt){frame(previousTime+dt*1000);}
     export function simulateLoading(){world=null;player=null;host=null;}
   `;
   const api=await import('data:text/javascript,'+encodeURIComponent(source));const scene=new THREE.Scene();scene.fog=new THREE.Fog('#c1cfb8',46,100);
-  api.mountFixture({world,physics,host,player,scene,camera:new THREE.PerspectiveCamera(48,1000/700,.1,160),sun:new THREE.DirectionalLight(),ambient:new THREE.HemisphereLight(),renderer:{shadowMap:{enabled:true},setPixelRatio(){},setSize(){}}});
+  api.mountFixture({world,physics,host,player,scene,camera:new THREE.PerspectiveCamera(48,1000/700,.1,160),sun:new THREE.DirectionalLight(),ambient:new THREE.HemisphereLight(),renderer:{shadowMap:{enabled:true},setPixelRatio(){},setSize(){},dispose(){},render(){}}});
   return {api,world,physics,host,player,doc,data,window,keydown(code,target=doc.getElementById('world')){const e={code,target,repeat:false,preventDefault(){}};for(const fn of window.events.keydown)fn(e);}};
 }
