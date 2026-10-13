@@ -81,6 +81,9 @@ export function animateMotion(character,time,speed,sitting,pose={}){
   const rig=character.userData.rig;
   if(!rig.asset.motions?.clips.size)return false;
   const state=rig.motion,dt=Math.max(0,Math.min(time-(state.lastTime??time),.05));
+  const displacement=state.previousRoot?character.position.clone().sub(state.previousRoot):new THREE.Vector3();state.previousRoot=character.position.clone();
+  const forward=new THREE.Vector3(0,0,1).applyQuaternion(character.quaternion);
+  state.gaitDirection=displacement.lengthSq()>.0000001&&displacement.lengthSq()<.16&&displacement.dot(forward)<0?-1:1;
   if(pose.running)prepareSprint(rig);
   state.lastTime=time;
   let id='idle',sample=0,explicit=false;
@@ -105,23 +108,26 @@ export function animateMotion(character,time,speed,sitting,pose={}){
   else if(pose.waving&&rig.asset.motions.clips.has('wave')){id='wave';}
   else if(pose.carry){id=speed>.12?(pose.twoHands?'box-walk':'carry-walk'):(pose.twoHands?'box-idle':'carry-idle');}
   else if(speed>.12){
-    if(!state.wasMoving)state.movingSince=time;
-    if(time-state.movingSince<.25){id='start-walk';sample=(time-state.movingSince)*1.8;explicit=true;}
-    else id=pose.running?'run':'walk';
+    // The supplied start recordings begin with a long stationary lead-in.
+    // Blend into the walking loop as movement starts; the recordings remain
+    // available for explicit previews and actions.
+    id=pose.running?'run':'walk';
   }
   state.wasMoving=speed>.12&&!pose.action&&!pose.driving&&!sitting&&!pose.crouching;
   id=available(rig,id);
   if(!id)return false;
   if(state.id!==id){
-    state.from=state.blendedPose??state.basePose??snapshot(rig);state.blend=0;state.clock=0;
+    const gait=/^(walk|run|carry-walk|box-walk)$/;
+    const phase=gait.test(state.id??'')&&gait.test(id)?state.clock/actionDuration(character,state.id):0;
+    state.from=state.blendedPose??state.basePose??snapshot(rig);state.blend=0;state.clock=phase*actionDuration(character,id);
   }
   state.blend=Math.min(1,state.blend+dt/.18);
   const duration=actionDuration(character,id);
   if(!explicit){
     const height=rig.model.userData.appearance?.height??1.95,scale=height/1.95;
-    const recordedSpeed=rig.asset.motions.catalog.clips.find(c=>c.id===id)?.gaitSpeed;
+    const recordedSpeed=rig.asset.motions.catalog.clips.find(c=>c.id===(['carry-walk','box-walk'].includes(id)?'walk':id))?.gaitSpeed;
     const rate=recordedSpeed>0?THREE.MathUtils.clamp(speed/recordedSpeed,.35,2.7):/walk/.test(id)?Math.max(.35,Math.min(2.7,speed/(1.8*scale))):id==='run'?Math.max(.5,Math.min(1.6,speed/(4.6*height/1.75))):1;
-    state.clock+=dt*rate;sample=state.clock%duration;
+    state.clock+=dt*rate*(/^(walk|run|carry-walk|box-walk)$/.test(id)?state.gaitDirection:1);sample=((state.clock%duration)+duration)%duration;
   }
   sampleMotion(character,id,sample,state.blend);
   // Match the last vehicle pose to the seated loop rather than carrying an FBX root offset into driving.

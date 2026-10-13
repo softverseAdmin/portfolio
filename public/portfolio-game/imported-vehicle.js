@@ -3,6 +3,7 @@ import {GLTFLoader} from './vendor/addons/loaders/GLTFLoader.js';
 import {MeshoptDecoder} from './vendor/meshopt_decoder.module.js';
 import {receiveAsset} from './asset-transfer.js';
 import {withTextureBudget} from './texture-budget.js';
+import {prepareOriginalWheels} from './wheel-geometry.js';
 
 const assetURL=file=>new URL('./assets/imported/car/'+file,import.meta.url).href;
 const point=(root,node)=>root.worldToLocal(node.getWorldPosition(new THREE.Vector3()));
@@ -81,15 +82,15 @@ export class ImportedCarControls{
 }
 
 export function createImportedVehicle(source,configuration=source.config){
-  const car=new THREE.Group();car.name='Uploaded original functional Land Cruiser';const model=(source.scene??source).clone(true);car.add(model);car.updateMatrixWorld(true);
+  const car=new THREE.Group();car.name='Uploaded original functional Land Cruiser';const model=(source.scene??source).clone(true);car.add(model);car.updateMatrixWorld(true);prepareOriginalWheels(car,configuration);
   const config=configuration,carDoors=config.doors.map(definition=>{
     const group=required(car,definition.name),front=definition.name.endsWith('Front'),side=definition.name.includes('Right')?1:-1,inner=required(car,definition.name+'_InnerPanel');
     inner.geometry.computeBoundingBox();const size=inner.geometry.boundingBox.getSize(new THREE.Vector3()),center=inner.geometry.boundingBox.getCenter(new THREE.Vector3()).applyMatrix4(inner.matrix);
     return {group,side,front,angle:definition.angle,open:false,panel:required(car,definition.name+'_Exterior'),collision:{shapes:[{halfExtents:[Math.max(.06,size.x/2),.62,size.z/2],offset:[center.x,0,center.z]}]}};
   });
   const carWheels=config.wheels.map(definition=>{
-    const steer=required(car,definition.steer),spin=required(car,definition.spin),mesh=spin.children.find(node=>node.isMesh),box=new THREE.Box3().setFromObject(mesh),width=box.getSize(new THREE.Vector3()).x,position=point(car,steer);
-    return {group:steer,steer,spin,tire:mesh,front:definition.front,side:position.x>0?1:-1,radius:definition.radius,width,suspensionRestY:position.y,localPosition:position,collision:{type:'cylinder',radius:definition.radius,height:width,axis:'X'}};
+    const steer=required(car,definition.steer),spin=required(car,definition.spin),meshes=spin.children.filter(node=>node.isMesh),mesh=meshes[0],box=new THREE.Box3().setFromObject(spin),width=box.getSize(new THREE.Vector3()).x,position=point(car,steer),radius=spin.userData.tyreRadius??definition.radius;
+    return {group:steer,steer,spin,tire:mesh,meshes,front:definition.front,side:position.x>0?1:-1,radius,width,suspensionRestY:position.y,localPosition:position,collision:{type:'cylinder',radius,height:width,axis:'X'}};
   });
   const lamps=config.lights.flatMap(definition=>{
     const group=required(car,definition.name),entries=[];

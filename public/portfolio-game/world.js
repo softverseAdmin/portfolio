@@ -5,6 +5,8 @@ import {updateCollider} from './physics.js';
 import {createRoadDistrict} from './journey.js';
 import {createProjector} from './projector.js';
 import {createStudyDesktop} from './desktop.js';
+import {floorAt} from './core.js';
+import {alignVehicleWheels} from './vehicle-motion.js';
 
 const geometries=new Map();
 const boxes=(w,h,d)=>{const key=[w,h,d].join(',');if(!geometries.has(key))geometries.set(key,new THREE.BoxGeometry(w,h,d));return geometries.get(key);};
@@ -370,7 +372,7 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
   toys.push({id:'basketball',kind:'ball',label:'basketball',mesh:ball,radius:.12,mass:.62,holdable:true});
   sign(['TAKE A BREAK','PICK UP THE BALL · AIM · SHOOT'],-19,1.1,-3.8,3.8,.9,Math.PI);
 
-  const vehicle=uploadedVehicle??createVehicle(),{car,carDoors,carWheels}=vehicle;car.position.set(18,.02,18);car.rotation.y=Math.PI;root.add(car);
+  const vehicle=uploadedVehicle??createVehicle(),{car,carDoors,carWheels}=vehicle;car.position.set(18,.02,18);car.rotation.y=Math.PI;root.add(car);alignVehicleWheels(vehicle,floorAt);
   const carBlocker=collider(car,[vehicle.bounds.bodyWidth/2,vehicle.bounds.height/2,vehicle.bounds.length/2],[0,vehicle.bounds.height/2,0],{navOnly:true,vehicle:true});
   for(const d of vehicle.glass)fragile(d.id,d.mesh,d.halfExtents,{...d,center:d.center??[0,0,0],material:'glass',moving:true,label:d.type==='laminated'?'windscreen':'car window'});
   for(const d of vehicle.mirrors??[])fragile(d.id,d.mesh,d.halfExtents,{...d,center:d.center??[0,0,0],material:'glass',moving:true,label:'side mirror'});

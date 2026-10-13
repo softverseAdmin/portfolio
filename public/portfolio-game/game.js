@@ -21,6 +21,7 @@ import {PORTFOLIO as copy,STORY_PREVIEWS,CONVERSATIONS,TECH_TOPICS,INVITATION,po
 import {readVisit,writeVisit,freshVisit,createInvitation,tourRouteFrom,guideShouldWait,surfaceAt} from './story.js';
 import {INTRO_SLIDES,createPresentationStory,createStoryStage,createStudyStage,presentationCamera,studyCamera,subtitleCues,subtitleAt} from './presentation.js';
 import {STUDY_SLIDES,desktopPage} from './desktop.js';
+import {rollVehicleWheels,alignVehicleWheels} from './vehicle-motion.js';
 
 const $=id=>document.getElementById(id);
 const actorHeight=actor=>actor?.userData.rig?.asset.height??actor?.userData.rig?.model?.userData.appearance?.height??1.76;
@@ -892,14 +893,14 @@ function movePlayer(dt){
   forward=clamp(forward,-1,1);side=clamp(side,-1,1);const len=Math.hypot(forward,side);
   if(state.driving){
     if(state.skipDriveRequested){forward=side=0;state.touchBrake=true;}
-    const from={x:state.vehicle.x,z:state.vehicle.z};
+    const from={x:state.vehicle.x,z:state.vehicle.z,heading:state.vehicle.heading};
     state.vehicle=stepVehicle(state.vehicle,{forward,steer:side,brake:keys.has('Space')||state.touchBrake},dt,world.blockers);
     const v=state.vehicle;state.carSpeed=v.vx*Math.sin(v.heading)+v.vz*Math.cos(v.heading);
+    rollVehicleWheels(world.vehicle,from,v,-side*.36);
     updateVehicleRide(v,dt);
     world.car.updateMatrixWorld(true);physics.syncColliders(dt);
     const seat=seatPosition();playerPos={x:seat.x,y:seat.y,z:seat.z};player.rotation.y=v.heading;
     if(v.impact>3){physics.vehicleImpact(v.impact);state.shake=Math.min(v.impact*.035,.3);tone(90,.16,.08);}
-    for(const wheel of world.carWheels){(wheel.spin??wheel.group).rotation.x+=state.carSpeed*dt/wheel.radius;(wheel.steer??wheel.group).rotation.y=wheel.front?-side*.36:0;}
     world.vehicle.steering.rotation.z=-side*.42;state.braking=keys.has('Space')||state.touchBrake||forward*state.carSpeed<-.1;world.vehicle.controls?.setSteering(-side*.36);world.vehicle.controls?.setSpeed(state.carSpeed);
     if(elapsed>state.lookUntil&&Math.abs(state.carSpeed)>.8)yaw=angleLerp(yaw,v.heading+Math.PI,1-Math.exp(-3*dt));
     if(state.race&&!state.race.finished&&passedCheckpoint(from,v,world.checkpoints[state.race.checkpoint])){
@@ -960,7 +961,7 @@ function updateVehicleRide(vehicle,dt){
   const blend=1-Math.exp(-12*dt);world.car.position.x=vehicle.x;world.car.position.z=vehicle.z;world.car.position.y+=(average-world.car.position.y)*blend;
   const pitch=-Math.atan2(mean(front)-mean(rear),world.vehicle.bounds.wheelbase),roll=Math.atan2(mean(right)-mean(left),world.vehicle.bounds.track);
   world.car.rotation.set(THREE.MathUtils.lerp(world.car.rotation.x,pitch,blend),vehicle.heading,THREE.MathUtils.lerp(world.car.rotation.z,roll,blend),'YXZ');
-  for(let i=0;i<world.carWheels.length;i++){const w=world.carWheels[i];w.group.position.y=w.suspensionRestY+clamp(heights[i]-average,-.055,.055);}
+  alignVehicleWheels(world.vehicle,(x,z)=>floorAt(x,z,world.car.position.y));
 }
 
 function moveHost(dt){
