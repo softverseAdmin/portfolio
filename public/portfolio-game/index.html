@@ -7,8 +7,8 @@
   <meta name="description" content="Meet Rabin Adhikari. Explore a playable home filled with stories about full-stack development, healthcare, cloud, and AI.">
   <title>Rabin’s House — A portfolio you can explore</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23192b29'/%3E%3Cpath d='M12 31 32 14 52 31M20 29v23h24V29M29 52V38h6v14' fill='none' stroke='%23e9c58b' stroke-width='4'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css">
-  <link rel="stylesheet" href="./mobile.css">
+  <link rel="stylesheet" href="./style.css?v=16">
+  <link rel="stylesheet" href="./mobile.css?v=16">
 </head>
 <body class="preparing">
   <div id="game-viewport">
@@ -29,13 +29,15 @@
     <div class="welcome-note"><span>00 — THE INVITATION</span><span>Walk · Discover · Play</span></div>
   </main>
   <aside id="arrival" class="arrival"><span class="tiny-label">A LITTLE HOUSE. A LOT OF STORIES.</span><strong>Welcome to my world.</strong><p>Meet your host, explore his work, and make yourself at home.</p><span class="arrival-line"></span><div><span>7 stories to discover</span><span>A garden full of play</span></div></aside>
-  <section id="loading" class="loading" aria-label="Preparing Rabin’s house">
-    <div class="load-top"><span>RABIN ADHIKARI</span><span>A WORLD TO MEET IN.</span></div>
-    <div class="load-orbit" aria-hidden="true"></div>
-    <div class="load-name" aria-label="Rabin’s house"><span>RA</span><span>BIN</span><em>’S HOUSE</em></div>
-    <div class="load-bottom"><div class="load-counter"><strong id="load-count">00</strong><span>%</span><small>PREPARING YOUR VISIT</small></div>
-      <div class="load-line"><i id="load-progress"></i></div>
+  <section id="loading" class="loading" aria-labelledby="load-name">
+    <div class="load-center">
+      <h2 id="load-name" class="load-name">RABIN ADHIKARI</h2>
+      <div class="load-line" aria-hidden="true"><i id="load-progress"></i></div>
+    </div>
+    <div class="load-meta"><div class="load-counter"><strong id="load-count">00</strong><span>%</span><small>PREPARING YOUR VISIT</small></div>
       <div class="load-assets"><span>House & garden <b id="load-house">Preparing</b></span><span>Original Land Cruiser <b id="load-car">Preparing</b></span><span>Characters & motions <b id="load-characters">Preparing</b></span></div>
+    </div>
+    <div class="load-bottom">
       <p id="loading-status" role="status" aria-live="polite" aria-atomic="true">Preparing your visit…</p>
       <div class="load-actions"><button id="loading-retry" class="text-button" hidden>Retry loading →</button><button id="basic-visit" class="text-button">Use simpler models without waiting →</button><button id="loading-portfolio" class="text-button">Read the portfolio →</button></div>
     </div>
@@ -60,6 +62,6 @@
   <div id="fatal" class="fatal" hidden><h2>Your visit needs a browser with WebGL 2.</h2><p>You can still explore Rabin’s work below.</p><button id="fallback-portfolio" class="primary">View portfolio →</button><button id="fatal-retry" class="text-button">Retry loading →</button></div>
   <noscript><div class="fatal"><h2>Rabin Adhikari</h2><p>Full-stack engineer and project lead based in Tokyo. Experience in healthcare applications, cloud systems, and AI integration.</p><p>Enable JavaScript to explore the house, or <a href="https://www.linkedin.com/in/rabin-adhikari-52573320b/">visit LinkedIn</a>.</p></div></noscript>
   </div>
-  <script type="module" src="./startup.js?v=15"></script>
+  <script type="module" src="./startup.js?v=16"></script>
 </body>
 </html>

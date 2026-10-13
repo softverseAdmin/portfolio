@@ -24,7 +24,7 @@ export function launchStartup({doc=document,loadGame=()=>import('./game.js?v=15'
     if(failed)return;
     failed=true;console.warn('Game startup failed:',error);
     game?.pauseAfterError?.();
-    $('loading').hidden=false;$('loading').classList.remove('is-ready');$('fatal').hidden=true;
+    $('loading').hidden=false;$('loading').classList.remove('is-ready');$('loading').classList.add('needs-help');$('fatal').hidden=true;
     $('loading-status').textContent='The game could not start. Retry, load a simpler visit, or read the portfolio.';
     $('loading-retry').hidden=false;$('loading-retry').onclick=reload;
     $('basic-visit').hidden=false;$('basic-visit').onclick=requestBasic;
@@ -34,11 +34,11 @@ export function launchStartup({doc=document,loadGame=()=>import('./game.js?v=15'
   $('loading-retry').onclick=reload;$('fatal-retry').onclick=reload;$('reload-original').onclick=reload;
   for(const id of ['quick-view','portfolio','loading-portfolio','fallback-portfolio'])$(id).onclick=()=>portfolio();
   doc.addEventListener('keydown',event=>{if((!game||failed)&&event.code==='Escape')close();});
-  const timer=setTimeout(()=>{$('loading-retry').hidden=false;$('loading-status').textContent='Loading is taking longer. You can retry, choose a simpler visit, or read the portfolio.';},25000);
+  const timer=setTimeout(()=>{$('loading-retry').hidden=false;$('loading').classList.add('needs-help');$('loading-status').textContent='Loading is taking longer. You can retry, choose a simpler visit, or read the portfolio.';},25000);
   const promise=(async()=>{
     try{
-      game=await loadGame();clearTimeout(timer);
-      const preparing=game.boot({useBasic:basic});if(portfolioOpen)game.portfolioModal();await preparing;
+      game=await loadGame();
+      const preparing=game.boot({useBasic:basic});if(portfolioOpen)game.portfolioModal();await preparing;clearTimeout(timer);
     }catch(error){clearTimeout(timer);fail(error);}
   })();
   return {promise,fail,portfolio,requestBasic};
