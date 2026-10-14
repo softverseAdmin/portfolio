@@ -93,7 +93,7 @@ function stageCharacters({world,physics,host,player,seats,positions,headings,foc
   if(toys.some(toy=>toy?.broken||toy?.held))return null;
   const actors=[host,player];
   const savedSeats=seats.map((seat,i)=>({position:seat.mesh.position.clone(),quaternion:seat.mesh.quaternion.clone(),visible:seat.mesh.visible,occupied:!!toys[i]?.occupied,velocity:toys[i]?.body.velocity.clone(),angularVelocity:toys[i]?.body.angularVelocity.clone(),sleeping:toys[i]?.body.sleepState===2}));
-  const savedActors=actors.map(actor=>({position:actor.position.clone(),quaternion:actor.quaternion.clone(),scale:actor.scale.clone(),visible:actor.visible,pose:actor.userData.rig?.idle.map(({bone})=>({position:bone.position.clone(),quaternion:bone.quaternion.clone()}))}));
+  const savedActors=actors.map(actor=>({position:actor.position.clone(),rotation:actor.rotation.clone(),scale:actor.scale.clone(),visible:actor.visible,pose:actor.userData.rig?.idle.map(({bone})=>({position:bone.position.clone(),quaternion:bone.quaternion.clone()}))}));
   let restored=false,animated=false;
   function restore(){
     if(restored)return;restored=true;
@@ -103,7 +103,9 @@ function stageCharacters({world,physics,host,player,seats,positions,headings,foc
       if(toy){toy.body.velocity.copy(saved.velocity);toy.body.angularVelocity.copy(saved.angularVelocity);if(saved.sleeping)toy.body.sleep();}
     });
     actors.forEach((actor,i)=>{
-      const saved=savedActors[i],rig=actor.userData.rig;actor.position.copy(saved.position);actor.quaternion.copy(saved.quaternion);actor.scale.copy(saved.scale);actor.visible=saved.visible;
+      // Preserve the yaw used by walking. Quaternion restoration can express a
+      // half-turn as X/Z flips, which reverses subsequent Y-only steering.
+      const saved=savedActors[i],rig=actor.userData.rig;actor.position.copy(saved.position);actor.rotation.copy(saved.rotation);actor.scale.copy(saved.scale);actor.visible=saved.visible;
       if(saved.pose&&animated){
         rig.idle.forEach(({bone},index)=>{bone.position.copy(saved.pose[index].position);bone.quaternion.copy(saved.pose[index].quaternion);});
         rig.motion.basePose=saved.pose;rig.motion.blendedPose=saved.pose;rig.motion.from=saved.pose;rig.motion.id=null;rig.motion.lastTime=null;

@@ -30,15 +30,14 @@ export function resolveCamera(position,target,desired,blockers,dt,options={}){
   return target.clone().lerp(next,cameraFraction(target,next,blockers,options));
 }
 
-// A turn must not smooth the camera through the visitor's face. Keep the arm
-// in the rear third of the view, then sweep again against the room geometry.
+// Follow turns around the visitor instead of snapping to a fixed rear angle
+// or cutting a straight line through the character. Walls still shorten the arm.
 export function resolveVisitorCamera(position,target,desired,heading,blockers,dt,options={}){
-  const next=resolveCamera(position,target,desired,blockers,dt,options),arm=next.clone().sub(target);
-  const rear=heading+Math.PI,angle=Math.atan2(arm.x,arm.z);
-  const offset=Math.atan2(Math.sin(angle-rear),Math.cos(angle-rear)),limit=Math.PI/6;
-  if(Math.abs(offset)<=limit)return next;
-  const distance=Math.hypot(arm.x,arm.z),safeAngle=rear+THREE.MathUtils.clamp(offset,-limit,limit);
-  next.set(target.x+Math.sin(safeAngle)*distance,next.y,target.z+Math.cos(safeAngle)*distance);
+  const arm=position.clone().sub(target),safe=target.clone().lerp(desired,cameraFraction(target,desired,blockers,options)),wanted=safe.sub(target);
+  const distance=Math.hypot(arm.x,arm.z),start=distance>.001?Math.atan2(arm.x,arm.z):heading+Math.PI;
+  const end=Math.atan2(desired.x-target.x,desired.z-target.z),turn=Math.atan2(Math.sin(end-start),Math.cos(end-start)),blend=1-Math.exp(-(options.smoothing??12)*dt);
+  const angle=start+turn*blend,radius=THREE.MathUtils.lerp(distance,Math.hypot(wanted.x,wanted.z),blend);
+  const next=new THREE.Vector3(target.x+Math.sin(angle)*radius,target.y+THREE.MathUtils.lerp(arm.y,wanted.y,blend),target.z+Math.cos(angle)*radius);
   return target.clone().lerp(next,cameraFraction(target,next,blockers,options));
 }
 

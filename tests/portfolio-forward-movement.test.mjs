@@ -25,7 +25,7 @@ for(const fps of [30,60,120])for(const rotated of [false,true])test(`forward inp
     const face=horizontal(new THREE.Vector3(0,0,1).applyQuaternion(player.userData.rig.bones.Head.getWorldQuaternion(new THREE.Quaternion())));
     assert.ok(face.dot(travel)>.94,`the visible visitor faces away from forward travel at frame ${frame}`);
     const rear=horizontal(f.api.cameraPosition().sub(player.userData.rig.bones.Spine2.getWorldPosition(new THREE.Vector3())));
-    assert.ok(rear.dot(face)<-.65,'the camera exposes the face rather than the visitor back');
+    if(frame>=fps/4)assert.ok(rear.dot(face)<-.65,'the camera does not follow behind after the turn');
     assert.equal(player.userData.rig.motion.gaitDirection,1,'forward input reverses the supplied walking animation');
   }
   point('pointerup');
