@@ -42,7 +42,7 @@ let fixtureId=0;
 export async function controllerFixture(t,saved=null,production={}){
   const keys=['document','window','matchMedia','localStorage','innerWidth','innerHeight','devicePixelRatio'];const originals=keys.map(key=>[key,Object.getOwnPropertyDescriptor(globalThis,key)]);
   delete globalThis.document;
-  const world=production.world??createWorld(),physics=production.physics??createSandboxPhysics(world),host=production.host??createCharacter({host:true}),player=production.player??createCharacter();host.userData.nameSprite=new THREE.Group();
+  const world=production.world??createWorld(),physics=production.physics??createSandboxPhysics(world),host=production.host??createCharacter({host:true}),player=production.player??createCharacter();
   const doc=documentFixture(),data=new Map([['rabin-house-lap','31.2']]);if(saved)data.set(PROGRESS_KEY,JSON.stringify(saved));
   const window={events:{},addEventListener(name,fn){(this.events[name]??=[]).push(fn);}};
   Object.assign(globalThis,{document:doc,window,matchMedia:()=>({matches:false}),localStorage:{getItem:key=>data.get(key)??null,setItem:(key,value)=>data.set(key,value)},innerWidth:1000,innerHeight:700,devicePixelRatio:1});

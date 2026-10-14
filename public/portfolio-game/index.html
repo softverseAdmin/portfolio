@@ -7,9 +7,9 @@
   <meta name="description" content="Meet Rabin Adhikari. Explore a playable home filled with stories about full-stack development, healthcare, cloud, and AI.">
   <title>Rabin’s House — A portfolio you can explore</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23192b29'/%3E%3Cpath d='M12 31 32 14 52 31M20 29v23h24V29M29 52V38h6v14' fill='none' stroke='%23e9c58b' stroke-width='4'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=22">
-  <link rel="stylesheet" href="./mobile.css?v=22">
-  <link rel="stylesheet" href="./presentation.css?v=22">
+  <link rel="stylesheet" href="./style.css?v=24">
+  <link rel="stylesheet" href="./mobile.css?v=24">
+  <link rel="stylesheet" href="./presentation.css?v=24">
 </head>
 <body class="preparing">
   <div id="game-viewport">
@@ -51,7 +51,7 @@
     <div class="activity-panel"><div id="game-badge" class="game-badge" hidden></div><button id="gesture-stop" class="gold-button" hidden>Stop preview →</button></div>
     <section id="journey" class="journey" hidden><span class="tiny-label">THE ROAD TO RABIN’S HOUSE</span><div><i id="journey-turn" aria-hidden="true">↑</i><strong id="journey-distance">Follow the road</strong></div><p id="journey-tip">W/S drive · A/D steer · Space brake</p><button id="basic-house" class="text-button" hidden>Use simpler house →</button><button id="skip-drive" class="text-button">Skip drive →</button></section>
     <div id="reticle" class="reticle" hidden aria-hidden="true"><i></i></div>
-    <footer id="controls-hint" class="controls"><span><kbd>W A S D</kbd> move</span><span><kbd>MOUSE</kbd> look</span><span><kbd>SHIFT</kbd> run</span><span><kbd>E</kbd> use</span><span><kbd>J / CLICK</kbd> act</span><span><kbd>F</kbd> car</span><span><kbd>ESC</kbd> pause</span></footer>
+    <div class="desktop-controls"><footer id="controls-hint" class="controls"><span><kbd>W A S D</kbd> move</span><span><kbd>MOUSE</kbd> look</span><span><kbd>SHIFT</kbd> run</span><span><kbd>E</kbd> use</span><span><kbd>J / CLICK</kbd> act</span><span><kbd>F</kbd> car</span><span><kbd>ESC</kbd> pause</span></footer><button id="desktop-run" class="desktop-run" type="button" aria-pressed="false" title="Toggle running, or hold Shift while moving" hidden>Run · Shift</button></div>
     <div class="touch-controls" id="touch-controls"><div id="joystick" aria-label="Movement joystick"><span class="joystick-direction north" aria-hidden="true">⌃</span><span class="joystick-direction east" aria-hidden="true">›</span><span class="joystick-direction south" aria-hidden="true">⌄</span><span class="joystick-direction west" aria-hidden="true">‹</span><span id="joystick-knob"></span></div><div class="touch-buttons"><button id="touch-run" aria-label="Run, or brake when driving">Run</button><button id="touch-jump" aria-label="Jump">Jump</button><button id="touch-use" aria-label="Interact with the nearest object">Use</button><button id="touch-aim" aria-pressed="false" aria-label="Toggle aiming">Aim</button><button id="touch-drop" aria-label="Drop an object, or start a lap when driving">Drop</button><button id="touch-action" aria-label="Punch, kick, or hold and release to throw">Hit</button></div></div>
     <p id="touch-hint" class="touch-hint">Drag to look · Talk, pick up and open nearby</p>
   </div>
@@ -80,40 +80,40 @@
   <script type="importmap">
 {
   "imports": {
-    "./arrival.js": "./arrival.js?v=22",
-    "./asset-transfer.js": "./asset-transfer.js?v=22",
-    "./camera.js": "./camera.js?v=22",
-    "./characters.js": "./characters.js?v=22",
-    "./controls.js": "./controls.js?v=22",
-    "./core.js": "./core.js?v=22",
-    "./desktop.js": "./desktop.js?v=22",
-    "./furnishings.js": "./furnishings.js?v=22",
-    "./game.js": "./game.js?v=22",
-    "./imported-characters.js": "./imported-characters.js?v=22",
-    "./imported-vehicle.js": "./imported-vehicle.js?v=22",
-    "./journey.js": "./journey.js?v=22",
-    "./loading.js": "./loading.js?v=22",
-    "./mobile.js": "./mobile.js?v=22",
-    "./model-assets.js": "./model-assets.js?v=22",
-    "./motions.js": "./motions.js?v=22",
-    "./physics.js": "./physics.js?v=22",
-    "./portfolio.js": "./portfolio.js?v=22",
-    "./poses.js": "./poses.js?v=22",
-    "./presentation.js": "./presentation.js?v=22",
-    "./projector.js": "./projector.js?v=22",
-    "./skins.js": "./skins.js?v=22",
-    "./startup.js": "./startup.js?v=22",
-    "./story.js": "./story.js?v=22",
-    "./terrain.js": "./terrain.js?v=22",
-    "./texture-budget.js": "./texture-budget.js?v=22",
-    "./transitions.js": "./transitions.js?v=22",
-    "./vehicle-motion.js": "./vehicle-motion.js?v=22",
-    "./vehicle.js": "./vehicle.js?v=22",
-    "./wheel-geometry.js": "./wheel-geometry.js?v=22",
-    "./world.js": "./world.js?v=22"
+    "./arrival.js": "./arrival.js?v=24",
+    "./asset-transfer.js": "./asset-transfer.js?v=24",
+    "./camera.js": "./camera.js?v=24",
+    "./characters.js": "./characters.js?v=24",
+    "./controls.js": "./controls.js?v=24",
+    "./core.js": "./core.js?v=24",
+    "./desktop.js": "./desktop.js?v=24",
+    "./furnishings.js": "./furnishings.js?v=24",
+    "./game.js": "./game.js?v=24",
+    "./imported-characters.js": "./imported-characters.js?v=24",
+    "./imported-vehicle.js": "./imported-vehicle.js?v=24",
+    "./journey.js": "./journey.js?v=24",
+    "./loading.js": "./loading.js?v=24",
+    "./mobile.js": "./mobile.js?v=24",
+    "./model-assets.js": "./model-assets.js?v=24",
+    "./motions.js": "./motions.js?v=24",
+    "./physics.js": "./physics.js?v=24",
+    "./portfolio.js": "./portfolio.js?v=24",
+    "./poses.js": "./poses.js?v=24",
+    "./presentation.js": "./presentation.js?v=24",
+    "./projector.js": "./projector.js?v=24",
+    "./skins.js": "./skins.js?v=24",
+    "./startup.js": "./startup.js?v=24",
+    "./story.js": "./story.js?v=24",
+    "./terrain.js": "./terrain.js?v=24",
+    "./texture-budget.js": "./texture-budget.js?v=24",
+    "./transitions.js": "./transitions.js?v=24",
+    "./vehicle-motion.js": "./vehicle-motion.js?v=24",
+    "./vehicle.js": "./vehicle.js?v=24",
+    "./wheel-geometry.js": "./wheel-geometry.js?v=24",
+    "./world.js": "./world.js?v=24"
   }
 }
   </script>
-  <script type="module" src="./startup.js?v=22"></script>
+  <script type="module" src="./startup.js?v=24"></script>
 </body>
 </html>

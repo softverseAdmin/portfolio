@@ -227,7 +227,6 @@ export function applyEnvironmentAsset(world,source){
   const doorUse=world.interactions.find(i=>i.id==='door');doorUse.z+=shift;
   world.doorbell.group.position.z+=shift;world.doorbell.interaction.z+=shift;world.doorbell.marker.position.z+=shift;
   for(const node of v.entranceFixtureNodes)node.position.z+=shift;
-  v.entranceSign.position.set(0,3.22,9.3+shift);v.entranceSign.scale.y=.6;
   for(const x of [-1.8,1.8]){
     const fill=new THREE.Mesh(new THREE.BoxGeometry(.4,yAt(3.55)-.13,.38),palette.get('White_Plaster'));
     fill.position.set(x,(yAt(3.55)+.13)/2,9.285);fill.castShadow=fill.receiveShadow=true;scene.add(fill);
