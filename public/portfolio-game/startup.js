@@ -2,7 +2,7 @@ import {PORTFOLIO,portfolioSummary} from './portfolio.js';
 import {installLandscape} from './mobile.js';
 
 // Keep entry and portfolio controls usable before the 3D modules arrive.
-export function launchStartup({doc=document,loadGame=()=>import('./game.js?v=24'),reload=()=>{const url=new URL(location.href);url.searchParams.delete('simple');location.assign(url);},reloadSimple=()=>{const url=new URL(location.href);url.searchParams.set('simple','1');location.assign(url);},simple=false}={}){
+export function launchStartup({doc=document,loadGame=()=>import('./game.js?v=25'),reload=()=>{const url=new URL(location.href);url.searchParams.delete('simple');location.assign(url);},reloadSimple=()=>{const url=new URL(location.href);url.searchParams.set('simple','1');location.assign(url);},simple=false}={}){
   installLandscape({doc});
   const $=id=>doc.getElementById(id);let game,basic=simple,portfolioOpen=false,failed=false;
   const close=()=>{portfolioOpen=false;$('modal').hidden=true;};
