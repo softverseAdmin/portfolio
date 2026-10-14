@@ -155,8 +155,6 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
   // Ground stays below the court and paving; equal heights flicker on phones.
   visuals.ground=box(110,.15,200,0,-.08,34,m.grass);
   const roadDistrict=createRoadDistrict();root.add(roadDistrict.root);blockers.push(...roadDistrict.blockers);visuals.road=roadDistrict.root;
-  sign(['RABIN’S HOUSE','FOLLOW THE ROAD →'], -21,1.7,73,3,1.15);
-  sign(['RABIN’S HOUSE','DRIVEWAY ↗'], -4,1.5,30,2.5,1);
   box(6.3,.04,17,0,.009,21,m.stone);
   for(let z=14;z<30;z+=2)box(6.25,.005,.016,0,.0315,z,mat('#959887'));
   box(7.9,.13,4,0,.065,10.9,m.stone);
@@ -227,7 +225,6 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
   for(const x of [-2.15,2.15])box(.12,1.6,.22,x,2.1,9.34,m.black);
   for(const x of [-3.23,3.23]){box(.04,.85,3.3,x,.88,11,m.black);for(let z=9.6;z<12.5;z+=.55)box(.04,.8,.04,x,.55,z,m.black);}
   visuals.legacyPorticoNodes=root.children.filter(o=>!porticoStart.has(o));
-  visuals.entranceSign=sign(['RABIN ADHIKARI','MAKE YOURSELF AT HOME'],0,3.24,9.3,2.5,.7);
   const door=new THREE.Group();door.position.set(-1.6,.13,9.06);root.add(door);const frontParts=[];
   for(const [yy,hh] of [[.7,1.33],[2.4,1.93]]){const mesh=box(3.12,hh,.065,1.6,yy,0,m.glass,door),d=fragile(`front-door-pane-${yy}`,mesh,[1.56,hh/2,.0325],{moving:true,doorId:'front',label:'entrance glass'});frontParts.push(d.blocker);}
   for(const x of [0,3.2])frontParts.push(rigidBox(.07,3.4,.11,x,1.7,0,m.black,door,{moving:true,doorId:'front'}).b);
@@ -265,10 +262,9 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
     doors.push({id,group,blocker,colliders:parts,open:true,angle,label,x,z});
     const i=interact(`door-${id}`,`Close the ${label}`,x,z,'door',{radius:1.65});i.doorId=id;i.blocker=blocker;
   }
-  for(const [name,x,z,rotation] of [['LIVING',-2.23,5.55,-Math.PI/2],['STUDY',-2.23,-3.03,-Math.PI/2],['PROJECTS',2.23,-3.03,Math.PI/2],['PLAY & BUILD',2.23,5.55,Math.PI/2]])sign([name],x,2.4,z,1.25,.5,rotation);
   box(2.5,.02,10,0,.145,0,mat('#bdb5a2'));
   for(const z of [7,2,-3,-8]){box(.1,.015,.1,0,.165,z,m.gold);cyl(.11,.045,0,6.9,z,m.gold);}
-  plant(1,7.6,1.2);sign(['WELCOME IN','A STORY IN EVERY ROOM'],0,2.4,-9.85,2,.9);
+  plant(1,7.6,1.2);
 
   // Rounded, coherent furnishings with independent everyday objects.
   box(6.5,.026,5.5,-7,.145,4.45,m.rug);
@@ -299,7 +295,7 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
   loose('pens','study-pens','pens',-8.08,.978,-5.35,{mass:.025});loose('books','study-books','books',-8.4,.978,-5.9,{mass:.9});
   const deskCup=loose('cup','study-cup','ceramic cup',-5.8,.978,-5.53,{mass:.18});fragile('study-cup-break',deskCup.mesh,deskCup.halfExtents,{material:'ceramic',threshold:1.4,toy:deskCup,collide:false,label:'ceramic cup',spill:'drink'});
   const frame=loose('frame','study-frame','picture frame',-5.43,.978,-6.16,{mass:.4,screenMaterial:signMaterial(['JAPAN + NEPAL'])});const frameGlass=frame.mesh.userData.parts.glass;frameGlass.geometry.computeBoundingBox();fragile('study-frame-glass',frameGlass,frameGlass.geometry.boundingBox.getSize(new THREE.Vector3()).multiplyScalar(.5).toArray(),{material:'glass',threshold:2,toy:frame,whole:false,collide:false,label:'picture-frame glass'});
-  sign(['EXPERIENCE','BUILDING → LEADING'],-10.1,2.3,-.11,2.8,1.3,Math.PI);lamp(-3.2,-8.7);plant(-10.8,-1.1,1.1);
+  lamp(-3.2,-8.7);plant(-10.8,-1.1,1.1);
   interact('experience','Explore the career timeline',-9,-7.7,'experience');interact('desk','Read the healthcare project',-6,-4.7,'healthcare');
 
   for(const [idx,x] of [[0,3.8],[1,6.7],[2,9.6]]){
@@ -309,8 +305,7 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
     loose('keyboard',`studio-keyboard-${idx}`,'keyboard',x,1.028,-7.48,{kind:'electronics',mass:.65});loose('mouse',`studio-mouse-${idx}`,'mouse',x+.73,1.028,-7.5,{kind:'electronics',mass:.09});
     interact(['softlearn','healthcare','ai'][idx],['Explore SoftLearn','Explore healthcare data management','Explore AI crawling & scoring'][idx],x,-6.0,['softlearn','healthcare','ai'][idx]);
   }
-  box(7,.02,3,6.6,.15,-4.9,mat('#d0c8b7'));sign(['SELECTED WORK','PRACTICAL PRODUCTS. CLEAR PURPOSE.'],7,2.3,-.11,5,1.3,Math.PI);plant(3,-9,1);plant(11,-1.1,1.2);
-  sign(['HOW I BUILD','PYTHON · TYPESCRIPT · REACT','AWS · GCP · DATABASES'],6.8,2.3,.12,5,2);
+  box(7,.02,3,6.6,.15,-4.9,mat('#d0c8b7'));plant(3,-9,1);plant(11,-1.1,1.2);
   furnish('desk',6,7.3,.13,{width:4.5,height:.81,depth:1.3});
   for(let j=0;j<4;j++){const x=4.35+j*1.1;box(.76,.53,.64,x,1.24,7.4,mat(['#496d61','#56758b','#b69d6f','#555e58'][j]));sign([['API','CLOUD','DATA','AI'][j]],x,1.25,7.731,.62,.3,Math.PI);}
   for(const [j,topic] of ['api','cloud','data','ai'].entries())interact('tech-'+topic,'Ask Rabin about '+topic.toUpperCase(),4.35+j*1.1,6.1,'tech-'+topic,{radius:1.8});
@@ -333,7 +328,6 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
   const bed=furnish('bed',7.2,-6.8,3.53,{width:3.5,height:1.4,depth:4.3,cushions:false});
   for(const x of [6.3,8.1])loose('cushion',`bed-pillow-${x}`,'pillow',x,4.34,-8.3,{width:1.15,height:.2,depth:.65,kind:'cloth',rotation:Math.PI/2,mass:.3});
   for(const x of [4.6,9.8]){furnish('nightstand',x,-8.3,3.53,{width:.65,height:.72,depth:.65});lamp(x,-8.3,4.263,true);}
-  sign(['ROOM TO GROW','JAPAN ↔ NEPAL'],7,5.5,-9.82,3,1.1);
   interact('future','Read about future plans',6.7,-3.6,'future',{y:3.53});plant(3.2,-8.2,1,3.53);
   const roofStart=new Set(root.children);
   const roofMat=mat('#d9dbd0',{transparent:true});const cap=box(24.6,.25,19.6,0,7.21,-.5,roofMat);roof.push(cap);
@@ -369,7 +363,6 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
   for(let j=0;j<12;j++){const a=j*Math.PI/6;const net=box(.012,.49,.012,-19+Math.cos(a)*.19,2.72,-16.82+Math.sin(a)*.19,m.trim);net.rotation.z=Math.sin(a)*.15;}
   const ball=sphere(.12,-19,.17,-9.5,mat('#c48a48'));for(const rot of [0,Math.PI/2]){const band=new THREE.Mesh(new THREE.TorusGeometry(1.006,.025,4,28),m.black);band.rotation.y=rot;ball.add(band);}
   toys.push({id:'basketball',kind:'ball',label:'basketball',mesh:ball,radius:.12,mass:.62,holdable:true});
-  sign(['TAKE A BREAK','PICK UP THE BALL · AIM · SHOOT'],-19,1.1,-3.8,3.8,.9,Math.PI);
 
   const vehicle=uploadedVehicle??createVehicle(),{car,carDoors,carWheels}=vehicle;car.position.set(18,.02,18);car.rotation.y=Math.PI;root.add(car);alignVehicleWheels(vehicle,floorAt);
   const carBlocker=collider(car,[vehicle.bounds.bodyWidth/2,vehicle.bounds.height/2,vehicle.bounds.length/2],[0,vehicle.bounds.height/2,0],{navOnly:true,vehicle:true});
@@ -377,7 +370,7 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
   for(const d of vehicle.mirrors??[])fragile(d.id,d.mesh,d.halfExtents,{...d,center:d.center??[0,0,0],material:'glass',moving:true,label:'side mirror'});
   for(const d of vehicle.lamps)fragile(d.id,d.mesh,d.halfExtents,{...d,center:d.center??[0,0,0],material:'lamp',moving:true,label:'lamp cover',onBreak:()=>d.mesh.material.emissiveIntensity=0,onRepair:()=>d.mesh.material.emissiveIntensity=d.baseIntensity});
   for(const d of carDoors){d.colliders=(d.collision.shapes??[{halfExtents:d.collision.halfExtents,offset:d.collision.offset}]).map(s=>collider(d.group,s.halfExtents,s.offset,{moving:true,vehicle:true,quaternion:s.quaternion}));}
-  sign(['GARDEN GARAGE','GET IN · DRIVE · RACE A LAP'],18,2.1,22,4,1,Math.PI);interact('car','Drive the garden SUV',18,18,'car',{radius:3.4});
+  interact('car','Drive the garden SUV',18,18,'car',{radius:3.4});
   if(vehicle.imported)interact('car-controls','Car doors & lights',18,20.65,'car-controls',{radius:1.75,vehicleLocal:[0,0,-2.65]});
 
   // Loose objects can be picked up, kicked, stacked, and thrown.
@@ -391,16 +384,14 @@ export function createWorld({vehicle:uploadedVehicle=null}={}){
     const body=new THREE.Mesh(new THREE.LatheGeometry(profile,20),m.trim);body.castShadow=true;pin.add(body);cyl(.026,.026,0,.1,0,mat('#a85941'),pin);
     toys.push({id:`pin-${row}-${col}`,kind:'pin',label:'bowling pin',mesh:pin,halfExtents:[.075,.20,.075],mass:.6,holdable:true,shapes:[{halfExtents:[.068,.1,.068],center:[0,-.1,0]},{halfExtents:[.028,.075,.028],center:[0,.075,0]}]});
   }
-  sign(['GARDEN BOWLING','PICK UP THE BLUE BALL · THROW'],19,1.3,-5.8,4,.9,Math.PI);
   for(let j=0;j<3;j++){const crate=loose('crate',`crate-${j}`,'wooden crate',15.8+j*.78,.024,13.8,{kind:'crate',mass:2});fragile(`crate-break-${j}`,crate.mesh,crate.halfExtents,{material:'wood',threshold:38,toy:crate,collide:false,label:'wooden crate'});}
   // A hanging training bag reacts to impulses through a physics constraint.
   for(const x of [15,17])box(.12,3.35,.12,x,1.66,-1,m.black,root,true);
   box(2.25,.14,.14,16,3.3,-1,m.black);
-  const bag=new THREE.Group();bag.position.set(16,2.2,-1);root.add(bag);cyl(.33,1.35,0,0,0,mat('#9d7655'),bag);cyl(.35,.09,0,-.48,0,m.black,bag);cyl(.35,.09,0,.48,0,m.black,bag);
-  const rope=box(.02,.43,.02,16,3.02,-1,m.black);
+  const bag=new THREE.Group();bag.position.set(16,1.1,-1);root.add(bag);cyl(.33,1.35,0,0,0,mat('#9d7655'),bag);cyl(.35,.09,0,-.48,0,m.black,bag);cyl(.35,.09,0,.48,0,m.black,bag);
+  const rope=box(.02,1.5,.02,16,2.55,-1,m.black);
   toys.push({id:'training-bag',kind:'bag',label:'training bag',mesh:bag,halfExtents:[.33,.675,.33],mass:6,holdable:false});
   interact('bag','Punch the training bag',16,-1,'punch',{radius:2.1});
-  sign(['STRETCH YOUR LEGS','CLICK / J TO PUNCH · PUSH & PLAY'],16,1.1,3,4,.9,Math.PI);
   interact('reset-toys','Repair & reset all objects',21,-7,'reset-toys',{radius:2});
 
   const checkpoints=[[20.5,3],[21,-21],[0,-22],[-21.5,-21],[-21.5,-1],[-18,20],[0,24],[18,18]].map(([x,z])=>({x,z}));

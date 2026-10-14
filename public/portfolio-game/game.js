@@ -27,7 +27,7 @@ const $=id=>document.getElementById(id);
 const actorHeight=actor=>actor?.userData.rig?.asset.height??actor?.userData.rig?.model?.userData.appearance?.height??1.76;
 const canvas=$('world');
 const state={phase:'welcome',loading:true,houseLoading:false,skipDriveRequested:false,sound:false,night:false,quality:'balanced',guide:false,chapter:-1,guideRoute:[],guideWaiting:false,dialogueAction:null,visited:new Set(),jumpVelocity:0,grounded:true,sitting:false,driving:false,carSpeed:0,waveUntil:0,near:null,modal:false,touchRun:false,reducedMotion:matchMedia('(prefers-reduced-motion: reduce)').matches};
-Object.assign(state,{held:null,transition:null,presentation:null,punch:null,combo:0,lastPunch:-10,crouching:false,aiming:false,charging:false,chargeStart:0,lookUntil:0,vehicle:{x:18,z:18,heading:0,vx:0,vz:0},moveVX:0,moveVZ:0,carSide:1,baskets:0,throws:0,bagHits:0,knockedPins:new Set(),race:null,actions:new Set(),shake:0});
+Object.assign(state,{held:null,transition:null,presentation:null,punch:null,combo:0,lastPunch:-10,crouching:false,aiming:false,charging:false,chargeStart:0,lookUntil:0,vehicle:{x:18,z:18,heading:0,vx:0,vz:0},moveVX:0,moveVZ:0,carSide:1,baskets:0,throws:0,bagHits:0,knockedPins:new Set(),race:null,actions:new Set(),shake:0,runToggle:false});
 let savedVisit;try{savedVisit=readVisit(localStorage);}catch{savedVisit=readVisit(null);}
 Object.assign(state,{sound:savedVisit.settings.sound,volume:savedVisit.settings.volume,night:savedVisit.settings.night,quality:savedVisit.settings.quality,reducedMotion:savedVisit.settings.reducedMotion??state.reducedMotion,reducedMotionChoice:savedVisit.settings.reducedMotion,visited:new Set(savedVisit.visited),actions:new Set(savedVisit.actions),completed:savedVisit.completed,guideCheckpoint:savedVisit.checkpoint,guidePausedByDistance:false,hostReturnRoute:[],invitation:null});
 const keys=new Set();
@@ -44,7 +44,7 @@ function toast(text,duration=3300){clearTimeout(toastTimer);$('toast').textConte
 function clearInput(){
   keys.clear();joystickPointer=null;joystick={x:0,y:0};$('joystick-knob').style.transform='translate(0,0)';drag=null;actionPointer=null;runPointer=null;
   state.touchRun=state.touchBrake=state.charging=state.aiming=state.running=false;state.moveVX=state.moveVZ=0;
-  movementYaw=null;
+  state.runToggle=false;movementYaw=null;updateRunControl();
 }
 function saveProgress(){
   const value={version:1,visited:[...state.visited],actions:[...state.actions],welcomed:visit?.progress.stage==='welcomed'||(state.phase==='welcome'&&savedVisit.welcomed),completed:state.completed,checkpoint:state.guideCheckpoint,settings:{sound:state.sound,volume:state.volume,night:state.night,quality:state.quality,reducedMotion:state.reducedMotionChoice}};
@@ -95,7 +95,7 @@ function replayVisit(){
   releaseMouse();hideDialogue();closeModal();repairScene();endGreeting(player);endGreeting(host);
   savedVisit=freshVisit(savedVisit);state.visited.clear();state.actions.clear();state.completed=false;state.guideCheckpoint=0;state.guide=false;state.guideRoute=[];state.guideWaiting=false;state.guidePausedByDistance=false;state.chapter=-1;state.invitation=null;state.near=null;state.grounded=true;state.jumpVelocity=0;state.crouching=false;state.race=null;world.raceGate.visible=false;footstepTravel=0;guideBlockedTime=0;
   for(const door of world.doors){door.open=false;door.group.rotation.y=0;door.group.userData.open=false;door.blocker.active=true;}
-  physics.syncColliders();visit=createArrival(world,host);lastVisitStage='';state.hostReturnRoute=[];host.userData.nameSprite.visible=false;document.body.classList.remove('cinematic');$('skip-greeting').hidden=true;$('game-badge').hidden=true;state.phase='welcome';saveProgress();beginVisit();
+  physics.syncColliders();visit=createArrival(world,host);lastVisitStage='';state.hostReturnRoute=[];document.body.classList.remove('cinematic');$('skip-greeting').hidden=true;$('game-badge').hidden=true;state.phase='welcome';saveProgress();beginVisit();
 }
 
 function portfolioModal(){
@@ -106,7 +106,7 @@ function portfolioModal(){
 }
 
 function controlsModal(){
-  openModal('Make yourself at home.','CONTROLS & SETTINGS',`<div class="content-grid"><div class="content-block"><h3>On a computer</h3><p>Click the scene: capture mouse-look<br>WASD / arrows: move · Shift: run<br>Space: jump · C: crouch<br>E: use / pick up · F: enter / exit car<br>Click / J: punch, kick, or throw<br>Right mouse: aim · Q: drop<br>G: wave · Enter: next dialogue<br>M: map · Escape: pause<br>Scroll: camera distance</p></div><div class="content-block"><h3>Driving & touch</h3><p>W/S: accelerate / reverse<br>A/D: steer · Space: handbrake<br>H: horn · R: start a timed lap<br>On touch: joystick to move; drag the scene to look. Hold ACT to charge a throw; tap AIM to aim. E to use; DROP to put an object down.</p></div></div><div class="setting-row"><span>Lighting</span><button id="lighting-setting">${state.night?'Evening':'Daylight'} →</button></div><div class="setting-row"><span>Graphics</span><button id="quality-setting">${state.quality==='balanced'?'Balanced':'Low power'} →</button></div><div class="setting-row"><span>Camera</span><button id="camera-setting">Reset view</button></div><div class="setting-row"><span>Broken or displaced objects</span><button id="repair-setting">Repair & reset scene</button></div><div class="setting-row"><span>Lost your way?</span><button id="reset-setting">Return to the entrance</button></div><p class="small-note">Explore freely. Glass and small objects react to impacts; repair the scene here at any time. Narration uses your browser’s voice.</p>`);
+  openModal('Make yourself at home.','CONTROLS & SETTINGS',`<div class="content-grid"><div class="content-block"><h3>On a computer</h3><p>Click the scene: capture mouse-look<br>WASD / arrows: move · Shift: run<br>Run button: toggle running<br>Space: jump · C: crouch<br>E: use / pick up · F: enter / exit car<br>Click / J: punch, kick, or throw<br>Right mouse: aim · Q: drop<br>G: wave · Enter: next dialogue<br>M: map · Escape: pause<br>Scroll: camera distance</p></div><div class="content-block"><h3>Driving & touch</h3><p>W/S: accelerate / reverse<br>A/D: steer · Space: handbrake<br>H: horn · R: start a timed lap<br>On touch: joystick to move; drag the scene to look. Hold ACT to charge a throw; tap AIM to aim. E to use; DROP to put an object down.</p></div></div><div class="setting-row"><span>Lighting</span><button id="lighting-setting">${state.night?'Evening':'Daylight'} →</button></div><div class="setting-row"><span>Graphics</span><button id="quality-setting">${state.quality==='balanced'?'Balanced':'Low power'} →</button></div><div class="setting-row"><span>Camera</span><button id="camera-setting">Reset view</button></div><div class="setting-row"><span>Broken or displaced objects</span><button id="repair-setting">Repair & reset scene</button></div><div class="setting-row"><span>Lost your way?</span><button id="reset-setting">Return to the entrance</button></div><p class="small-note">Explore freely. Glass and small objects react to impacts; repair the scene here at any time. Narration uses your browser’s voice.</p>`);
   $('lighting-setting').onclick=()=>{state.night=!state.night;updateLighting();saveProgress();$('lighting-setting').textContent=state.night?'Evening →':'Daylight →';};
   $('quality-setting').onclick=()=>{state.quality=state.quality==='balanced'?'low':'balanced';setQuality();saveProgress();$('quality-setting').textContent=state.quality==='balanced'?'Balanced →':'Low power →';};
   $('camera-setting').onclick=()=>{yaw=player.rotation.y-Math.PI;pitch=0;cameraDistance=5.3;toast('Camera reset behind the visitor.');};
@@ -206,7 +206,7 @@ function mapModal(){
 function speak(text,onEnd=null,onError=null){if(!state.sound||state.volume===0||!('speechSynthesis' in window))return null;window.speechSynthesis.cancel();const utterance=new SpeechSynthesisUtterance(text);utterance.lang='en-US';utterance.rate=.96;utterance.volume=state.volume;utterance.onend=onEnd;utterance.onerror=onError;window.speechSynthesis.speak(utterance);return utterance;}
 function tone(frequency,duration=.4,volume=.06){
   if(!state.sound||state.volume===0)return;
-  try{audioContext??=new (window.AudioContext||window.webkitAudioContext)();audioContext.resume();const o=audioContext.createOscillator(),g=audioContext.createGain();o.type='sine';o.frequency.value=frequency;g.gain.setValueAtTime(Math.max(.0001,volume*state.volume),audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.0001,audioContext.currentTime+duration);o.connect(g);g.connect(audioContext.destination);o.start();o.stop(audioContext.currentTime+duration);}catch{}
+  try{audioContext??=new (window.AudioContext||window.webkitAudioContext)();audioContext.resume().catch(()=>{});const o=audioContext.createOscillator(),g=audioContext.createGain();o.type='sine';o.frequency.value=frequency;g.gain.setValueAtTime(Math.max(.0001,volume*state.volume),audioContext.currentTime);g.gain.exponentialRampToValueAtTime(.0001,audioContext.currentTime+duration);o.connect(g);g.connect(audioContext.destination);o.start();o.stop(audioContext.currentTime+duration);}catch{}
 }
 
 function dialogue(text,label='RABIN · YOUR HOST',action=null,nextLabel='Next room →',choices=[],detailId=null){
@@ -244,7 +244,7 @@ function startPresentation(onComplete=null,id='about',initialPage=null){
   const study=id==='experience',display=study?world?.study?.desktop:world?.projector,slides=study?STUDY_SLIDES:INTRO_SLIDES;
   if(!display||state.phase!=='playing'||state.driving||state.transition)return false;
   stopGesture({resume:false,notice:null});hideDialogue();if(state.held)dropObject();
-  const previous={position:{...playerPos},sitting:state.sitting,seatTarget:state.seatTarget,seatToy:state.seatToy,crouching:state.crouching,grounded:state.grounded,jumpVelocity:state.jumpVelocity,brand:$('brand-room').textContent,hud:$('hud').hidden,display:display.root.visible,hostName:host.userData.nameSprite.visible,canvasLabel:canvas.getAttribute('aria-label'),cameraPosition:camera.position.clone(),cameraQuaternion:camera.quaternion.clone(),fov:camera.fov,lookTarget:lookTarget.clone(),roof:world.roof.map(mesh=>[mesh,mesh.visible])};
+  const previous={position:{...playerPos},sitting:state.sitting,seatTarget:state.seatTarget,seatToy:state.seatToy,crouching:state.crouching,grounded:state.grounded,jumpVelocity:state.jumpVelocity,brand:$('brand-room').textContent,hud:$('hud').hidden,display:display.root.visible,canvasLabel:canvas.getAttribute('aria-label'),cameraPosition:camera.position.clone(),cameraQuaternion:camera.quaternion.clone(),fov:camera.fov,lookTarget:lookTarget.clone(),roof:world.roof.map(mesh=>[mesh,mesh.visible])};
   const stage=(study?createStudyStage:createStoryStage)({world,physics,host,player});
   if(!stage){toast('Clear the space around the chairs, or use Repair & reset before the seated story.');return false;}
   clearInput();releaseMouse();discover(id);
@@ -252,7 +252,7 @@ function startPresentation(onComplete=null,id='about',initialPage=null){
   session.story=createPresentationStory({slides,seatingDuration:state.reducedMotion?0:1.2,onSlide:(slide,index)=>showPresentationSlide(session,slide,index),onEnd:reason=>{if(state.presentation!==session)return;if(reason==='completed')finishPresentation(true);else{finishPresentation();pauseTour();}}});
   state.presentation=session;state.sitting=true;state.seatTarget=null;state.seatToy=null;state.crouching=false;state.grounded=true;state.jumpVelocity=0;state.near=null;
   $('hud').hidden=true;$('dialogue').hidden=true;$('presentation').hidden=false;$('story-next').disabled=true;$('story-title').textContent=slides[0].title;$('story-details').textContent=slides[0].subtitle;$('story-caption').textContent='Make yourself comfortable.';$('story-count').textContent=`1 / ${slides.length}`;$('story-count').setAttribute('aria-label',`Slide 1 of ${slides.length}`);
-  $('brand-room').textContent=study?'Study · Project showcase':'Living room · Story mode';host.userData.nameSprite.visible=false;display.root.visible=true;display.showSlide(slides[0]);
+  $('brand-room').textContent=study?'Study · Project showcase':'Living room · Story mode';display.root.visible=true;display.showSlide(slides[0]);
   $('desktop-browse').hidden=!study;$('desktop-browse').disabled=true;$('desktop-browse').setAttribute('aria-expanded','false');$('desktop-menu').hidden=true;
   canvas.setAttribute('aria-label',study?'A seated study presentation. Use Browse desktop to select a project or section.':'A seated living-room presentation.');
   document.body.classList.add('story-mode');document.body.classList.toggle('study-mode',study);updatePresentationPause(session);updatePresentation(0);$('story-pause').focus();return true;
@@ -298,7 +298,7 @@ function finishPresentation(advance=false){
   const session=state.presentation;if(!session)return;state.presentation=null;
   if('speechSynthesis' in window){window.speechSynthesis.cancel();window.speechSynthesis.resume();}
   session.stage.restore();const saved=session.previous;playerPos={...saved.position};state.sitting=saved.sitting;state.seatTarget=saved.seatTarget;state.seatToy=saved.seatToy;state.crouching=saved.crouching;state.grounded=saved.grounded;state.jumpVelocity=saved.jumpVelocity;
-  host.userData.nameSprite.visible=saved.hostName;session.display.root.visible=saved.display;canvas.setAttribute('aria-label',saved.canvasLabel);for(const [mesh,visible] of saved.roof)mesh.visible=visible;
+  session.display.root.visible=saved.display;canvas.setAttribute('aria-label',saved.canvasLabel);for(const [mesh,visible] of saved.roof)mesh.visible=visible;
   camera.position.copy(saved.cameraPosition);camera.quaternion.copy(saved.cameraQuaternion);camera.fov=saved.fov;camera.updateProjectionMatrix();lookTarget.copy(saved.lookTarget);endGreeting(host);endGreeting(player);clearInput();
   $('presentation').hidden=true;$('hud').hidden=saved.hud;$('brand-room').textContent=saved.brand;document.body.classList.remove('story-mode','study-mode');$('desktop-browse').hidden=true;$('desktop-menu').hidden=true;$('desktop-browse').setAttribute('aria-expanded','false');if(!stopped)canvas.focus();updateVisitUI(true);
   if(advance)session.onComplete?.();
@@ -378,7 +378,7 @@ function beginVisit(){
   closeModal();$('welcome').hidden=true;$('arrival').hidden=true;state.phase='playing';document.body.classList.add('playing');$('hud').hidden=false;
   playerPos=savedVisit.welcomed?{x:1.96,y:.13,z:11.8}:arrivalSpawn(world);player.position.set(playerPos.x,playerPos.y,playerPos.z);player.rotation.y=Math.atan2(-playerPos.x,10.55-playerPos.z);player.visible=true;host.visible=true;keys.clear();joystick={x:0,y:0};
   yaw=player.rotation.y-Math.PI;pitch=0;camera.position.set(playerPos.x+Math.sin(yaw)*5.3,playerPos.y+2.35,playerPos.z+Math.cos(yaw)*5.3);lookTarget.set(playerPos.x,playerPos.y+1.3,playerPos.z);camera.lookAt(lookTarget);
-  if(savedVisit.welcomed){visit.resume();state.hostReturnRoute=tourRouteFrom(host.position,CHAPTERS[0]);host.userData.nameSprite.visible=true;physics.syncColliders();updateVisitUI(true);toast('Welcome back. Your stories and settings are restored. Continue the tour or explore.',6000);}
+  if(savedVisit.welcomed){visit.resume();state.hostReturnRoute=tourRouteFrom(host.position,CHAPTERS[0]);physics.syncColliders();updateVisitUI(true);}
   else beginInvitation();
   updateProgress();updateVehicleLights();paintTouchControls(document,state);canvas.focus();
 }
@@ -444,13 +444,13 @@ function updateGreetingApproach(dt){
 function beginGreeting(){
   if(!visit.greet()){cancelGreetingApproach();return;}
   state.phase='greeting';cinematicTime=0;keys.clear();state.moveVX=state.moveVZ=0;
-  document.body.classList.add('cinematic');player.rotation.y=Math.PI;host.rotation.y=0;host.userData.nameSprite.visible=false;updateVisitUI();
+  document.body.classList.add('cinematic');player.rotation.y=Math.PI;host.rotation.y=0;updateVisitUI();
 }
 function finishArrival(){
   visit.finish();greetingRoute=[];$('skip-greeting').hidden=true;clearInput();
   state.phase='playing';document.body.classList.remove('cinematic');document.body.classList.add('playing');$('hud').hidden=false;openDoor();yaw=0;pitch=0;
   endGreeting(player);endGreeting(host);
-  host.userData.nameSprite.visible=true;camera.fov=48;camera.updateProjectionMatrix();camera.position.set(playerPos.x,playerPos.y+2.35,playerPos.z+4);lookTarget.set(playerPos.x,playerPos.y+1.3,playerPos.z);camera.lookAt(lookTarget);
+  camera.fov=48;camera.updateProjectionMatrix();camera.position.set(playerPos.x,playerPos.y+2.35,playerPos.z+4);lookTarget.set(playerPos.x,playerPos.y+1.3,playerPos.z);camera.lookAt(lookTarget);
   state.hostReturnRoute=tourRouteFrom(host.position,CHAPTERS[0]);
   dialogue('Hi, I’m Rabin. Welcome to my house! Let me give you a tour, or make yourself at home and explore. Every room has a story.','RABIN · WELCOME',startTour,'Take the guided tour →');
   saveProgress();updateProgress();updateVisitUI();canvas.focus();
@@ -506,7 +506,7 @@ function repairScene(){
 function impactSound(material){
   if(!state.sound||state.volume===0)return;
   try{
-    audioContext??=new (window.AudioContext||window.webkitAudioContext)();audioContext.resume();const length=material==='glass'?.27:material==='ceramic'?.18:.11,buffer=audioContext.createBuffer(1,Math.ceil(audioContext.sampleRate*length),audioContext.sampleRate),samples=buffer.getChannelData(0);
+    audioContext??=new (window.AudioContext||window.webkitAudioContext)();audioContext.resume().catch(()=>{});const length=material==='glass'?.27:material==='ceramic'?.18:.11,buffer=audioContext.createBuffer(1,Math.ceil(audioContext.sampleRate*length),audioContext.sampleRate),samples=buffer.getChannelData(0);
     for(let i=0;i<samples.length;i++)samples[i]=(Math.random()*2-1)*Math.exp(-i/samples.length*6);
     const source=audioContext.createBufferSource(),filter=audioContext.createBiquadFilter(),gain=audioContext.createGain();source.buffer=buffer;filter.type=material==='wood'?'lowpass':'highpass';filter.frequency.value=material==='wood'?440:material==='ceramic'?1200:2700;gain.gain.value=.13*state.volume;source.connect(filter);filter.connect(gain);gain.connect(audioContext.destination);source.start();
   }catch{}
@@ -516,7 +516,7 @@ function recordAction(action){state.actions.add(action);if(['carry','throw','str
 function beginAction(type,to,heading,duration,onMid,onEnd){
   if(state.transition||state.presentation)return;
   hideDialogue();state.moveVX=state.moveVZ=0;
-  state.running=false;state.crouching=false;
+  state.running=false;state.runToggle=false;state.crouching=false;
   const action={type,time:0,duration,from:{...playerPos},to:to??{...playerPos},heading:heading??player.rotation.y,onMid,onEnd,midDone:false};
   if((type==='sit'||type==='stand')&&state.seatTarget){
     const contact=chairContact(player,state.seatTarget,world.blockers);if(contact)action.contact={x:contact.x,y:contact.y,z:contact.z};
@@ -586,24 +586,24 @@ function dropObject(){
 function throwObject(power=.4){
   if(!state.held||state.transition||state.punch?.type==='throw')return;
   const toy=state.held;player.rotation.y=yaw+Math.PI;
-  const velocity=throwVelocity(toy,power);
+  const aim={aiming:state.aiming,viewYaw:yaw,viewPitch:pitch};
   state.charging=state.aiming=false;
   const captured=player.userData.rig?.asset.motions?.clips.has('throw');
-  state.punch={time:0,duration:captured?Math.min(actionDuration(player,'throw'),1.8):.42,side:1,type:'throw',hit:true,toy,velocity,releaseAt:captured?.5:0};
+  state.punch={time:0,duration:captured?Math.min(actionDuration(player,'throw'),1.8):.42,side:1,type:'throw',hit:true,toy,power,aim,releaseAt:captured?.5:0};
   if(!captured)releaseThrow(state.punch);
 }
 function releaseThrow(action){
   if(state.held!==action.toy)return;const toy=action.toy;action.toy=null;
-  physics.release(toy,action.velocity);state.held=null;recordAction('throw');if(toy.id==='basketball')state.throws++;
+  physics.release(toy,throwVelocity(toy,action.power,action.aim));state.held=null;recordAction('throw');if(toy.id==='basketball')state.throws++;
   tone(300,.09);toast('Thrown. You can pick it up wherever it lands.',2200);
 }
-function throwVelocity(toy,power){
+function throwVelocity(toy,power,{aiming=state.aiming,viewYaw=yaw,viewPitch=pitch}={}){
   const from=toy.mesh.position;
-  const elevation=state.aiming?clamp(-(.2+pitch*.85),-.65,.9):clamp(.32-pitch*.7,.04,.85),speed=(8+clamp(power,0,1)*10)/Math.sqrt(Math.max(1,toy.originalMass/.65));
-  let velocity={x:-Math.sin(yaw)*speed*Math.cos(elevation),y:Math.sin(elevation)*speed,z:-Math.cos(yaw)*speed*Math.cos(elevation)};
-  if(toy.id==='bowling-ball'&&state.aiming)velocity.y=-1.5;
-  const dx=world.hoop.x-from.x,dz=world.hoop.z-from.z,d=Math.hypot(dx,dz),facing=(-Math.sin(yaw)*dx-Math.cos(yaw)*dz)/d;
-  if(toy.id==='basketball'&&state.aiming&&d>2&&d<13&&facing>.96)velocity=basketballLaunch(from,world.hoop,power);
+  const elevation=aiming?clamp(-(.2+viewPitch*.85),-.65,.9):clamp(.32-viewPitch*.7,.04,.85),speed=(8+clamp(power,0,1)*10)/Math.sqrt(Math.max(1,toy.originalMass/.65));
+  let velocity={x:-Math.sin(viewYaw)*speed*Math.cos(elevation),y:Math.sin(elevation)*speed,z:-Math.cos(viewYaw)*speed*Math.cos(elevation)};
+  if(toy.id==='bowling-ball'&&aiming)velocity.y=-1.5;
+  const dx=world.hoop.x-from.x,dz=world.hoop.z-from.z,d=Math.hypot(dx,dz),facing=(-Math.sin(viewYaw)*dx-Math.cos(viewYaw)*dz)/d;
+  if(toy.id==='basketball'&&aiming&&d>2&&d<13&&facing>.96)velocity=basketballLaunch(from,world.hoop,power);
   return velocity;
 }
 function actionPress(){
@@ -628,7 +628,7 @@ function updatePunch(dt){
     if(target){state.shake=.1;tone(110,.1,.055);if(target.kind==='bag'){state.bagHits++;recordAction('strike');toast(`${a.type==='kick'?'Kick':'Punch'} · ${state.bagHits} bag hits`,1400);}else toast(`${a.type==='kick'?'Kicked':'Hit'} the ${target.label}.`,1400);}
 
   }
-  if(t>1)state.punch=null;
+  if(t>1){if(a.type!=='throw')state.lastPunch=elapsed;state.punch=null;}
 }
 function beginRace(){
   if(!state.driving||state.phase!=='playing'||state.modal||state.transition)return;
@@ -799,6 +799,7 @@ function bindEvents(){
   function releaseJoystick(e){if(e.pointerId!==joystickPointer)return;joystickPointer=null;joystick={x:0,y:0};$('joystick-knob').style.transform='translate(0,0)';}
   $('joystick').addEventListener('pointerup',releaseJoystick);$('joystick').addEventListener('pointercancel',releaseJoystick);
   $('touch-use').onclick=use;
+  $('desktop-run').onclick=()=>{if(state.phase!=='playing'||state.modal||state.driving||state.sitting||state.transition||state.gesture||state.presentation||!state.grounded)return;state.runToggle=!state.runToggle;updateRunControl();canvas.focus();};
   const touchReady=()=>state.phase==='playing'&&!state.modal&&!state.transition&&!state.gesture&&!state.presentation;
   $('touch-jump').addEventListener('pointerdown',e=>{if(!touchReady()||state.driving)return;jump();$('touch-jump').setPointerCapture(e.pointerId);});
   $('touch-action').addEventListener('pointerdown',e=>{if(!touchReady())return;e.preventDefault();actionPointer=e.pointerId;$('touch-action').setPointerCapture(e.pointerId);actionPress();});
@@ -856,11 +857,7 @@ async function boot({useBasic=false}={}){
   const pathGeometry=new THREE.BufferGeometry();pathGeometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(32*3),3));
   trajectory=new THREE.Line(pathGeometry,new THREE.LineDashedMaterial({color:'#f5d090',dashSize:.16,gapSize:.14,transparent:true,opacity:.85}));trajectory.frustumCulled=false;trajectory.visible=false;scene.add(trajectory);
   host.position.set(0,.13,7.4);scene.add(host);
-  const nameCanvas=document.createElement('canvas');nameCanvas.width=256;nameCanvas.height=96;const ctx=nameCanvas.getContext('2d');ctx.fillStyle='#173b31';ctx.beginPath();ctx.roundRect(4,4,248,88,20);ctx.fill();ctx.fillStyle='#efd4a3';ctx.font='500 25px Arial';ctx.textAlign='center';ctx.fillText('RABIN',128,42);ctx.font='14px Arial';ctx.fillStyle='#dbe3d2';ctx.fillText('YOUR HOST',128,68);
-  const nameTexture=new THREE.CanvasTexture(nameCanvas);nameTexture.colorSpace=THREE.SRGBColorSpace;const nameSprite=new THREE.Sprite(new THREE.SpriteMaterial({map:nameTexture,depthTest:true,depthWrite:false}));nameSprite.scale.set(1.3,.48,1);nameSprite.position.y=2.5;host.add(nameSprite);
-  host.userData.nameSprite=nameSprite;
   visit=createArrival(world,host);
-  host.userData.nameSprite.visible=false;
   const hostRing=new THREE.Mesh(new THREE.RingGeometry(.47,.51,32),new THREE.MeshBasicMaterial({color:'#69bb9a',transparent:true,opacity:.8,side:THREE.DoubleSide}));hostRing.rotation.x=-Math.PI/2;hostRing.position.y=.02;host.add(hostRing);
   $('loading-status').textContent='Preparing the first graphics frame…';setQuality();updateLighting();
   camera.position.set(32,20,37);camera.lookAt(-4.6,1.6,1.8);
@@ -915,7 +912,7 @@ function movePlayer(dt){
   }
   if(len>1){forward/=len;side/=len;}
   if(state.sitting){if(state.seatTarget){const seat=chairPose(player,state.seatTarget).root;playerPos={x:seat.x,y:seat.y,z:seat.z};}if(len>.1)standUp();return 0;}
-  const sprint=keys.has('ShiftLeft')||keys.has('ShiftRight')||state.touchRun;
+  const sprint=keys.has('ShiftLeft')||keys.has('ShiftRight')||state.touchRun||state.runToggle;
   state.running=sprint&&len>.1&&!state.crouching&&!state.aiming;
   const speed=state.crouching?1.25:state.aiming?1.6:sprint?4.6:2.2;
   const acceleration=1-Math.exp(-(len>.05?10:15)*dt);
@@ -955,7 +952,7 @@ function movePlayer(dt){
 function footstepSound(surface){
   if(!state.sound||state.volume===0)return;
   try{
-    audioContext??=new (window.AudioContext||window.webkitAudioContext)();audioContext.resume();const duration=.1,buffer=audioContext.createBuffer(1,Math.ceil(audioContext.sampleRate*duration),audioContext.sampleRate),samples=buffer.getChannelData(0);
+    audioContext??=new (window.AudioContext||window.webkitAudioContext)();audioContext.resume().catch(()=>{});const duration=.1,buffer=audioContext.createBuffer(1,Math.ceil(audioContext.sampleRate*duration),audioContext.sampleRate),samples=buffer.getChannelData(0);
     for(let i=0;i<samples.length;i++)samples[i]=(Math.random()*2-1)*Math.exp(-i/samples.length*8);
     const source=audioContext.createBufferSource(),filter=audioContext.createBiquadFilter(),gain=audioContext.createGain();source.buffer=buffer;filter.type='lowpass';filter.frequency.value=surface==='grass'?450:surface==='wood'?1100:1900;gain.gain.value=(surface==='grass'?.05:.085)*state.volume*(state.crouching?.5:1);source.connect(filter);filter.connect(gain);gain.connect(audioContext.destination);source.start();
   }catch{}
@@ -972,25 +969,36 @@ function updateVehicleRide(vehicle,dt){
   alignVehicleWheels(world.vehicle,(x,z)=>floorAt(x,z,world.car.position.y));
 }
 
+function faceHostTravel(previous,dt){
+  const heading=Math.atan2(host.position.x-previous.x,host.position.z-previous.z);
+  const turn=Math.atan2(Math.sin(heading-host.rotation.y),Math.cos(heading-host.rotation.y));
+  host.rotation.y=angleLerp(host.rotation.y,heading,Math.abs(turn)>Math.PI/2?1:1-Math.exp(-10*dt));
+}
+
+function openHostRouteDoors(){
+  for(const door of world.doors)if(!door.open&&Math.hypot(door.x-host.position.x,door.z-host.position.z)<2.1){door.open=true;door.blocker.active=false;}
+}
+
 function moveHost(dt){
   if(state.presentation)return 0;
-  if(visit.progress.stage!=='welcomed'){const speed=visit.update(dt,playerPos);host.userData.nameSprite.visible=visit.progress.stage==='invited';updateVisitUI();return speed;}
+  if(visit.progress.stage!=='welcomed'){const speed=visit.update(dt,playerPos);updateVisitUI();return speed;}
   if(state.gesture)return 0;
   if(!state.guide&&state.hostReturnRoute.length){
     if(!$('dialogue').hidden)return 0;
-    const [x,z]=state.hostReturnRoute[0],result=walkArrivalRoute(host.position,{x,z},dt,[...world.blockers,actorBlocker(playerPos,VISITOR_RADIUS)],2.15,HOST_RADIUS);
-    host.position.set(result.position.x,result.position.y,result.position.z);if(result.speed>.01)host.rotation.y=angleLerp(host.rotation.y,Math.atan2(x-host.position.x,z-host.position.z),1-Math.exp(-10*dt));if(result.done)state.hostReturnRoute.shift();return result.speed;
+    openHostRouteDoors();
+    const previous=host.position.clone(),[x,z]=state.hostReturnRoute[0],result=walkArrivalRoute(host.position,{x,z},dt,[...world.blockers,actorBlocker(playerPos,VISITOR_RADIUS)],2.15,HOST_RADIUS);
+    host.position.set(result.position.x,result.position.y,result.position.z);if(result.speed>.01)faceHostTravel(previous,dt);if(result.done)state.hostReturnRoute.shift();return result.speed;
   }
   let speed=0;
   if(state.guide&&state.guideRoute.length){
-    const waiting=guideShouldWait(host.position,playerPos);
+    const waiting=guideShouldWait(host.position,playerPos,state.guidePausedByDistance);
     if(waiting!==state.guidePausedByDistance){state.guidePausedByDistance=waiting;updateGuideUI();updateVisitUI(true);if(waiting)toast('Rabin is waiting. Catch up to continue the tour.',4000);}
     if(waiting||!$('dialogue').hidden)return 0;
     const [x,z]=state.guideRoute[0],dx=x-host.position.x,dz=z-host.position.z,dist=Math.hypot(dx,dz),step=Math.min(dist,2.15*dt);
-    for(const door of world.doors)if(!door.open&&Math.hypot(door.x-host.position.x,door.z-host.position.z)<2.1){door.open=true;door.blocker.active=false;}
+    openHostRouteDoors();
     if(dist<.09)state.guideRoute.shift();else{
-      const next=moveWithCollisions(host.position,dx/dist*step,dz/dist*step,[...world.blockers,actorBlocker(playerPos,VISITOR_RADIUS)],HOST_RADIUS);next.y=floorAt(next.x,next.z,host.position.y);
-      speed=Math.hypot(next.x-host.position.x,next.z-host.position.z)/dt;host.position.set(next.x,next.y,next.z);host.rotation.y=angleLerp(host.rotation.y,Math.atan2(dx,dz),1-Math.exp(-10*dt));
+      const previous=host.position.clone(),next=moveWithCollisions(host.position,dx/dist*step,dz/dist*step,[...world.blockers,actorBlocker(playerPos,VISITOR_RADIUS)],HOST_RADIUS);next.y=floorAt(next.x,next.z,host.position.y);
+      speed=Math.hypot(next.x-host.position.x,next.z-host.position.z)/dt;host.position.set(next.x,next.y,next.z);if(speed>.01)faceHostTravel(previous,dt);
       if(speed<.03){guideBlockedTime+=dt;if(guideBlockedTime>2.5&&guideBlockedTime-dt<=2.5)toast('Leave Rabin’s path clear. Repair & reset can restore displaced furniture.',5000);}else guideBlockedTime=0;
     }
     if(!state.guideRoute.length){state.guideWaiting=true;state.guidePausedByDistance=false;updateVisitUI(true);}
@@ -999,7 +1007,7 @@ function moveHost(dt){
     state.guideWaiting=false;showChapter(CHAPTERS[state.chapter]);
     if(state.presentation)return 0;
   }
-  if(speed<.1&&horizontalDistance(playerPos,host.position)<7)host.rotation.y=angleLerp(host.rotation.y,Math.atan2(playerPos.x-host.position.x,playerPos.z-host.position.z),dt*4);
+  if(speed<.1&&!state.guideRoute.length&&horizontalDistance(playerPos,host.position)<7)host.rotation.y=angleLerp(host.rotation.y,Math.atan2(playerPos.x-host.position.x,playerPos.z-host.position.z),dt*4);
   return speed;
 }
 
@@ -1048,6 +1056,7 @@ function updateSandbox(dt){
   updateActivityHUD();updateTrajectory();
 }
 function updateActivityHUD(){
+  updateRunControl();
   const badge=$('game-badge');let text='';
   if(state.gesture){const g=state.gesture;text=`<span class="tiny-label">${g.actor==='host'?'RABIN':'VISITOR'} · GESTURE PREVIEW</span><strong>${g.label}</strong><span class="activity-detail">${Math.max(0,g.duration-g.time).toFixed(1)}s remaining${state.guide?' · tour paused':''}</span>`;}
   else if(state.driving){
@@ -1078,6 +1087,13 @@ function updateActivityHUD(){
   paintTouchControls(document,state);
   const mode=state.gesture?'gesture':driving?'driving':state.sitting?'seated':state.held?'carrying':'walking';
   const hints=$('controls-hint');if(hints.dataset.mode!==mode){hints.dataset.mode=mode;const lines=mode==='driving'?[['W / S','drive'],['A / D','steer'],['SPACE','brake'],['E / F','exit'],['H','horn']]:mode==='seated'?[['E','stand up'],['MOUSE','look']]:mode==='gesture'?[['E','stop preview']]:mode==='carrying'?[['WASD','move'],['RIGHT CLICK','aim'],['J / CLICK','hold & throw'],['Q','drop']]:[['WASD','move'],['MOUSE','look'],['SHIFT','run'],['E','use'],['SPACE','jump'],['F','car']];hints.innerHTML=lines.map(([key,label])=>'<span><kbd>'+key+'</kbd> '+label+'</span>').join('')+'<span><kbd>ESC</kbd> pause</span>';}
+}
+function updateRunControl(){
+  const button=$('desktop-run');if(!button)return;
+  button.hidden=state.phase!=='playing'||state.driving||state.sitting||!!state.gesture||!!state.presentation;
+  button.disabled=state.modal||!!state.transition||!state.grounded;
+  button.setAttribute('aria-pressed',String(state.runToggle));
+  button.textContent=state.runToggle?'Run on · Shift':'Run · Shift';
 }
 function updateNavigation(){
   const active=!!state.journey;$('journey').hidden=!active;document.body.classList.toggle('arriving',active);if(!active)return;

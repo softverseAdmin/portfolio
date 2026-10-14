@@ -40,7 +40,10 @@ export function tourRouteFrom(position,chapter){
   return route;
 }
 
-export function guideShouldWait(host,visitor){return Math.hypot(host.x-visitor.x,host.z-visitor.z)>7||Math.abs(host.y-visitor.y)>2.1;}
+export function guideShouldWait(host,visitor,waiting=false){
+  // Let the visitor catch up before walking again, instead of restarting at every small step.
+  return Math.hypot(host.x-visitor.x,host.z-visitor.z)>(waiting?5.5:7)||Math.abs(host.y-visitor.y)>(waiting?1.6:2.1);
+}
 
 export function surfaceAt(x,z,y=0){
   if(z>28&&journeyDirections({x,z}).roadDistance<3.6)return 'stone';
