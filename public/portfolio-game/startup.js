@@ -1,10 +1,10 @@
 import {PORTFOLIO,portfolioSummary} from './portfolio.js';
-import {installLandscape} from './mobile.js';
+import {installLandscape,requestLandscape,deviceProfile} from './mobile.js';
 
 // Keep entry and portfolio controls usable before the 3D modules arrive.
-export function launchStartup({doc=document,loadGame=()=>import('./game.js?v=25'),reload=()=>{const url=new URL(location.href);url.searchParams.delete('simple');location.assign(url);},reloadSimple=()=>{const url=new URL(location.href);url.searchParams.set('simple','1');location.assign(url);},simple=false}={}){
+export function launchStartup({doc=document,loadGame=()=>import('./game.js?v=26'),reload=()=>{const url=new URL(location.href);url.searchParams.delete('simple');location.assign(url);},reloadSimple=()=>{const url=new URL(location.href);url.searchParams.set('simple','1');location.assign(url);},simple=false,defer=false}={}){
   installLandscape({doc});
-  const $=id=>doc.getElementById(id);let game,basic=simple,portfolioOpen=false,failed=false;
+  const $=id=>doc.getElementById(id);let game,basic=simple,portfolioOpen=false,failed=false,promise,timer;
   const close=()=>{portfolioOpen=false;$('modal').hidden=true;};
   function portfolio(id){
     if(game&&!failed){game.portfolioModal();return;}
@@ -14,11 +14,12 @@ export function launchStartup({doc=document,loadGame=()=>import('./game.js?v=25'
     $('modal').hidden=false;$('modal-close').onclick=close;$('modal-close').focus();
     doc.querySelectorAll('.project-read').forEach(button=>button.onclick=()=>portfolio(button.dataset.id));
     if($('startup-back'))$('startup-back').onclick=()=>portfolio();
-    if($('quick-enter')){$('quick-enter').textContent='Load a simpler visit →';$('quick-enter').onclick=()=>{close();requestBasic();};}
+    if($('quick-enter')){$('quick-enter').disabled=false;$('quick-enter').textContent='Explore the house →';$('quick-enter').onclick=()=>{close();start(true);};}
   }
   function requestBasic(){
     basic=true;$('loading-status').textContent='Preparing a simpler visit…';
     if(failed)reloadSimple();
+    else if(!promise)start(true);
   }
   function fail(error){
     if(failed)return;
@@ -34,18 +35,28 @@ export function launchStartup({doc=document,loadGame=()=>import('./game.js?v=25'
   $('loading-retry').onclick=reload;$('fatal-retry').onclick=reload;$('reload-original').onclick=reload;
   for(const id of ['quick-view','portfolio','loading-portfolio','fallback-portfolio'])$(id).onclick=()=>portfolio();
   doc.addEventListener('keydown',event=>{if((!game||failed)&&event.code==='Escape')close();});
-  const timer=setTimeout(()=>{$('loading-retry').hidden=false;$('loading').classList.add('needs-help');$('loading-status').textContent='Loading is taking longer. You can retry, choose a simpler visit, or read the portfolio.';},25000);
-  const promise=(async()=>{
-    try{
-      game=await loadGame();
-      const preparing=game.boot({useBasic:basic});if(portfolioOpen)game.portfolioModal();await preparing;clearTimeout(timer);
-    }catch(error){clearTimeout(timer);fail(error);}
-  })();
-  return {promise,fail,portfolio,requestBasic};
+  function start(enterWhenReady=false){
+    if(promise)return promise;
+    if(enterWhenReady&&deviceProfile().mobile)void requestLandscape({doc});
+    $('loading').hidden=false;doc.body.classList.remove('landing');doc.body.classList.add('preparing');$('enter').disabled=true;
+    timer=setTimeout(()=>{$('loading-retry').hidden=false;$('loading').classList.add('needs-help');$('loading-status').textContent='Loading is taking longer. You can retry, choose a simpler visit, or read the portfolio.';},25000);
+    promise=(async()=>{
+      try{
+        game=await loadGame();
+        const preparing=game.boot({useBasic:basic});if(portfolioOpen)game.portfolioModal();await preparing;clearTimeout(timer);
+        if(enterWhenReady&&!failed&&!portfolioOpen&&!$('enter').disabled)game.startVisit?.({fullscreen:false});
+      }catch(error){clearTimeout(timer);fail(error);}
+    })();
+    return promise;
+  }
+  if(defer){$('enter').disabled=false;$('enter-label').textContent='Begin your visit';$('enter').onclick=()=>start(true);$('loading').hidden=true;$('help').onclick=()=>portfolio();}
+  else start();
+  return {get promise(){return promise;},start,fail,portfolio,requestBasic};
 }
 
 if(typeof document!=='undefined'){
-  const startup=launchStartup({simple:new URL(location.href).searchParams.get('simple')==='1'});
+  const simple=new URL(location.href).searchParams.get('simple')==='1';
+  const startup=launchStartup({simple,defer:!simple});
   window.addEventListener('unhandledrejection',event=>{event.preventDefault();startup.fail(event.reason);});
   window.addEventListener('error',event=>{if(event.error){event.preventDefault();startup.fail(event.error);}});
   document.getElementById('world').addEventListener('webglcontextlost',event=>{event.preventDefault();startup.fail(new Error('The browser released the graphics context.'));});

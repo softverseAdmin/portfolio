@@ -34,6 +34,15 @@ function documentFixture(){
   return {body:element(),getElementById(id){if(!ids.has(id))ids.set(id,element());return ids.get(id);},querySelectorAll:()=>[],addEventListener(){}};
 }
 
+test('the welcome page waits for visitor intent and starts the 3D game only once',async()=>{
+  const doc=documentFixture(),loading=deferred();let downloads=0,boots=0,entered=0;
+  const startup=launchStartup({doc,defer:true,loadGame:()=>{downloads++;return loading.promise;}});
+  await flush();assert.equal(downloads,0);assert.equal(doc.getElementById('loading').hidden,true);assert.equal(doc.getElementById('enter').disabled,false);
+  doc.getElementById('enter').onclick();doc.getElementById('enter').onclick();assert.equal(downloads,1);
+  loading.resolve({boot:async()=>{boots++;doc.getElementById('enter').disabled=false;},startVisit:()=>entered++});
+  await startup.promise;assert.equal(boots,1);assert.equal(entered,1);
+});
+
 test('choosing a simpler visit before the game module loads is passed to boot',async()=>{
   const doc=documentFixture(),loading=deferred();let options;
   const startup=launchStartup({doc,loadGame:()=>loading.promise});startup.requestBasic();

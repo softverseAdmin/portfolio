@@ -7,11 +7,12 @@
   <meta name="description" content="Meet Rabin Adhikari. Explore a playable home filled with stories about full-stack development, healthcare, cloud, and AI.">
   <title>Rabin’s House — A portfolio you can explore</title>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23192b29'/%3E%3Cpath d='M12 31 32 14 52 31M20 29v23h24V29M29 52V38h6v14' fill='none' stroke='%23e9c58b' stroke-width='4'/%3E%3C/svg%3E">
-  <link rel="stylesheet" href="./style.css?v=25">
-  <link rel="stylesheet" href="./mobile.css?v=25">
-  <link rel="stylesheet" href="./presentation.css?v=25">
+  <link rel="preload" as="image" href="./assets/optimized/house-preview.0e3b688c4dba.webp">
+  <link rel="stylesheet" href="./style.css?v=26">
+  <link rel="stylesheet" href="./mobile.css?v=26">
+  <link rel="stylesheet" href="./presentation.css?v=26">
 </head>
-<body class="preparing">
+<body class="landing">
   <div id="game-viewport">
   <canvas id="world" aria-label="A playable three-dimensional house. WASD to move, E to use, J to act, F to enter a car. Click the scene to capture mouse-look."></canvas>
   <div class="vignette" aria-hidden="true"></div>
@@ -23,14 +24,14 @@
     <div class="eyebrow"><span class="status-dot"></span> TOKYO, JAPAN · OPEN FOR EXPLORATION</div>
     <h1>Come in.<br>Make yourself<br><em>at home.</em></h1>
     <p>I’m Rabin. Engineer, project lead, and your host.<br>Tour my house. Take the wheel. Pick up a ball and play.</p>
-    <div class="welcome-actions"><button id="enter" class="primary" disabled><span id="enter-label">Preparing your visit…</span><span>↗</span></button><button id="quick-view" class="text-button">Just the portfolio →</button></div>
+    <div class="welcome-actions"><button id="enter" class="primary"><span id="enter-label">Begin your visit</span><span>↗</span></button><button id="quick-view" class="text-button">Just the portfolio →</button></div>
     <button id="welcome-basic-house" class="text-button" hidden>House detail loading · use simpler house →</button>
     <button id="reload-original" class="text-button" hidden>Retry with original graphics →</button>
     <button id="replay-entry" class="text-button" hidden>Replay from the invitation →</button>
     <div class="welcome-note"><span>00 — THE INVITATION</span><span>Walk · Discover · Play</span></div>
   </main>
   <aside id="arrival" class="arrival"><span class="tiny-label">A LITTLE HOUSE. A LOT OF STORIES.</span><strong>Welcome to my world.</strong><p>Meet your host, explore his work, and make yourself at home.</p><span class="arrival-line"></span><div><span>7 stories to discover</span><span>A garden full of play</span></div></aside>
-  <section id="loading" class="loading" aria-labelledby="load-name">
+  <section id="loading" class="loading" hidden aria-labelledby="load-name">
     <div class="load-center">
       <h2 id="load-name" class="load-name">RABIN ADHIKARI</h2>
       <div class="load-line" aria-hidden="true"><i id="load-progress"></i></div>
@@ -80,40 +81,41 @@
   <script type="importmap">
 {
   "imports": {
-    "./arrival.js": "./arrival.js?v=25",
-    "./asset-transfer.js": "./asset-transfer.js?v=25",
-    "./camera.js": "./camera.js?v=25",
-    "./characters.js": "./characters.js?v=25",
-    "./controls.js": "./controls.js?v=25",
-    "./core.js": "./core.js?v=25",
-    "./desktop.js": "./desktop.js?v=25",
-    "./furnishings.js": "./furnishings.js?v=25",
-    "./game.js": "./game.js?v=25",
-    "./imported-characters.js": "./imported-characters.js?v=25",
-    "./imported-vehicle.js": "./imported-vehicle.js?v=25",
-    "./journey.js": "./journey.js?v=25",
-    "./loading.js": "./loading.js?v=25",
-    "./mobile.js": "./mobile.js?v=25",
-    "./model-assets.js": "./model-assets.js?v=25",
-    "./motions.js": "./motions.js?v=25",
-    "./physics.js": "./physics.js?v=25",
-    "./portfolio.js": "./portfolio.js?v=25",
-    "./poses.js": "./poses.js?v=25",
-    "./presentation.js": "./presentation.js?v=25",
-    "./projector.js": "./projector.js?v=25",
-    "./skins.js": "./skins.js?v=25",
-    "./startup.js": "./startup.js?v=25",
-    "./story.js": "./story.js?v=25",
-    "./terrain.js": "./terrain.js?v=25",
-    "./texture-budget.js": "./texture-budget.js?v=25",
-    "./transitions.js": "./transitions.js?v=25",
-    "./vehicle-motion.js": "./vehicle-motion.js?v=25",
-    "./vehicle.js": "./vehicle.js?v=25",
-    "./wheel-geometry.js": "./wheel-geometry.js?v=25",
-    "./world.js": "./world.js?v=25"
+    "./asset-catalog.js": "./asset-catalog.js?v=26",
+    "./arrival.js": "./arrival.js?v=26",
+    "./asset-transfer.js": "./asset-transfer.js?v=26",
+    "./camera.js": "./camera.js?v=26",
+    "./characters.js": "./characters.js?v=26",
+    "./controls.js": "./controls.js?v=26",
+    "./core.js": "./core.js?v=26",
+    "./desktop.js": "./desktop.js?v=26",
+    "./furnishings.js": "./furnishings.js?v=26",
+    "./game.js": "./game.js?v=26",
+    "./imported-characters.js": "./imported-characters.js?v=26",
+    "./imported-vehicle.js": "./imported-vehicle.js?v=26",
+    "./journey.js": "./journey.js?v=26",
+    "./loading.js": "./loading.js?v=26",
+    "./mobile.js": "./mobile.js?v=26",
+    "./model-assets.js": "./model-assets.js?v=26",
+    "./motions.js": "./motions.js?v=26",
+    "./physics.js": "./physics.js?v=26",
+    "./portfolio.js": "./portfolio.js?v=26",
+    "./poses.js": "./poses.js?v=26",
+    "./presentation.js": "./presentation.js?v=26",
+    "./projector.js": "./projector.js?v=26",
+    "./skins.js": "./skins.js?v=26",
+    "./startup.js": "./startup.js?v=26",
+    "./story.js": "./story.js?v=26",
+    "./terrain.js": "./terrain.js?v=26",
+    "./texture-budget.js": "./texture-budget.js?v=26",
+    "./transitions.js": "./transitions.js?v=26",
+    "./vehicle-motion.js": "./vehicle-motion.js?v=26",
+    "./vehicle.js": "./vehicle.js?v=26",
+    "./wheel-geometry.js": "./wheel-geometry.js?v=26",
+    "./world.js": "./world.js?v=26"
   }
 }
   </script>
-  <script type="module" src="./startup.js?v=25"></script>
+  <script type="module" src="./startup.js?v=26"></script>
 </body>
 </html>

@@ -1,17 +1,20 @@
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/addons/loaders/GLTFLoader.js';
 import {loadMotionLibrary} from './motions.js';
-import {receiveAsset,loadModelAsset} from './asset-transfer.js';
+import {loadPackedModel} from './asset-transfer.js';
 import {withTextureBudget} from './texture-budget.js';
+import {MeshoptDecoder} from './vendor/meshopt_decoder_v1.module.js';
+import {WEB_ASSETS} from './asset-catalog.js';
 
 export async function loadImportedCharacters({onProgress=()=>{},initialMotions,signal,maxTextureSize=0,sequential=false}={}){
   const roles={};
   const loadRole=async role=>{
     const baseURL=new URL('./assets/imported/characters/'+role+'/',import.meta.url);
-    const metadata=await receiveAsset(new URL('metadata.json',baseURL),null,()=>{},signal);
+    const asset=WEB_ASSETS.characters[role],metadata=asset.metadata;let modelLoaded=0,motionLoaded=0;
+    const report=()=>onProgress(role,{loaded:modelLoaded+motionLoaded,total:asset.bytes+asset.core.bytes,lengthComputable:true});
     const [gltf,motions]=await Promise.all([
-      loadModelAsset(withTextureBudget(new GLTFLoader(new THREE.LoadingManager()),maxTextureSize),new URL('model.glb',baseURL).href,event=>onProgress(role,event),{signal}),
-      loadMotionLibrary({catalogURL:new URL('animation-catalog.json',baseURL),baseURL,signal,initial:[...new Set(['idle','walk','run','greet',...(initialMotions??['start-walk','stop-walk','jump','talk','talk-alt','sit','stand','sit-idle','drive','enter-car','exit-car','carry-walk','carry-idle','box-walk','box-idle'])])]}),
+      loadPackedModel(withTextureBudget(new GLTFLoader(new THREE.LoadingManager()),maxTextureSize).setMeshoptDecoder(MeshoptDecoder),asset,event=>{modelLoaded=event.loaded;report();},{signal}),
+      loadMotionLibrary({catalog:asset.catalog,baseURL,signal,coreBundle:asset.core,tourBundle:asset.tour,packedClips:asset.motions,onProgress:loaded=>{motionLoaded=loaded;report();},initial:[...new Set(['idle','walk','run','greet',...(initialMotions??[])])]}),
     ]);
     const model=gltf.scene,clip=motions.clips.get('greet');
     if(!clip||!model.getObjectByName('mixamorigRightHand'))throw new Error('The uploaded '+role+' model needs its native rig and handshake.');

@@ -1,43 +1,19 @@
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/addons/loaders/GLTFLoader.js';
-import {MeshoptDecoder} from './vendor/meshopt_decoder.module.js';
-import {receiveAsset} from './asset-transfer.js';
+import {MeshoptDecoder} from './vendor/meshopt_decoder_v1.module.js';
+import {loadPackedModel} from './asset-transfer.js';
+import {WEB_ASSETS} from './asset-catalog.js';
 import {withTextureBudget} from './texture-budget.js';
 import {prepareOriginalWheels} from './wheel-geometry.js';
 
-const assetURL=file=>new URL('./assets/imported/car/'+file,import.meta.url).href;
 const point=(root,node)=>root.worldToLocal(node.getWorldPosition(new THREE.Vector3()));
 const required=(root,name)=>{const node=root.getObjectByName(name);if(!node)throw Error('Uploaded car part missing: '+name);return node;};
 
-// The original full-resolution PNG bytes and exact mesh buffers survive both
-// codecs. Blob URLs let the official loader resolve the lossless delivery files.
-export async function loadImportedVehicle(onProgress=()=>{},{signal,requestTimeoutMs=30000,concurrency=2,maxTextureSize=0}={}){
-  const abort=new AbortController(),urls=new Map();let document,transfers=[],manager;
-  const cancel=()=>{abort.abort(signal?.reason);manager?.abort();};
-  if(signal?.aborted)cancel();else signal?.addEventListener('abort',cancel,{once:true});
-  try{
-    transfers=['delivery.json','config.json'].map(file=>receiveAsset(assetURL(file),null,()=>{},abort.signal,requestTimeoutMs));
-    const [manifest,config]=await Promise.all(transfers);
-    const totals=new Map(manifest.files.map(file=>[file.uri,0]));
-    const report=phase=>onProgress({loaded:[...totals.values()].reduce((a,b)=>a+b,0),total:manifest.totalBytes,lengthComputable:true,phase});
-    let next=0;
-    const worker=async()=>{
-      while(next<manifest.files.length){
-        abort.signal.throwIfAborted();const file=manifest.files[next++];
-        const decoded=await receiveAsset(assetURL(file.deliveryUri??file.uri),file,loaded=>{totals.set(file.uri,loaded);report('download');},abort.signal,requestTimeoutMs);
-        if(file.uri===manifest.entryPoint){document=new TextDecoder().decode(decoded);continue;}
-        const mime=file.uri.endsWith('.png')?'image/png':'application/octet-stream';
-        urls.set(assetURL(file.uri),URL.createObjectURL(new Blob([decoded],{type:mime})));
-      }
-    };
-    transfers=Array.from({length:Math.min(Math.max(1,concurrency),manifest.files.length)},worker);await Promise.all(transfers);
-    abort.signal.throwIfAborted();report('prepare');
-    manager=new THREE.LoadingManager();manager.setURLModifier(url=>urls.get(url)??url);
-    const gltf=await withTextureBudget(new GLTFLoader(manager),maxTextureSize).setMeshoptDecoder(MeshoptDecoder).parseAsync(document,new URL('./assets/imported/car/',import.meta.url).href);
-    abort.signal.throwIfAborted();
-    return {scene:gltf.scene,config};
-  }catch(error){abort.abort();await Promise.allSettled(transfers);throw error;}
-  finally{signal?.removeEventListener('abort',cancel);for(const url of urls.values())URL.revokeObjectURL(url);}
+// Keep the mechanical parts separate while loading one compact web asset.
+export async function loadImportedVehicle(onProgress=()=>{},{signal,requestTimeoutMs=30000,maxTextureSize=0}={}){
+  const loader=withTextureBudget(new GLTFLoader(new THREE.LoadingManager()),maxTextureSize).setMeshoptDecoder(MeshoptDecoder);
+  const gltf=await loadPackedModel(loader,WEB_ASSETS.car,onProgress,{signal,timeoutMs:requestTimeoutMs});
+  return {scene:gltf.scene,config:WEB_ASSETS.car.config};
 }
 
 export class ImportedCarControls{
@@ -85,7 +61,7 @@ export function createImportedVehicle(source,configuration=source.config){
   const car=new THREE.Group();car.name='Uploaded original functional Land Cruiser';const model=(source.scene??source).clone(true);car.add(model);car.updateMatrixWorld(true);prepareOriginalWheels(car,configuration);
   const config=configuration,carDoors=config.doors.map(definition=>{
     const group=required(car,definition.name),front=definition.name.endsWith('Front'),side=definition.name.includes('Right')?1:-1,inner=required(car,definition.name+'_InnerPanel');
-    inner.geometry.computeBoundingBox();const size=inner.geometry.boundingBox.getSize(new THREE.Vector3()),center=inner.geometry.boundingBox.getCenter(new THREE.Vector3()).applyMatrix4(inner.matrix);
+    const box=new THREE.Box3().setFromObject(inner).applyMatrix4(group.matrixWorld.clone().invert()),size=box.getSize(new THREE.Vector3()),center=box.getCenter(new THREE.Vector3());
     return {group,side,front,angle:definition.angle,open:false,panel:required(car,definition.name+'_Exterior'),collision:{shapes:[{halfExtents:[Math.max(.06,size.x/2),.62,size.z/2],offset:[center.x,0,center.z]}]}};
   });
   const carWheels=config.wheels.map(definition=>{

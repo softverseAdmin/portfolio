@@ -1,5 +1,15 @@
 import {Gunzip} from './vendor/addons/libs/fflate.module.js';
 
+// These files have content hashes in their names, so repeat visits can reuse
+// their bytes. Parsing stays separate from the download progress indicator.
+export async function loadPackedModel(loader,asset,onProgress=()=>{},{signal,timeoutMs=30000}={}){
+  const url=new URL(asset.url,import.meta.url).href;
+  const bytes=await receiveAsset(url,asset,loaded=>onProgress({loaded,total:asset.bytes,lengthComputable:true,phase:'download'}),signal,timeoutMs);
+  signal?.throwIfAborted();onProgress({loaded:asset.bytes,total:asset.bytes,lengthComputable:true,phase:'prepare'});
+  const result=await loader.parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),new URL('.',url).href);
+  signal?.throwIfAborted();return result;
+}
+
 export function loadModelAsset(loader,url,onProgress=()=>{},{signal,timeoutMs=30000}={}){
   return new Promise((resolve,reject)=>{
     let timer,done=false;
@@ -28,7 +38,7 @@ export async function receiveAsset(url,file,onProgress,signal,timeoutMs=30000){
   });
   try{
     touch();check();
-    const fetching=fetch(url,{signal:request.signal,cache:'no-cache'}).then(value=>{
+    const fetching=fetch(url,{signal:request.signal,cache:file?'force-cache':'no-cache'}).then(value=>{
       response=value;
       if(request.signal.aborted){response.body?.cancel().catch(()=>{});throw request.signal.reason;}
       return response;

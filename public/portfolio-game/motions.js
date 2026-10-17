@@ -2,20 +2,32 @@ import * as THREE from './vendor/three.module.js';
 import {receiveAsset} from './asset-transfer.js';
 
 const essential=['idle','walk','start-walk','jump','talk','talk-alt','sit','stand','sit-idle','carry-walk','carry-idle','box-walk','box-idle','enter-car','drive','exit-car'];
-export async function loadMotionLibrary({initial=essential,catalogURL=new URL('./assets/characters/animation-catalog.json',import.meta.url),baseURL,signal}={}){
-  const url=new URL(catalogURL,import.meta.url),catalog=await receiveAsset(url,null,()=>{},signal);
-  const library={catalog,baseURL:new URL(baseURL??'.',url).href,signal,clips:new Map(),pending:new Map(),failures:[]};
+export async function loadMotionLibrary({initial=essential,catalog:providedCatalog,catalogURL=new URL('./assets/characters/animation-catalog.json',import.meta.url),baseURL,signal,coreBundle,tourBundle,packedClips,onProgress}={}){
+  const url=new URL(catalogURL,import.meta.url),catalog=providedCatalog??await receiveAsset(url,null,()=>{},signal);
+  const library={catalog,baseURL:new URL(baseURL??'.',url).href,signal,clips:new Map(),pending:new Map(),failures:[],tourBundle,packedClips,bundles:new Map()};
+  if(coreBundle)await loadMotionBundle(library,coreBundle,onProgress);
   await Promise.allSettled(initial.filter(id=>catalog.clips.some(c=>c.id===id)).map(id=>loadMotion(library,id)));
   return library;
 }
-export function warmMotionLibrary(library){return library?Promise.allSettled(essential.filter(id=>library.catalog.clips.some(c=>c.id===id)).map(id=>loadMotion(library,id))):Promise.resolve([]);}
+async function loadMotionBundle(library,asset,onProgress=()=>{}){
+  if(library.bundles.has(asset.url))return library.bundles.get(asset.url);
+  const task=(async()=>{const bytes=await receiveAsset(new URL(asset.url,import.meta.url),asset,onProgress,library.signal),data=JSON.parse(new TextDecoder().decode(bytes));for(const [id,clip] of Object.entries(data))if(!library.clips.has(id))library.clips.set(id,THREE.AnimationClip.parse(clip));})();
+  library.bundles.set(asset.url,task);try{await task;}catch(error){library.bundles.delete(asset.url);throw error;}
+}
+export async function warmMotionLibrary(library){
+  if(!library)return [];
+  if(library.tourBundle)await loadMotionBundle(library,library.tourBundle).catch(error=>library.failures.push({id:'tour',error:error.message}));
+  return Promise.allSettled(essential.filter(id=>library.catalog.clips.some(c=>c.id===id)).map(id=>loadMotion(library,id)));
+}
 export async function loadMotion(library,id){
   if(library.clips.has(id))return library.clips.get(id);
   if(library.pending.has(id))return library.pending.get(id);
   const entry=library.catalog.clips.find(c=>c.id===id);
   if(!entry)throw new Error('This motion is unavailable: '+id);
   const promise=(async()=>{
-    const data=await receiveAsset(new URL(entry.src,library.baseURL??new URL('./assets/characters/',import.meta.url)),null,()=>{},library.signal);
+    const packed=library.packedClips?.[id];
+    const bytes=packed?await receiveAsset(new URL(packed.url,import.meta.url),packed,()=>{},library.signal):null;
+    const data=packed?JSON.parse(new TextDecoder().decode(bytes)):await receiveAsset(new URL(entry.src,library.baseURL??new URL('./assets/characters/',import.meta.url)),null,()=>{},library.signal);
     const clip=THREE.AnimationClip.parse(data);
     library.clips.set(id,clip);return clip;
   })();
