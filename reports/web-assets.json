@@ -1,0 +1,360 @@
+{
+  "generated": "2026-10-17T19:41:10.451Z",
+  "files": {
+    "car.glb": {
+      "uri": "car.356f6080df59.glb",
+      "bytes": 3616856,
+      "sha256": "356f6080df598f4b52dbbd2c51fbaddfe2d296bf0d8ac240963ca9cef7d5cb49"
+    },
+    "host.glb": {
+      "uri": "host.f7845ffa38a1.glb",
+      "bytes": 1107972,
+      "sha256": "f7845ffa38a1e3bc9203f3da6d903431a7201bd037f6df0a60b22bd32b4eeab5"
+    },
+    "host-walk.json.gz": {
+      "uri": "host-walk.json.7adae1b008bb.gz",
+      "bytes": 12120,
+      "sha256": "7adae1b008bb4a3059d85516a9cefa8f2a5f0b673c916aeb8ff01a7031d781ea"
+    },
+    "host-start-walk.json.gz": {
+      "uri": "host-start-walk.json.af7aae4d7c65.gz",
+      "bytes": 31001,
+      "sha256": "af7aae4d7c65447544be3c9f4db7bbbb109dfeaa9181e40ad0f692341b6bb171"
+    },
+    "host-stop-walk.json.gz": {
+      "uri": "host-stop-walk.json.583f0bcf5ce5.gz",
+      "bytes": 32714,
+      "sha256": "583f0bcf5ce5c9952939f4a4c7a3bb1ee6d6536e371177eda3b6c9241a4f78d2"
+    },
+    "host-jump.json.gz": {
+      "uri": "host-jump.json.8d1531af53c7.gz",
+      "bytes": 30468,
+      "sha256": "8d1531af53c7d7b1d09f13c1ea25b0a0ca23d15277a46261c305900afb7119ed"
+    },
+    "host-talk.json.gz": {
+      "uri": "host-talk.json.712cb372fd66.gz",
+      "bytes": 44698,
+      "sha256": "712cb372fd66f6775595d8cebef539bf8fdf8a962bed301a5f7b6456c359a265"
+    },
+    "host-talk-alt.json.gz": {
+      "uri": "host-talk-alt.json.c9640feeb54e.gz",
+      "bytes": 42009,
+      "sha256": "c9640feeb54e55002bcc21794b3600a7135af2aded71777fa2ad45c809970701"
+    },
+    "host-greet.json.gz": {
+      "uri": "host-greet.json.c9bdf4175447.gz",
+      "bytes": 50019,
+      "sha256": "c9bdf41754476b6f1c208f42c7a352d52b6059550f2e6c180d4d33df583de692"
+    },
+    "host-wave.json.gz": {
+      "uri": "host-wave.json.da075f100a4c.gz",
+      "bytes": 5482,
+      "sha256": "da075f100a4c2a3b8134f6f462c7fe6691e08b8dca43607e7bf7fc798ee013ce"
+    },
+    "host-bow.json.gz": {
+      "uri": "host-bow.json.bd1cff07d15a.gz",
+      "bytes": 30367,
+      "sha256": "bd1cff07d15a06ace828dd634141cb2d2b58e899216227363a7bbb5624cdf4b6"
+    },
+    "host-typing.json.gz": {
+      "uri": "host-typing.json.9557d3ec75b5.gz",
+      "bytes": 165342,
+      "sha256": "9557d3ec75b59783f578f78c0f517767970aba3fd80d46c154542d667ebb6ce8"
+    },
+    "host-sit-to-type.json.gz": {
+      "uri": "host-sit-to-type.json.34e80293010c.gz",
+      "bytes": 15028,
+      "sha256": "34e80293010c4adf4debdbb3b80a4fdb87aa557f0ae121f1ab2c8bbe362f7c0c"
+    },
+    "host-type-to-sit.json.gz": {
+      "uri": "host-type-to-sit.json.204559f3464b.gz",
+      "bytes": 10778,
+      "sha256": "204559f3464b83f5fbb678eaa1394a1fdc0f650a576b7e3bb5dd331b8c4f3ac6"
+    },
+    "host-walk-left-turn.json.gz": {
+      "uri": "host-walk-left-turn.json.e1a0248d04af.gz",
+      "bytes": 14616,
+      "sha256": "e1a0248d04af413e1bb48b6df0002b10a77509b8418c1e7079538ad48a55b5f1"
+    },
+    "host-walk-turn-back.json.gz": {
+      "uri": "host-walk-turn-back.json.a9d5d5763c2e.gz",
+      "bytes": 12296,
+      "sha256": "a9d5d5763c2e3ba50bae8d9b03a9fdf3ed3e888659a02d3b659e584e562039de"
+    },
+    "host-briefcase-right-turn.json.gz": {
+      "uri": "host-briefcase-right-turn.json.c32bb11b673c.gz",
+      "bytes": 11238,
+      "sha256": "c32bb11b673c83fd17c9fd050692b38d547c4c6ccc4fe0820245669726a98d9f"
+    },
+    "host-briefcase-right-turn-alt.json.gz": {
+      "uri": "host-briefcase-right-turn-alt.json.0346a2d6d01d.gz",
+      "bytes": 21256,
+      "sha256": "0346a2d6d01d294c595d3bb71450295c2777895ab3d43fc9d17b1c93f3905caa"
+    },
+    "host-idle.json.gz": {
+      "uri": "host-idle.json.0ef609ea27e3.gz",
+      "bytes": 830,
+      "sha256": "0ef609ea27e3f3d1999b03f2f22b98def186df301a181ba062515fb57cf89160"
+    },
+    "host-run.json.gz": {
+      "uri": "host-run.json.e98140ed1cf7.gz",
+      "bytes": 9412,
+      "sha256": "e98140ed1cf7c38807c054f97ee6fbc9d39710e7ffe4bb113700fd7586440c0e"
+    },
+    "host-sit.json.gz": {
+      "uri": "host-sit.json.df02e17069e2.gz",
+      "bytes": 26004,
+      "sha256": "df02e17069e249ac54a298e37b08ea3c2c6cfa554d177ca010f451cc2f0a25b5"
+    },
+    "host-stand.json.gz": {
+      "uri": "host-stand.json.fc68d9ab657a.gz",
+      "bytes": 26701,
+      "sha256": "fc68d9ab657aa6fd73a2330b665db7b3ff4aed9dc60c3a9a137a77257dc866d1"
+    },
+    "host-drive.json.gz": {
+      "uri": "host-drive.json.50e17dcecd5b.gz",
+      "bytes": 39287,
+      "sha256": "50e17dcecd5b336e8c5595cc7d7fd502bdbaad7eaeb5a5bb5cfa8f61ad86d0c9"
+    },
+    "host-enter-car.json.gz": {
+      "uri": "host-enter-car.json.2d19efe5321e.gz",
+      "bytes": 59957,
+      "sha256": "2d19efe5321ed2534230f8b0587f426cbe2196909960e74e769138648e06f70f"
+    },
+    "host-exit-car.json.gz": {
+      "uri": "host-exit-car.json.0ce37c029269.gz",
+      "bytes": 64607,
+      "sha256": "0ce37c0292696d3c3e2003b66895d4873d105af542c87484a5f41aed609bc6d3"
+    },
+    "host-pickup.json.gz": {
+      "uri": "host-pickup.json.80c00a015018.gz",
+      "bytes": 32448,
+      "sha256": "80c00a01501852a5dd2d8f1887877724caf9d3fa0bad5b49772a1ad992ce2b82"
+    },
+    "host-throw.json.gz": {
+      "uri": "host-throw.json.bc0e7c689503.gz",
+      "bytes": 59437,
+      "sha256": "bc0e7c689503d0b68f9b68673ceb6f3abfc1377a81534a94684133e7437f7613"
+    },
+    "host-sit-idle.json.gz": {
+      "uri": "host-sit-idle.json.1da31f3f2b82.gz",
+      "bytes": 844,
+      "sha256": "1da31f3f2b82af319d6fd395b32e967e5b038db20df49f35ac5a43fa7f10870a"
+    },
+    "host-carry-walk.json.gz": {
+      "uri": "host-carry-walk.json.e2e287a1f6c9.gz",
+      "bytes": 12127,
+      "sha256": "e2e287a1f6c90f15b6b697544895eeb989404e57c9ced1e2e9ed9e68dbfca4f1"
+    },
+    "host-box-walk.json.gz": {
+      "uri": "host-box-walk.json.75daf9a189e9.gz",
+      "bytes": 12125,
+      "sha256": "75daf9a189e93528a8fd5e0bc4178698f890076d8c2bb4e44539c2361bd9b820"
+    },
+    "host-carry-idle.json.gz": {
+      "uri": "host-carry-idle.json.0ef7de642a16.gz",
+      "bytes": 837,
+      "sha256": "0ef7de642a163ade995d1bb5d4621c4ce1c7879e8d2eb80793dcdfc0efb9bcbd"
+    },
+    "host-box-idle.json.gz": {
+      "uri": "host-box-idle.json.009f1d0c0e4a.gz",
+      "bytes": 834,
+      "sha256": "009f1d0c0e4ab95f27f56fe1c6136ef06dd91ea8a5c53337f5c93155544f252e"
+    },
+    "host-core.json.gz": {
+      "uri": "host-core.json.5d60d8a51d57.gz",
+      "bytes": 234797,
+      "sha256": "5d60d8a51d57905f1c53737b8d8c4ffcf113b31d0001bf91ffa5909bf7883e8a"
+    },
+    "host-tour.json.gz": {
+      "uri": "host-tour.json.62dab74c3d69.gz",
+      "bytes": 320852,
+      "sha256": "62dab74c3d690629ad520b185e7345c67c6966c32dad0dbe8c802d3ef45b1417"
+    },
+    "visitor.glb": {
+      "uri": "visitor.4d92531c3794.glb",
+      "bytes": 1287736,
+      "sha256": "4d92531c3794f62927ee18b6135983938a43be66a45db1d10dab2c63c213045e"
+    },
+    "visitor-idle.json.gz": {
+      "uri": "visitor-idle.json.38e1f318e121.gz",
+      "bytes": 303218,
+      "sha256": "38e1f318e121adcb052ada8e50429c82a00a5d27697d30597b5b1892ae0048ba"
+    },
+    "visitor-walk.json.gz": {
+      "uri": "visitor-walk.json.070d6f7115de.gz",
+      "bytes": 21505,
+      "sha256": "070d6f7115def0689a47f7f5246c61f590c2ffa86861c9071849af2f961511b6"
+    },
+    "visitor-run.json.gz": {
+      "uri": "visitor-run.json.25e3ff9ec836.gz",
+      "bytes": 15988,
+      "sha256": "25e3ff9ec83634465ad24f2ea5221964217926984049702e27cded7bfd6f4074"
+    },
+    "visitor-start-walk.json.gz": {
+      "uri": "visitor-start-walk.json.e2df588a3bcd.gz",
+      "bytes": 18205,
+      "sha256": "e2df588a3bcdd124d1927aed79a28b5de136f99d50ef4907d9259bf7a52c18fa"
+    },
+    "visitor-stop-walk.json.gz": {
+      "uri": "visitor-stop-walk.json.447128da4bae.gz",
+      "bytes": 15214,
+      "sha256": "447128da4bae8c742739cd7d4c68ef4208271fddefc6b5969beda51fe2737c95"
+    },
+    "visitor-jump.json.gz": {
+      "uri": "visitor-jump.json.295bff807367.gz",
+      "bytes": 50362,
+      "sha256": "295bff8073676a48650d3790580c776e1098c971b9c5f8b3f4c03cf2327610a6"
+    },
+    "visitor-talk.json.gz": {
+      "uri": "visitor-talk.json.2eca0aa9475a.gz",
+      "bytes": 195202,
+      "sha256": "2eca0aa9475a65fa312dc3f14a29a1a119918a332713135ef28e35a97242a2e7"
+    },
+    "visitor-talk-alt.json.gz": {
+      "uri": "visitor-talk-alt.json.8c3643b9293c.gz",
+      "bytes": 88584,
+      "sha256": "8c3643b9293c0a06bc55cdf9d0bc4bdaabb38f2d21c7761bf939c9c4f61f9bc1"
+    },
+    "visitor-meeting-female.json.gz": {
+      "uri": "visitor-meeting-female.json.920ee7993006.gz",
+      "bytes": 663777,
+      "sha256": "920ee7993006e3dd159591b52025a0dd0d4c4685287c23a602d178e6122728f8"
+    },
+    "visitor-greet.json.gz": {
+      "uri": "visitor-greet.json.fca0906acf4d.gz",
+      "bytes": 80886,
+      "sha256": "fca0906acf4d2c7075f8a9f08ce6b575d1df42b6d1821c1b12af3e898c9b8ea4"
+    },
+    "visitor-sit.json.gz": {
+      "uri": "visitor-sit.json.93a81d169115.gz",
+      "bytes": 46079,
+      "sha256": "93a81d1691156d5feda2a68651064263b1c651bbd161c6b66135621df2de741e"
+    },
+    "visitor-stand.json.gz": {
+      "uri": "visitor-stand.json.fafda166aaac.gz",
+      "bytes": 46755,
+      "sha256": "fafda166aaac393562e52f14ed4618b67af4f44b30f18217d50f598359c2d252"
+    },
+    "visitor-drive.json.gz": {
+      "uri": "visitor-drive.json.ebcc703bfb31.gz",
+      "bytes": 39097,
+      "sha256": "ebcc703bfb31ef3b0a59c765ce1a05595791f09f5b20a3a64d3cd5e93449f27d"
+    },
+    "visitor-enter-car.json.gz": {
+      "uri": "visitor-enter-car.json.950abb0318b0.gz",
+      "bytes": 89392,
+      "sha256": "950abb0318b0bd14710a26f5c648cf9e82ecc90acdd2c937bb393b28df6909d2"
+    },
+    "visitor-exit-car.json.gz": {
+      "uri": "visitor-exit-car.json.5661d2d6b2d7.gz",
+      "bytes": 104828,
+      "sha256": "5661d2d6b2d75e1c4a55b1c3d426568d947cbfe642d872a8eec1a8412107b9b0"
+    },
+    "visitor-pickup.json.gz": {
+      "uri": "visitor-pickup.json.26bf2ae9c9a4.gz",
+      "bytes": 36677,
+      "sha256": "26bf2ae9c9a45f3cba7a9e96125b3875802af6efce34c595e65925087dd6ead0"
+    },
+    "visitor-pickup-alt.json.gz": {
+      "uri": "visitor-pickup-alt.json.7513bd1df5d8.gz",
+      "bytes": 148978,
+      "sha256": "7513bd1df5d80fbb3962bacf90a3a084d79b931d592267c13f541fb48fd377b1"
+    },
+    "visitor-throw.json.gz": {
+      "uri": "visitor-throw.json.f012ced59721.gz",
+      "bytes": 93321,
+      "sha256": "f012ced597214b810e69ffa468e6d8b00f2b83f9f9dcccc3f82bc8cee2c462eb"
+    },
+    "visitor-throw-in.json.gz": {
+      "uri": "visitor-throw-in.json.9594632e7431.gz",
+      "bytes": 58469,
+      "sha256": "9594632e7431938879bcb0376f589718770ef45573406f44c27aa6545e0c4c26"
+    },
+    "visitor-dribble.json.gz": {
+      "uri": "visitor-dribble.json.fe4e1af3f606.gz",
+      "bytes": 43019,
+      "sha256": "fe4e1af3f60671842c2ebe0eaf6626ca0822af85d0d6a79d4908a7476dd5fc2d"
+    },
+    "visitor-punch.json.gz": {
+      "uri": "visitor-punch.json.33a422b2ed4e.gz",
+      "bytes": 22244,
+      "sha256": "33a422b2ed4ee6129304304bd1e24c4219cc4438e7df71e457101fb0c83ff943"
+    },
+    "visitor-light-torch.json.gz": {
+      "uri": "visitor-light-torch.json.1a1402515248.gz",
+      "bytes": 50066,
+      "sha256": "1a1402515248eda66a16eb4dac9da19d7add5d1606952cca4d96f93b35365518"
+    },
+    "visitor-sit-idle.json.gz": {
+      "uri": "visitor-sit-idle.json.f8e4549d198d.gz",
+      "bytes": 1306,
+      "sha256": "f8e4549d198db7eb9ca7f691bcb5bdbfa0ad115ced61e916d4627ad1498d35e9"
+    },
+    "visitor-carry-walk.json.gz": {
+      "uri": "visitor-carry-walk.json.868662d7c3aa.gz",
+      "bytes": 21512,
+      "sha256": "868662d7c3aaf83c2a2f2bb82b40cae54e8aea5123b007e0aac26ecc427822ee"
+    },
+    "visitor-box-walk.json.gz": {
+      "uri": "visitor-box-walk.json.e8510c22ece8.gz",
+      "bytes": 21508,
+      "sha256": "e8510c22ece8244c67857c372478c2a516c5b3bf567b7896ee05507e8b811d9a"
+    },
+    "visitor-carry-idle.json.gz": {
+      "uri": "visitor-carry-idle.json.688f68857cbe.gz",
+      "bytes": 303228,
+      "sha256": "688f68857cbeda3ee3f8c840e68a81b987f5515fa593045d7b361bb4473c3817"
+    },
+    "visitor-box-idle.json.gz": {
+      "uri": "visitor-box-idle.json.105213539274.gz",
+      "bytes": 303224,
+      "sha256": "105213539274c8540945df9bb974ecdbe2014e938782f8f5544a97ef23cb6903"
+    },
+    "visitor-core.json.gz": {
+      "uri": "visitor-core.json.a229fa777e2f.gz",
+      "bytes": 653410,
+      "sha256": "a229fa777e2f1cab045f28aa0a482abb22f8a5042bdd0b0040feec33df93f59c"
+    },
+    "visitor-tour.json.gz": {
+      "uri": "visitor-tour.json.783aba570dd0.gz",
+      "bytes": 1244419,
+      "sha256": "783aba570dd06977b45d655661feb416a0041159184e99d78cca0a05422c0c83"
+    },
+    "estate.glb": {
+      "uri": "estate.28194497beea.glb",
+      "bytes": 4838544,
+      "sha256": "28194497beea4f47640fd310a1ec1ea567bd50a5dfe4cce70a3618446ca3df5e"
+    }
+  },
+  "sourceCar": "Tencent_Car_Mechanical_Rig.glb",
+  "notes": [
+    "Original source files remain unchanged.",
+    "Web assets use bounded mesh simplification and resized textures. Rig nodes and cabin controls remain separate."
+  ],
+  "car": {
+    "trianglesBefore": 1518886,
+    "trianglesAfter": 257306,
+    "textureSize": 2048,
+    "bytes": 3616856
+  },
+  "host": {
+    "trianglesBefore": 80000,
+    "trianglesAfter": 80000,
+    "textureSize": 2048,
+    "bytes": 1107972
+  },
+  "visitor": {
+    "trianglesBefore": 80000,
+    "trianglesAfter": 80000,
+    "textureSize": 2048,
+    "bytes": 1287736
+  },
+  "estate": {
+    "trianglesBefore": 177257,
+    "trianglesAfter": 177257,
+    "textureSize": 2048,
+    "bytes": 4838544
+  },
+  "startupBytes": 11739315
+}

@@ -11,24 +11,14 @@ let source;
 async function vehicle(){source??=loadProductionVehicle({raw:true});return createImportedVehicle(await source);}
 function actualLowest(wheel){let min=Infinity;for(const mesh of wheel.meshes){mesh.updateWorldMatrix(true,false);const p=mesh.geometry.attributes.position,index=mesh.geometry.index,e=mesh.matrixWorld.elements;for(let i=0;i<index.count;i++){const id=index.getX(i);min=Math.min(min,e[1]*p.getX(id)+e[5]*p.getY(id)+e[9]*p.getZ(id)+e[13]);}}return min;}
 
-test('whole original tyre surfaces rotate at the axle while the arches remain on the chassis, preserving every source triangle and UV',async()=>{
-  const v=await vehicle(),raw=await source,records=new Map(),point=new THREE.Vector3();raw.scene.updateMatrixWorld(true);v.car.updateMatrixWorld(true);
-  raw.scene.traverse(mesh=>{if(!mesh.isMesh||mesh.material.name!=='Original_Textured_Paint')return;const geometry=mesh.geometry;records.set(geometry.attributes.position,{geometry,matrix:mesh.matrixWorld.clone(),seen:new Uint8Array(geometry.index.count/3)});for(let i=0;i<geometry.index.count;i++)assert.ok(geometry.index.getX(i)===i,'the supplied source no longer has its original triangle order');});
-  v.car.traverse(mesh=>{
-    if(!mesh.isMesh||mesh.material.name!=='Original_Textured_Paint'||!mesh.geometry.attributes.position)return;
-    const record=records.get(mesh.geometry.attributes.position);assert.ok(record,'a replacement vertex buffer was introduced');
-    for(const [name,attribute] of Object.entries(record.geometry.attributes))assert.ok(mesh.geometry.attributes[name]===attribute,`original ${name} bytes were changed`);
-    assert.ok(mesh.material===raw.scene.getObjectByName(mesh.name.replace(' Tyre surface','')).material,'an original texture material was replaced');
-    const index=mesh.geometry.index;
-    for(let i=0;i<index.count;i+=3){const a=index.getX(i),triangle=a/3;assert.equal(index.getX(i+1),a+1);assert.equal(index.getX(i+2),a+2);assert.equal(record.seen[triangle],0,'a source triangle is drawn twice');record.seen[triangle]=1;}
-    // Changing the parent preserves the source appearance before steering/roll.
-    if(index.count){const original=point.fromBufferAttribute(mesh.geometry.attributes.position,index.getX(0)).clone().applyMatrix4(record.matrix),rendered=point.clone().applyMatrix4(mesh.matrixWorld);assert.ok(original.distanceTo(rendered)<1e-7,'the source rest surface was moved');}
-  });
-  for(const {seen} of records.values())assert.ok(seen.every(n=>n===1),'a source triangle was dropped');
-  const arches=v.carWheels.map(w=>v.car.getObjectByName(w.group.name.replace('_Steer',''))),before=arches.map(m=>m.matrixWorld.clone());
+test('the web car retains independent textured wheels, stationary bodywork and the supplied axle positions',async()=>{
+  const v=await vehicle(),raw=await source;v.car.updateMatrixWorld(true);raw.scene.updateMatrixWorld(true);
+  let triangles=0;v.car.traverse(mesh=>{if(mesh.isMesh){triangles+=(mesh.geometry.index?.count??mesh.geometry.attributes.position.count)/3;}});
+  assert.ok(triangles>100000&&triangles<350000,'the optimized car lost its detail or exceeded its geometry budget');
+  const body=v.car.getObjectByName('Body_Exterior'),before=body.matrixWorld.clone();assert.ok(body.geometry.attributes.uv,'the original paint texture coordinates are missing');assert.ok(body.geometry.attributes.normal,'exterior shading normals are missing');
   rollVehicleWheels(v,{x:0,z:0,heading:0},{x:0,z:1,heading:0},.36);v.car.updateMatrixWorld(true);
-  arches.forEach((m,i)=>assert.deepEqual(m.matrixWorld.elements,before[i].elements,'a fixed arch turns with a tyre'));
-  for(const w of v.carWheels){assert.ok(w.meshes.length>=2,'a tyre still contains only its old clipped wheel cell');assert.ok(Math.abs(w.localPosition.z-(w.front?1.475:-1.265))<1e-6,'a tyre uses the old bounding-box pivot');}
+  assert.deepEqual(body.matrixWorld.elements,before.elements,'bodywork rotates with a wheel');
+  for(const wheel of v.carWheels){assert.ok(wheel.meshes.length>0);assert.ok(wheel.tire.geometry.attributes.uv);assert.ok(Math.abs(wheel.localPosition.z-(wheel.front?1.4265217913:-1.2956869525))<.001,'a wheel is away from its supplied axle');assert.ok(Math.abs(wheel.spin.rotation.x)>1);}
 });
 
 test('the original tyres roll by signed distance, steer separately, and remain still without travel',async()=>{

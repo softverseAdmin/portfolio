@@ -22,6 +22,7 @@ import {readVisit,writeVisit,freshVisit,createInvitation,tourRouteFrom,guideShou
 import {INTRO_SLIDES,createPresentationStory,createStoryStage,createStudyStage,presentationCamera,studyCamera,subtitleCues,subtitleAt} from './presentation.js';
 import {STUDY_SLIDES,desktopPage} from './desktop.js';
 import {rollVehicleWheels,alignVehicleWheels} from './vehicle-motion.js';
+import {WEB_ASSETS} from './asset-catalog.js';
 
 const $=id=>document.getElementById(id);
 const actorHeight=actor=>actor?.userData.rig?.asset.height??actor?.userData.rig?.model?.userData.appearance?.height??1.76;
@@ -371,10 +372,10 @@ function resetPosition(){
   if(state.invitation?.progress.stage==='exiting')state.invitation.finish();updateVehicleLights();updateVisitUI(true);
 }
 
-function beginVisit(){
+function beginVisit({fullscreen=true}={}){
   if(state.phase!=='welcome')return;
   if(!visitReady()){toast(state.loading||state.houseLoading?'The house is still loading. You can browse the portfolio or use simpler models.':'The 3D view is unavailable. Your portfolio is still available.');return;}
-  if(deviceProfile().mobile)void requestLandscape();
+  if(fullscreen&&deviceProfile().mobile)void requestLandscape();
   closeModal();$('welcome').hidden=true;$('arrival').hidden=true;state.phase='playing';document.body.classList.add('playing');$('hud').hidden=false;
   playerPos=savedVisit.welcomed?{x:1.96,y:.13,z:11.8}:arrivalSpawn(world);player.position.set(playerPos.x,playerPos.y,playerPos.z);player.rotation.y=Math.atan2(-playerPos.x,10.55-playerPos.z);player.visible=true;host.visible=true;keys.clear();joystick={x:0,y:0};
   yaw=player.rotation.y-Math.PI;pitch=0;camera.position.set(playerPos.x+Math.sin(yaw)*5.3,playerPos.y+2.35,playerPos.z+Math.cos(yaw)*5.3);lookTarget.set(playerPos.x,playerPos.y+1.3,playerPos.z);camera.lookAt(lookTarget);
@@ -827,21 +828,21 @@ async function boot({useBasic=false}={}){
   // Present a graphics frame before waiting for the full-resolution assets.
   renderer.render(scene,camera);
   $('enter-label').textContent='Preparing the house and characters…';
-  const progress=createAssetProgress({host:7479832,visitor:8415980,car:116561849},fraction=>{
+  const progress=createAssetProgress({host:WEB_ASSETS.characters.host.bytes+WEB_ASSETS.characters.host.core.bytes,visitor:WEB_ASSETS.characters.visitor.bytes+WEB_ASSETS.characters.visitor.core.bytes,car:WEB_ASSETS.car.bytes,house:WEB_ASSETS.house.bytes},fraction=>{
     $('load-count').textContent=String(Math.round(fraction*100)).padStart(2,'0');$('load-progress').style.transform=`scaleX(${fraction})`;
   });
   const downloads=Array.from({length:3},()=>new AbortController());
   const simpleAsset=()=>{const error=new Error('Simpler models requested.');error.code='simple-models';return Promise.reject(error);};
-  const startCharacters=()=>useBasic?simpleAsset():loadCharacterAsset({onProgress:progress.update,signal:downloads[0].signal,maxTextureSize:profile.maxTextureSize,sequential:profile.mobile,initialMotions:['idle','walk','start-walk','drive','exit-car','enter-car','sit','stand','sit-idle','talk','jump','pickup','throw','punch','wave']});
+  const startCharacters=()=>useBasic?simpleAsset():loadCharacterAsset({onProgress:progress.update,signal:downloads[0].signal,maxTextureSize:profile.maxTextureSize,initialMotions:['drive','exit-car','enter-car']});
   const startCar=()=>useBasic?simpleAsset():loadImportedVehicle(e=>{progress.update('car',e);if(e.total>0)$('load-car').textContent=e.phase==='prepare'?'Preparing':`${Math.round(e.loaded/e.total*100)}%`;},{signal:downloads[2].signal,maxTextureSize:profile.maxTextureSize,concurrency:profile.mobile?1:2});
-  const startHouse=()=>useBasic?simpleAsset():loadEnvironmentAsset(e=>{if(e.total>0)$('load-house').textContent=`${Math.round(e.loaded/e.total*100)}%`;},{signal:downloads[1].signal,maxTextureSize:profile.maxTextureSize});
-  const assets=prepareVisitAssets(loadVisitAssets({sequential:profile.mobile,character:startCharacters,vehicle:startCar,environment:startHouse}),statuses=>{
+  const startHouse=()=>useBasic?simpleAsset():loadEnvironmentAsset(e=>{progress.update('house',e);if(e.total>0)$('load-house').textContent=`${Math.round(e.loaded/e.total*100)}%`;},{signal:downloads[1].signal,maxTextureSize:profile.maxTextureSize});
+  const assets=prepareVisitAssets(loadVisitAssets({character:startCharacters,vehicle:startCar,environment:startHouse}),statuses=>{
     const [characterStatus,houseStatus,carStatus]=statuses;
     if(houseStatus!=='pending')$('load-house').textContent=houseStatus==='fulfilled'?'Ready':'Simpler house';
     $('load-characters').textContent=characterStatus==='fulfilled'?'Ready':characterStatus==='rejected'?'Simpler models':'Loading';
     if(carStatus!=='pending')$('load-car').textContent=carStatus==='fulfilled'?'Ready':'Simpler car';
     $('loading-status').textContent=characterStatus==='pending'?'Preparing the uploaded character models and motions.':carStatus==='pending'?'Preparing your original Land Cruiser.':houseStatus==='pending'?'Drive ready. House detail continues while you travel.':'Ready to explore.';
-  },{readyIndexes:[0,2],cancel:index=>downloads[index].abort()});
+  },{readyIndexes:savedVisit.welcomed?[0,1,2]:[0,2],cancel:index=>downloads[index].abort()});
   $('basic-visit').hidden=false;$('basic-visit').onclick=()=>assets.useBasic();$('basic-house').onclick=()=>assets.useBasic();$('welcome-basic-house').onclick=()=>assets.useBasic();
   const [characterResult,environmentResult,vehicleResult]=await assets.promise;$('basic-visit').hidden=true;
   state.houseLoading=environmentResult.status==='pending';
@@ -863,7 +864,7 @@ async function boot({useBasic=false}={}){
   camera.position.set(32,20,37);camera.lookAt(-4.6,1.6,1.8);
   await prepareGraphics(renderer,scene,camera,[player,host]);if(stopped)return;progress.finish();
   state.loading=false;document.body.classList.remove('preparing');setQuality();updateLighting();updateVehicleLights();$('loading').classList.add('is-ready');setTimeout(()=>$('loading').hidden=true,state.reducedMotion?0:700);$('loading-status').textContent=state.houseLoading?'Drive ready. House detail continues while you travel.':world.visuals.applied&&player.userData.rig?'Ready to explore.':'Ready with simpler models. You can still tour and explore.';updateReadyControls();$('replay-entry').hidden=!savedVisit.welcomed;
-  warmMotionLibrary(player.userData.rig?.asset.motions);warmMotionLibrary(host.userData.rig?.asset.motions);
+  setTimeout(()=>{warmMotionLibrary(player.userData.rig?.asset.motions);warmMotionLibrary(host.userData.rig?.asset.motions);},1000);
   assets.complete.then(([,result])=>finishHouseLoading(result));
   frameRequest=requestAnimationFrame(frame);
 }
@@ -1226,4 +1227,4 @@ function frame(time){
 }
 
 function pauseAfterError(){stopped=true;if(state.presentation)finishPresentation();if(frameRequest!==null)cancelAnimationFrame(frameRequest);clearTimeout(resizeTimer);state.modal=true;clearInput();renderer?.dispose?.();}
-export {boot,portfolioModal,pauseAfterError};
+export {boot,beginVisit as startVisit,portfolioModal,pauseAfterError};

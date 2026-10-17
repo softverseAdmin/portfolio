@@ -8,6 +8,10 @@ const nextConfig = {
   async headers() {
     return [
       {
+        source: '/portfolio-game/assets/optimized/:path*',
+        headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
+      },
+      {
         source: '/(.*)',
         headers: [
           {

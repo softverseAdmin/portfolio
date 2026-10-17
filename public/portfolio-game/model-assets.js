@@ -1,8 +1,10 @@
 import * as THREE from './vendor/three.module.js';
 import {GLTFLoader} from './vendor/addons/loaders/GLTFLoader.js';
 import {updateCollider} from './physics.js';
-import {loadModelAsset} from './asset-transfer.js';
+import {loadPackedModel} from './asset-transfer.js';
 import {withTextureBudget} from './texture-budget.js';
+import {MeshoptDecoder} from './vendor/meshopt_decoder_v1.module.js';
+import {WEB_ASSETS} from './asset-catalog.js';
 
 const runtimeURL=file=>new URL('./assets/runtime/'+file,import.meta.url).href;
 export async function loadReviewedAppearance(role,onProgress){
@@ -51,7 +53,7 @@ export function bindReviewedAppearance(model,skin,appearance,{host=false}={}){
   model.userData.appearance={style:host?'host':'visitor',source:'reviewed-model',height:appearance.height};
 }
 
-export async function loadEnvironmentAsset(onProgress,{signal,maxTextureSize=0}={}){return (await loadModelAsset(withTextureBudget(new GLTFLoader(new THREE.LoadingManager()),maxTextureSize),runtimeURL('estate.glb'),onProgress,{signal})).scene;}
+export async function loadEnvironmentAsset(onProgress,{signal,maxTextureSize=0}={}){return (await loadPackedModel(withTextureBudget(new GLTFLoader(new THREE.LoadingManager()),maxTextureSize).setMeshoptDecoder(MeshoptDecoder),WEB_ASSETS.house,onProgress,{signal})).scene;}
 
 const vertical=7/(8.15-.48),yAt=y=>.13+(y-.48)*vertical;
 function sourcePoint(x,depth,y,origin,angle){
