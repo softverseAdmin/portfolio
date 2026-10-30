@@ -203,11 +203,7 @@ export default async function BlogPost({ params }) {
         {/* Every post renders from its own content by default, so a new post
             file in ../posts works with no changes here. Posts that need a
             bespoke layout are the only exceptions. */}
-        {post.slug === 'top-10-devops-tools-2025' ? (
-          <DevOpsToolsContent />
-        ) : (
-          <BlogContentRenderer content={post.content} />
-        )}
+        <BlogContentRenderer content={post.content} />
         
         {/* Tags */}
         <div className="mt-12 pt-8 border-t border-gold/30">
