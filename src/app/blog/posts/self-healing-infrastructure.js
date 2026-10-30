@@ -7,7 +7,7 @@ export const selfHealingInfrastructureBlog = {
   content: `
 # Self-Healing Infrastructure in Kubernetes (2026): A Practical Guide to Auto-Remediation
 
-*Last updated: 2026 — [set the exact publishing date when you post this]*
+*Last updated: October 30, 2026*
 
 Modern applications fail in small ways all the time: a container crashes, a node becomes unavailable, a deployment ships a bad configuration, or traffic spikes faster than a fixed number of replicas can handle.
 
@@ -462,7 +462,7 @@ Start with the layer closest to your most common failure, automate only what is 
 - [GitOps vs Traditional CI/CD](https://www.devopsenginer.com/blog/gitops-vs-traditional-cicd-2025-comparison) — how Git-based delivery changes deployment, drift correction, and rollback.
 - [Serverless vs Containers](https://www.devopsenginer.com/blog/serverless-vs-containers-2025) — how your compute model changes scaling, failure modes, and recovery.
 
-*[ADD AUTHOR NOTE: 2–3 lines in your own voice — what you are currently running/testing, and an invitation to comment or contact you via the site. No employer or client details.]*
+*Author's note: I am currently improving the deployment setup behind my own 3D portfolio — the project that taught me most of the lessons in this guide. If you are experimenting with self-healing patterns yourself, I would like to hear what worked — reach me via the contact page.*
 
 ---
 
