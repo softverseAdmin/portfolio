@@ -9,22 +9,25 @@ const AdSense = dynamic(() => import('@/components/ads/AdSense'), {
 export default function FeaturedContent() {
   const articles = [
     {
-      title: "Complete Docker to Kubernetes Migration Guide",
-      excerpt: "Step-by-step migration with zero downtime deployment strategies",
+      title: "Kubernetes Deployment Strategies in 2026: Rolling, Blue-Green, Canary, Recreate, A/B and Shadow",
+      excerpt: "Compare Kubernetes deployment strategies in 2026 with YAML examples, rollback guidance, risk and cost trade-offs, and clear advice on when to use each one.",
       category: "DevOps",
-      readTime: "12 min read"
+      readTime: "24 min read",
+      slug: "kubernetes-deployment-strategies-2025-complete-guide"
     },
     {
-      title: "AWS Cost Optimization: Save 40% on Your Cloud Bill",
-      excerpt: "Proven techniques to reduce AWS costs without sacrificing performance",
+      title: "AWS Cost Optimization in 2026: 15 Tactics That Cut Real Bills (With Checks, Commands, and Honest Impact Ranges)",
+      excerpt: "15 practical AWS cost tactics for 2026 — right-sizing, Savings Plans, Spot, S3 lifecycle rules and more — each with a check to run and an honest impact range.",
       category: "Cloud",
-      readTime: "8 min read"
+      readTime: "26 min read",
+      slug: "aws-cost-optimization-15-tactics-saved-50k-month"
     },
     {
-      title: "Zero Trust Security Implementation Roadmap",
-      excerpt: "Enterprise-grade security architecture for modern DevOps teams",
+      title: "DevSecOps Checklist 2026: Secure Your CI/CD Pipeline Without Slowing Delivery",
+      excerpt: "A practical checklist for securing source code, secrets, builds, containers, approvals, and production evidence — especially in regulated environments.",
       category: "Security",
-      readTime: "15 min read"
+      readTime: "22 min read",
+      slug: "devsecops-checklist-securing-pipeline-2025"
     }
   ]
 
@@ -59,9 +62,9 @@ export default function FeaturedContent() {
                   </p>
                   <div className="flex items-center justify-between">
                     <span className="text-xs text-warm-white/50">{article.readTime}</span>
-                    <button className="text-gold text-sm font-semibold hover:text-amber transition-colors flex items-center gap-1">
+                    <a href={`/blog/${article.slug}`} className="text-gold text-sm font-semibold hover:text-amber transition-colors flex items-center gap-1">
                       Read More <span className="group-hover:translate-x-1 transition-transform">→</span>
-                    </button>
+                    </a>
                   </div>
                 </div>
               ))}

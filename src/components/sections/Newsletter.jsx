@@ -18,7 +18,7 @@ export default function Newsletter() {
           </h2>
           <p className="text-lg text-warm-white/70 mb-8 leading-relaxed">
             Get weekly DevOps insights, cloud architecture patterns, and security best practices delivered to your inbox. 
-            <span className="text-gold font-semibold"> Join 10,000+ engineers!</span>
+            <span className="text-gold font-semibold"> New posts every week.</span>
           </p>
           
           <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
