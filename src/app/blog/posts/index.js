@@ -13,8 +13,10 @@ import { dockerImageOptimizationBlog } from './docker-image-optimization';
 import { multiCloudStrategyBlog } from './multi-cloud-strategy';
 import { selfHealingInfrastructureBlog } from './self-healing-infrastructure';
 import { serverlessVsContainers2025Blog } from './serverless-vs-containers-2025';
+import { aiForDevopsBlog } from './ai-for-devops';
 
 export const blogPosts = [
+  aiForDevopsBlog,
   serverlessVsContainers2025Blog,
   selfHealingInfrastructureBlog,
   multiCloudStrategyBlog,
