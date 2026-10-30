@@ -15,8 +15,10 @@ import { selfHealingInfrastructureBlog } from './self-healing-infrastructure';
 import { serverlessVsContainers2025Blog } from './serverless-vs-containers-2025';
 import { aiForDevopsBlog } from './ai-for-devops';
 import { kubectlCheatSheetBlog } from './kubectl-cheat-sheet';
+import { argoCdTutorialBlog } from './argo-cd-tutorial';
 
 export const blogPosts = [
+  argoCdTutorialBlog,
   kubectlCheatSheetBlog,
   aiForDevopsBlog,
   serverlessVsContainers2025Blog,
