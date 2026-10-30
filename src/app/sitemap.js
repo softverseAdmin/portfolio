@@ -1,3 +1,5 @@
+import { blogPosts } from './blog/posts';
+
 export default function sitemap() {
   const baseUrl = 'https://www.devopsenginer.com';
   const currentDate = new Date().toISOString();
@@ -29,6 +31,12 @@ export default function sitemap() {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/ai-job-hunting`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/resources`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
@@ -39,6 +47,12 @@ export default function sitemap() {
       lastModified: currentDate,
       changeFrequency: 'daily',
       priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/portfolio`,
+      lastModified: currentDate,
+      changeFrequency: 'monthly',
+      priority: 0.8,
     },
     {
       url: `${baseUrl}/contact`,
@@ -78,49 +92,13 @@ export default function sitemap() {
     },
   ];
 
-  // Prefer using each post's real publish/modified date when available
-  // Import blog post metadata to get accurate lastModified values.
-  let dynamicBlogPages = [];
-  try {
-    // import the central posts index which exports `blogPosts`
-    // Note: keep this a runtime require-like import so it works in Node environment
-    // when building the sitemap.
-    // eslint-disable-next-line import/no-dynamic-require, global-require
-    const postsModule = require('./blog/posts');
-    const posts = postsModule && postsModule.blogPosts ? postsModule.blogPosts : [];
-
-    dynamicBlogPages = posts.map((post) => ({
-      url: `${baseUrl}/blog/${post.slug}`,
-      lastModified: post.lastModified || post.publishDate || currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    }));
-  } catch (e) {
-    // Fallback: if importing posts fails, keep hard-coded slugs (best-effort)
-    const fallbackSlugs = [
-      'how-to-optimize-docker-images-production-2025',
-      'aws-cost-optimization-15-tactics-saved-50k-month',
-      'github-actions-vs-gitlab-ci-vs-jenkins-2025-comparison',
-      'gitops-vs-traditional-cicd-2025-comparison',
-      'kubernetes-deployment-strategies-2025-complete-guide',
-      'terraform-vs-pulumi-cloudformation-2025-iac-comparison',
-      'top-10-devops-tools-2025',
-      'how-to-build-cicd-pipeline-github-actions-2025',
-      'devsecops-checklist-securing-pipeline-2025',
-      'how-to-become-devops-engineer-japan-2025-career-guide',
-      'rise-of-platform-engineering-redefining-devops-2025',
-      'multi-cloud-strategy-2025',
-      'self-healing-infrastructure-2025',
-      'serverless-vs-containers-2025',
-    ];
-
-    dynamicBlogPages = fallbackSlugs.map((slug) => ({
-      url: `${baseUrl}/blog/${slug}`,
-      lastModified: currentDate,
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    }));
-  }
+  // Use each post's real publish/modified date when available
+  const dynamicBlogPages = blogPosts.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: post.lastModified || post.publishDate || currentDate,
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }));
 
   return [...staticPages, ...dynamicBlogPages];
 }

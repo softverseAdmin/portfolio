@@ -114,15 +114,6 @@ const nextConfig = {
   // Enable static optimization
   trailingSlash: false,
   
-  // PWA and SEO optimizations
-  async rewrites() {
-    return [
-      {
-        source: '/sitemap.xml',
-        destination: '/api/sitemap',
-      },
-    ];
-  },
 };
 
 export default nextConfig;

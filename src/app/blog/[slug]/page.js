@@ -1,6 +1,11 @@
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
-import { getBlogPost, getRelatedPosts } from '../blogData';
+import { blogPosts, getBlogPost, getRelatedPosts } from '../blogData';
+
+// Pre-render every post at build time
+export function generateStaticParams() {
+  return blogPosts.map((post) => ({ slug: post.slug }));
+}
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }) {
@@ -195,21 +200,14 @@ export default async function BlogPost({ params }) {
 
       {/* Content */}
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        {/* Dynamic content based on slug */}
-        {post.slug === 'how-to-optimize-docker-images-production-2025' && <BlogContentRenderer content={post.content} />}
-        {post.slug === 'aws-cost-optimization-15-tactics-saved-50k-month' && <BlogContentRenderer content={post.content} />}
-        {post.slug === 'github-actions-vs-gitlab-ci-vs-jenkins-2025-comparison' && <BlogContentRenderer content={post.content} />}
-        {post.slug === 'gitops-vs-traditional-cicd-2025-comparison' && <BlogContentRenderer content={post.content} />}
-        {post.slug === 'kubernetes-deployment-strategies-2025-complete-guide' && <BlogContentRenderer content={post.content} />}
-        {post.slug === 'top-10-devops-tools-2025' && <DevOpsToolsContent />}
-        {post.slug === 'how-to-build-cicd-pipeline-github-actions-2025' && <BlogContentRenderer content={post.content} />}
-        {post.slug === 'devsecops-checklist-securing-pipeline-2025' && <BlogContentRenderer content={post.content} />}
-        {post.slug === 'rise-of-platform-engineering-redefining-devops-2025' && <BlogContentRenderer content={post.content} />}
-        {post.slug === 'how-to-become-devops-engineer-japan-2025-career-guide' && <BlogContentRenderer content={post.content} />}
-        {post.slug === 'terraform-vs-pulumi-cloudformation-2025-iac-comparison' && <BlogContentRenderer content={post.content} />}
-        {post.slug === 'multi-cloud-strategy-2025' && <BlogContentRenderer content={post.content} />}
-        {post.slug === 'self-healing-infrastructure-2025' && <BlogContentRenderer content={post.content} />}
-        {post.slug === 'serverless-vs-containers-2025' && <BlogContentRenderer content={post.content} />}
+        {/* Every post renders from its own content by default, so a new post
+            file in ../posts works with no changes here. Posts that need a
+            bespoke layout are the only exceptions. */}
+        {post.slug === 'top-10-devops-tools-2025' ? (
+          <DevOpsToolsContent />
+        ) : (
+          <BlogContentRenderer content={post.content} />
+        )}
         
         {/* Tags */}
         <div className="mt-12 pt-8 border-t border-gold/30">

@@ -96,9 +96,6 @@ export const metadata = {
   },
   verification: {
     google: 'google11d554c204b2b981',
-    other: {
-      'msvalidate.01': 'your-bing-verification-code',
-    }
   }
 };
 
@@ -114,12 +111,6 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" className={inter.variable}>
       <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="google-site-verification" content="google11d554c204b2b981" />
-        <meta name="theme-color" content="#0a0a0a" />
-        
-        <link rel="canonical" href="https://www.devopsenginer.com" />
-        <link rel="icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
         <link rel="dns-prefetch" href="https://pagead2.googlesyndication.com" />
         

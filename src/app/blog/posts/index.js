@@ -36,9 +36,22 @@ export function getBlogPost(slug) {
   return blogPosts.find(post => post.slug === slug);
 }
 
-// Helper function to get related posts
+// Helper function to get related posts: same category first,
+// then posts sharing the most tags with the current post
 export function getRelatedPosts(currentSlug, limit = 3) {
+  const current = blogPosts.find(post => post.slug === currentSlug);
+  if (!current) {
+    return blogPosts.slice(0, limit);
+  }
+  const currentTags = new Set((current.tags || []).map(tag => tag.toLowerCase()));
   return blogPosts
     .filter(post => post.slug !== currentSlug)
-    .slice(0, limit);
+    .map(post => {
+      const sharedTags = (post.tags || []).filter(tag => currentTags.has(tag.toLowerCase())).length;
+      const score = (post.category === current.category ? 2 : 0) + sharedTags;
+      return { post, score };
+    })
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(entry => entry.post);
 }
