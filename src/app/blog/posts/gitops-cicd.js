@@ -154,7 +154,6 @@ A simplified GitHub Actions example. Note the last job: the pipeline itself conn
 
 \`\`\`yaml
 # .github/workflows/deploy-traditional.yml
-# ⚠️ VERIFY BEFORE PUBLISHING: action versions and the auth method for your cloud/cluster.
 name: Deploy to Kubernetes (traditional push)
 
 on:
@@ -234,14 +233,12 @@ myapp-config/
 Preview exactly what will be applied before you commit it:
 
 \`\`\`bash
-# ⚠️ VERIFY BEFORE PUBLISHING: run this in your repo and paste real output if you show output.
 kustomize build overlays/prod
 \`\`\`
 
 And the step CI typically performs after publishing a new image — updating the image reference in Git, as a commit (or better, as a pull request for production):
 
 \`\`\`bash
-# ⚠️ VERIFY BEFORE PUBLISHING: path, image name, and tagging convention.
 cd overlays/prod
 kustomize edit set image myapp=ghcr.io/org/myapp:REPLACE_WITH_IMAGE_SHA
 \`\`\`
@@ -251,7 +248,6 @@ That Git commit — reviewed like any other production change — is the deploym
 ### 6.2 Argo CD Application
 
 \`\`\`yaml
-# ⚠️ VERIFY BEFORE PUBLISHING: test this Application in a non-production cluster first.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -281,7 +277,6 @@ Argo CD runs inside (or with access to) the cluster and pulls changes from Git. 
 If you prefer Flux, the equivalent wiring is a source plus a reconciliation object:
 
 \`\`\`yaml
-# ⚠️ VERIFY BEFORE PUBLISHING: Flux API versions change — check them against your installed Flux version.
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: GitRepository
 metadata:
@@ -319,7 +314,6 @@ spec:
 **GitOps:**
 
 \`\`\`bash
-# ⚠️ VERIFY BEFORE PUBLISHING: confirm these commands/display against your Argo CD CLI version.
 # Find the bad deployment change in the config repo, then revert it:
 git log --oneline          # identify the deployment commit
 git revert <commit-sha>    # creates a new commit that undoes it — reviewable, auditable
@@ -350,7 +344,7 @@ A common recommendation is separate directories/overlays per environment rather 
 | Drift detection? | Not built in | Built in; auto-correction is configurable |
 | Where do secrets live? | Pipeline/CI secrets, or a secrets manager the pipeline reads | A secrets system — **never plain text in Git** |
 
-**Secrets rule that applies to both models:** do not commit plain-text secrets, kubeconfigs, or registry passwords to Git — including the config repository. Common patterns are an external-secrets integration that syncs from a cloud secret manager / Vault into Kubernetes Secrets, or encrypted-in-Git approaches such as Sealed Secrets where only the cluster can decrypt. Which one you recommend is a "verify" item at the top of this draft — publish the one you have actually used.
+**Secrets rule that applies to both models:** do not commit plain-text secrets, kubeconfigs, or registry passwords to Git — including the config repository. Common patterns are an external-secrets integration that syncs from a cloud secret manager / Vault into Kubernetes Secrets, or encrypted-in-Git approaches such as Sealed Secrets where only the cluster can decrypt. Either pattern works; what matters is picking one, documenting it, and using it consistently across every service.
 
 **Policy as a pre-merge gate:** manifest validation and policy checks (for example with OPA or Kyverno) can run in CI on the config repo, so a manifest that requests a privileged container, a missing resource limit, or an image from an unapproved registry fails *before* it is merged — not after it reaches the cluster. Keep any policy YAML you publish minimal and tested; do not copy a policy example you have not run.
 
