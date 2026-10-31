@@ -39,8 +39,10 @@ import { amazonEksBlog } from './amazon-eks';
 import { kubernetesNetworkPoliciesBlog } from './kubernetes-network-policies';
 import { kubernetesBackupDrBlog } from './kubernetes-backup-disaster-recovery';
 import { kubernetesPdbBlog } from './kubernetes-pod-disruption-budgets';
+import { githubActionsOidcBlog } from './github-actions-aws-oidc';
 
 export const blogPosts = [
+  githubActionsOidcBlog,
   kubernetesPdbBlog,
   kubernetesBackupDrBlog,
   kubernetesNetworkPoliciesBlog,
