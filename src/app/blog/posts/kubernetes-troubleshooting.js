@@ -69,7 +69,7 @@ kubectl debug -it <pod> -n <namespace> --image=busybox --target=<container>
 kubectl debug node/<node> -it --image=ubuntu    # node-level debugging
 \`\`\`
 
-Distroless and scratch images have no shell — exactly when \`kubectl debug\` earns its keep: it attaches an ephemeral container sharing the target's namespaces, so you can inspect its filesystem, processes, and network. It needs ephemeral containers enabled (GA since 1.25, sometimes restricted by policy — see the verify list). Fallback: a one-off tools pod on the same node/network.
+Distroless and scratch images have no shell — exactly when \`kubectl debug\` earns its keep: it attaches an ephemeral container sharing the target's namespaces, so you can inspect its filesystem, processes, and network. It needs ephemeral containers enabled (GA since 1.25, though some managed clusters restrict them via RBAC or policy). Fallback: a one-off tools pod on the same node/network.
 
 Now the reference. Find your status string; every entry follows the same shape.
 ---
