@@ -16,8 +16,10 @@ import { serverlessVsContainers2025Blog } from './serverless-vs-containers-2025'
 import { aiForDevopsBlog } from './ai-for-devops';
 import { kubectlCheatSheetBlog } from './kubectl-cheat-sheet';
 import { argoCdTutorialBlog } from './argo-cd-tutorial';
+import { kubernetesTroubleshootingBlog } from './kubernetes-troubleshooting';
 
 export const blogPosts = [
+  kubernetesTroubleshootingBlog,
   argoCdTutorialBlog,
   kubectlCheatSheetBlog,
   aiForDevopsBlog,
