@@ -23,6 +23,13 @@ export default function Newsletter() {
         body,
       })
       const data = await res.json().catch(() => null)
+      // Kit's anti-bot guard sometimes quarantines a direct post and returns
+      // a verification page URL instead. Hand the visitor to that page so
+      // they can complete the human check and the subscription goes through.
+      if (data && data.status === "quarantined" && data.url) {
+        window.location.href = data.url
+        return
+      }
       if (res.ok && (!data || data.status === "success" || data.status === undefined)) {
         setStatus("success")
       } else {
