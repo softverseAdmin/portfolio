@@ -33,8 +33,10 @@ import { kubernetesSecurityBasicsBlog } from './kubernetes-security-basics';
 import { kubernetesStorageBlog } from './kubernetes-storage';
 import { kubernetesUpgradesBlog } from './kubernetes-upgrades';
 import { kubernetesConfigmapsSecretsBlog } from './kubernetes-configmaps-secrets';
+import { terraformModulesBlog } from './terraform-modules';
 
 export const blogPosts = [
+  terraformModulesBlog,
   kubernetesConfigmapsSecretsBlog,
   kubernetesUpgradesBlog,
   kubernetesStorageBlog,
