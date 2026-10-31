@@ -37,8 +37,10 @@ import { terraformModulesBlog } from './terraform-modules';
 import { awsVpcBlog } from './aws-vpc';
 import { amazonEksBlog } from './amazon-eks';
 import { kubernetesNetworkPoliciesBlog } from './kubernetes-network-policies';
+import { kubernetesBackupDrBlog } from './kubernetes-backup-disaster-recovery';
 
 export const blogPosts = [
+  kubernetesBackupDrBlog,
   kubernetesNetworkPoliciesBlog,
   amazonEksBlog,
   awsVpcBlog,
