@@ -17,8 +17,10 @@ import { aiForDevopsBlog } from './ai-for-devops';
 import { kubectlCheatSheetBlog } from './kubectl-cheat-sheet';
 import { argoCdTutorialBlog } from './argo-cd-tutorial';
 import { kubernetesTroubleshootingBlog } from './kubernetes-troubleshooting';
+import { kubernetesRequestsLimitsBlog } from './kubernetes-requests-limits';
 
 export const blogPosts = [
+  kubernetesRequestsLimitsBlog,
   kubernetesTroubleshootingBlog,
   argoCdTutorialBlog,
   kubectlCheatSheetBlog,
