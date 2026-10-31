@@ -30,8 +30,10 @@ import { kubernetesObservabilityBlog } from './kubernetes-observability';
 import { argoRolloutsBlog } from './argo-rollouts';
 import { kubernetesAutoscalingBlog } from './kubernetes-autoscaling';
 import { kubernetesSecurityBasicsBlog } from './kubernetes-security-basics';
+import { kubernetesStorageBlog } from './kubernetes-storage';
 
 export const blogPosts = [
+  kubernetesStorageBlog,
   kubernetesSecurityBasicsBlog,
   kubernetesAutoscalingBlog,
   argoRolloutsBlog,
