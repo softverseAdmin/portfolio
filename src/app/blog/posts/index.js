@@ -34,8 +34,10 @@ import { kubernetesStorageBlog } from './kubernetes-storage';
 import { kubernetesUpgradesBlog } from './kubernetes-upgrades';
 import { kubernetesConfigmapsSecretsBlog } from './kubernetes-configmaps-secrets';
 import { terraformModulesBlog } from './terraform-modules';
+import { awsVpcBlog } from './aws-vpc';
 
 export const blogPosts = [
+  awsVpcBlog,
   terraformModulesBlog,
   kubernetesConfigmapsSecretsBlog,
   kubernetesUpgradesBlog,
