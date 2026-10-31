@@ -18,8 +18,10 @@ import { kubectlCheatSheetBlog } from './kubectl-cheat-sheet';
 import { argoCdTutorialBlog } from './argo-cd-tutorial';
 import { kubernetesTroubleshootingBlog } from './kubernetes-troubleshooting';
 import { kubernetesRequestsLimitsBlog } from './kubernetes-requests-limits';
+import { terraformStateManagementBlog } from './terraform-state-management';
 
 export const blogPosts = [
+  terraformStateManagementBlog,
   kubernetesRequestsLimitsBlog,
   kubernetesTroubleshootingBlog,
   argoCdTutorialBlog,
