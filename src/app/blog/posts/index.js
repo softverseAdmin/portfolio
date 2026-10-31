@@ -21,8 +21,10 @@ import { kubernetesRequestsLimitsBlog } from './kubernetes-requests-limits';
 import { terraformStateManagementBlog } from './terraform-state-management';
 import { githubActionsReusableWorkflowsBlog } from './github-actions-reusable-workflows';
 import { awsIamLeastPrivilegeBlog } from './aws-iam-least-privilege';
+import { kubernetesIngressNetworkingBlog } from './kubernetes-ingress-networking';
 
 export const blogPosts = [
+  kubernetesIngressNetworkingBlog,
   awsIamLeastPrivilegeBlog,
   githubActionsReusableWorkflowsBlog,
   terraformStateManagementBlog,
