@@ -23,8 +23,10 @@ import { githubActionsReusableWorkflowsBlog } from './github-actions-reusable-wo
 import { awsIamLeastPrivilegeBlog } from './aws-iam-least-privilege';
 import { kubernetesIngressNetworkingBlog } from './kubernetes-ingress-networking';
 import { helmChartsTutorialBlog } from './helm-charts-tutorial';
+import { kubernetesCostOptimizationBlog } from './kubernetes-cost-optimization';
 
 export const blogPosts = [
+  kubernetesCostOptimizationBlog,
   helmChartsTutorialBlog,
   kubernetesIngressNetworkingBlog,
   awsIamLeastPrivilegeBlog,
