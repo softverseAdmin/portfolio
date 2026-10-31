@@ -20,8 +20,10 @@ import { kubernetesTroubleshootingBlog } from './kubernetes-troubleshooting';
 import { kubernetesRequestsLimitsBlog } from './kubernetes-requests-limits';
 import { terraformStateManagementBlog } from './terraform-state-management';
 import { githubActionsReusableWorkflowsBlog } from './github-actions-reusable-workflows';
+import { awsIamLeastPrivilegeBlog } from './aws-iam-least-privilege';
 
 export const blogPosts = [
+  awsIamLeastPrivilegeBlog,
   githubActionsReusableWorkflowsBlog,
   terraformStateManagementBlog,
   kubernetesRequestsLimitsBlog,
