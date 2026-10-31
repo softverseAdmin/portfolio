@@ -43,8 +43,10 @@ import { githubActionsOidcBlog } from './github-actions-aws-oidc';
 import { kubernetesLoggingBlog } from './kubernetes-logging';
 import { terraformTestingBlog } from './terraform-testing';
 import { kubernetesRbacBlog } from './kubernetes-rbac';
+import { kubernetesJobsCronjobsBlog } from './kubernetes-jobs-cronjobs';
 
 export const blogPosts = [
+  kubernetesJobsCronjobsBlog,
   kubernetesRbacBlog,
   terraformTestingBlog,
   kubernetesLoggingBlog,
