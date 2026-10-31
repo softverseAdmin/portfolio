@@ -27,8 +27,10 @@ import { kubernetesCostOptimizationBlog } from './kubernetes-cost-optimization';
 import { cicdMonoreposBlog } from './cicd-monorepos';
 import { platformEngineeringPracticeBlog } from './platform-engineering-practice';
 import { kubernetesObservabilityBlog } from './kubernetes-observability';
+import { argoRolloutsBlog } from './argo-rollouts';
 
 export const blogPosts = [
+  argoRolloutsBlog,
   kubernetesObservabilityBlog,
   platformEngineeringPracticeBlog,
   cicdMonoreposBlog,
