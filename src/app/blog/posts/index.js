@@ -42,8 +42,10 @@ import { kubernetesPdbBlog } from './kubernetes-pod-disruption-budgets';
 import { githubActionsOidcBlog } from './github-actions-aws-oidc';
 import { kubernetesLoggingBlog } from './kubernetes-logging';
 import { terraformTestingBlog } from './terraform-testing';
+import { kubernetesRbacBlog } from './kubernetes-rbac';
 
 export const blogPosts = [
+  kubernetesRbacBlog,
   terraformTestingBlog,
   kubernetesLoggingBlog,
   githubActionsOidcBlog,
