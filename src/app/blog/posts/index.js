@@ -44,8 +44,10 @@ import { kubernetesLoggingBlog } from './kubernetes-logging';
 import { terraformTestingBlog } from './terraform-testing';
 import { kubernetesRbacBlog } from './kubernetes-rbac';
 import { kubernetesJobsCronjobsBlog } from './kubernetes-jobs-cronjobs';
+import { prometheusMonitoringBlog } from './prometheus-monitoring';
 
 export const blogPosts = [
+  prometheusMonitoringBlog,
   kubernetesJobsCronjobsBlog,
   kubernetesRbacBlog,
   terraformTestingBlog,
