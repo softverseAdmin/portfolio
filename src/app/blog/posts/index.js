@@ -24,8 +24,10 @@ import { awsIamLeastPrivilegeBlog } from './aws-iam-least-privilege';
 import { kubernetesIngressNetworkingBlog } from './kubernetes-ingress-networking';
 import { helmChartsTutorialBlog } from './helm-charts-tutorial';
 import { kubernetesCostOptimizationBlog } from './kubernetes-cost-optimization';
+import { cicdMonoreposBlog } from './cicd-monorepos';
 
 export const blogPosts = [
+  cicdMonoreposBlog,
   kubernetesCostOptimizationBlog,
   helmChartsTutorialBlog,
   kubernetesIngressNetworkingBlog,
