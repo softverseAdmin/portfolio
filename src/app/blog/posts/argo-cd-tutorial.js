@@ -312,6 +312,8 @@ My portfolio taught me the value of a known-good previous state the expensive wa
 - [GitOps vs Traditional CI/CD](https://www.devopsenginer.com/blog/gitops-vs-traditional-cicd-2025-comparison) — the delivery-model decision behind this tutorial.
 - [Kubernetes Deployment Strategies](https://www.devopsenginer.com/blog/kubernetes-deployment-strategies-2025-complete-guide) — rolling, canary, and blue-green, and where Argo Rollouts fits.
 - [Self-Healing Infrastructure in Kubernetes](https://www.devopsenginer.com/blog/self-healing-infrastructure-2025) — probes, autoscaling, and automated remediation beyond sync.
+- [Argo Rollouts 2026: Progressive Delivery for Kubernetes](https://www.devopsenginer.com/blog/argo-rollouts-progressive-delivery-2026) — add canary and blue-green promotion steps on top of the GitOps sync you just built.
+- [Helm Charts Tutorial 2026](https://www.devopsenginer.com/blog/helm-charts-tutorial-2026) — package the manifests Argo CD applies so they stop sprawling across repos.
   `,
   featuredImage: "/images/blog/gitops-vs-traditional-cicd-2025-comparison/gitops-cicd-hero.jpg",
   category: "Kubernetes",

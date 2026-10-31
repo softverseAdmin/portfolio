@@ -397,13 +397,15 @@ None of this needs new tooling budgets or a platform team — it is an afternoon
 - [Kubernetes Deployment Strategies: Rolling, Blue-Green, Canary & More](https://www.devopsenginer.com/blog/kubernetes-deployment-strategies-2025-complete-guide)
 - [DevSecOps Checklist: Securing the Pipeline End to End](https://www.devopsenginer.com/blog/devsecops-checklist-securing-pipeline-2025)
 - [Serverless vs Containers: Which Should You Choose?](https://www.devopsenginer.com/blog/serverless-vs-containers-2025)
+- [Kubernetes Security Basics in 2026](https://www.devopsenginer.com/blog/kubernetes-security-basics-guide-2026) — RBAC, network policies and pod security — the runtime half of the image hygiene above.
+- [Kubernetes Cost Optimization 2026](https://www.devopsenginer.com/blog/kubernetes-cost-optimization-guide-2026) — smaller images are step one; right-sizing requests is where the real money is.
   `,
   featuredImage: "/images/blog/how-to-optimize-docker-images-production-2025/hero.jpg",
   category: "DevOps",
   tags: ["Docker", "Containers", "DevOps", "CI/CD", "Security", "Performance", "Optimization", "Kubernetes", "Alpine", "Multi-stage Build"],
   author: "DevOps Enginer",
   publishDate: "2025-01-20",
-  lastModified: "2026-10-30",
+  lastModified: "2026-10-31",
   readTime: "27 min read",
   seo: {
     title: "How to Optimize Docker Images for Production in 2026: Smaller Images, Fewer CVEs, Faster Deploys",

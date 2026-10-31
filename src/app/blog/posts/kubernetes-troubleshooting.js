@@ -362,6 +362,9 @@ And when the release itself is the problem, the least glamorous move here is oft
 - [Self-Healing Infrastructure in Kubernetes](https://www.devopsenginer.com/blog/self-healing-infrastructure-2025) — the probes, autoscaling and remediation patterns that prevent half the errors above
 - [Kubernetes Deployment Strategies](https://www.devopsenginer.com/blog/kubernetes-deployment-strategies-2025-complete-guide) — rolling back and rolling out, deliberately
 - [GitOps vs Traditional CI/CD](https://www.devopsenginer.com/blog/gitops-vs-traditional-cicd-2025-comparison) — making the manifest the source of truth so "what changed?" is always answerable
+- [Kubernetes Logging in 2026](https://www.devopsenginer.com/blog/kubernetes-logging-guide-2026) — previous-container logs are step one; a real pipeline is the fix behind them.
+- [Prometheus in 2026: Metrics, PromQL and Alerting That Pages Only When It Matters](https://www.devopsenginer.com/blog/prometheus-monitoring-guide-2026) — catch the saturation signals that predict the failures above.
+- [Kubernetes Observability 2026](https://www.devopsenginer.com/blog/kubernetes-observability-guide-2026) — metrics, logs and traces together, so diagnosis stops being tab-hopping.
   `,
   featuredImage: "/images/blog/self-healing-infrastructure-2025/hero.jpg",
   category: "Kubernetes",

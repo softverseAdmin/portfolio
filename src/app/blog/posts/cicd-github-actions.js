@@ -492,13 +492,16 @@ Actions wins on GitHub integration and time-to-first-pipeline; GitLab CI is comp
 A good pipeline is not the longest YAML file — it is the one whose result the whole team believes. Build it in this order: reproducible CI on every pull request, caching and split jobs so it stays fast, an image tagged with the commit SHA, an approval gate in front of production, and credentials that expire before anyone could steal them. Each step in this guide stands on its own, so adopt them incrementally: the required status checks you set up in Step 1 will already change how your project feels to work on.
 
 From here, the natural next layers are security scanning in the pipeline (see the [DevSecOps checklist](https://www.devopsenginer.com/blog/devsecops-checklist-securing-pipeline-2025)) and, if your deployments grow more complex, letting a GitOps controller reconcile state instead of pushing changes (see [GitOps vs Traditional CI/CD](https://www.devopsenginer.com/blog/gitops-vs-traditional-cicd-2025-comparison)).
+- [GitHub Actions to AWS Without Stored Keys: OIDC Federation in 2026](https://www.devopsenginer.com/blog/github-actions-aws-oidc-guide-2026) — delete the long-lived AWS keys from your pipeline secrets and federate instead.
+- [GitHub Actions Reusable Workflows & Composite Actions (2026)](https://www.devopsenginer.com/blog/github-actions-reusable-workflows-guide-2026) — stop copy-pasting YAML across repos once the pipeline above starts multiplying.
+- [CI/CD for Monorepos 2026: Build Only What Changed](https://www.devopsenginer.com/blog/cicd-monorepos-guide-2026) — path filters and affected-only builds when one repo holds many services.
   `,
   featuredImage: "/images/blog/how-to-build-cicd-pipeline-github-actions-2025/cicd-hero.jpg",
   category: "DevOps",
   tags: ["CI/CD", "GitHub Actions", "DevOps", "Automation", "Pipeline", "AWS", "Docker", "Kubernetes", "Deployment", "2026"],
   author: "DevOps Enginer",
   publishDate: "2025-10-20",
-  lastModified: "2026-10-30",
+  lastModified: "2026-10-31",
   readTime: "26 min read",
   seo: {
     title: "Build a CI/CD Pipeline with GitHub Actions (2026): Complete Step-by-Step Guide",

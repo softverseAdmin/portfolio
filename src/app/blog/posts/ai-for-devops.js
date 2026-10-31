@@ -346,13 +346,16 @@ Day to day, I use AI the way this site was built: it drafts, summarises, and hel
 - [Self-Healing Infrastructure in Kubernetes (2026)](https://www.devopsenginer.com/blog/self-healing-infrastructure-2025) — what automated recovery does well *without* AI, and where its limits are.
 - [Serverless vs Containers (2026): How to Choose for Cost, Scale and Speed](https://www.devopsenginer.com/blog/serverless-vs-containers-2025) — the same "maturity vs hype" judgement applied to architecture choices.
 - [AI Job Hunting tool](https://www.devopsenginer.com/ai-job-hunting) — the small AI feature running on this site, mentioned in the reality-check section above.
+- [Prometheus in 2026: Metrics, PromQL and Alerting That Pages Only When It Matters](https://www.devopsenginer.com/blog/prometheus-monitoring-guide-2026) — the metrics discipline underneath the anomaly detection discussed above.
+- [Kubernetes Observability 2026](https://www.devopsenginer.com/blog/kubernetes-observability-guide-2026) — metrics, logs and traces as one investigation, not three tabs.
+- [Platform Engineering in Practice 2026](https://www.devopsenginer.com/blog/platform-engineering-in-practice-2026) — where AI assistance lands when a platform team productises it.
   `,
   featuredImage: "/images/blog/rise-of-platform-engineering-redefining-devops-2025/ai-powered-platform-assistant.jpg",
   category: "AI & DevOps",
   tags: ["AI for DevOps", "AIOps", "Incident Management", "Kubernetes", "CI/CD", "LLMs"],
   author: "DevOps Enginer",
   publishDate: "2026-10-30",
-  lastModified: "2026-10-30",
+  lastModified: "2026-10-31",
   readTime: "20 min read",
   seo: {
     title: "AI for DevOps in 2026: Practical Use Cases, Tools & a Hands-On Example",

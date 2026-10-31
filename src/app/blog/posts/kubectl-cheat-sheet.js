@@ -409,6 +409,9 @@ kubectl rewards a small vocabulary used fluently: \`get\` and \`describe\` to se
 
 - [Kubernetes Deployment Strategies in 2026: Rolling, Blue-Green, Canary, Recreate, A/B and Shadow](https://www.devopsenginer.com/blog/kubernetes-deployment-strategies-2025-complete-guide) — the strategies behind the rollout commands in section 2.
 - [GitOps vs Traditional CI/CD in 2026: Differences, Examples, and Which One to Choose](https://www.devopsenginer.com/blog/gitops-vs-traditional-cicd-2025-comparison) — why the manifests kubectl applies should live in Git, and who should be applying them.
+- [Kubernetes Troubleshooting in 2026](https://www.devopsenginer.com/blog/kubernetes-troubleshooting-guide-2026) — the calm diagnosis sequence these commands feed into when a pod breaks.
+- [Kubernetes Logging in 2026](https://www.devopsenginer.com/blog/kubernetes-logging-guide-2026) — from kubectl logs to a pipeline that survives node rotation.
+- [Kubernetes RBAC in 2026](https://www.devopsenginer.com/blog/kubernetes-rbac-guide-2026) — when the cheat sheet's commands start answering Forbidden, this is why.
   `,
   featuredImage: "/images/blog/kubernetes-deployment-strategies-2025-complete-guide/k8s-deployment-hero.jpg",
   category: "Kubernetes",
