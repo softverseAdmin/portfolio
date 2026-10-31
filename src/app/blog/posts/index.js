@@ -29,8 +29,10 @@ import { platformEngineeringPracticeBlog } from './platform-engineering-practice
 import { kubernetesObservabilityBlog } from './kubernetes-observability';
 import { argoRolloutsBlog } from './argo-rollouts';
 import { kubernetesAutoscalingBlog } from './kubernetes-autoscaling';
+import { kubernetesSecurityBasicsBlog } from './kubernetes-security-basics';
 
 export const blogPosts = [
+  kubernetesSecurityBasicsBlog,
   kubernetesAutoscalingBlog,
   argoRolloutsBlog,
   kubernetesObservabilityBlog,
