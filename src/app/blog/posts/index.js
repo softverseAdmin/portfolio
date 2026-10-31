@@ -31,8 +31,10 @@ import { argoRolloutsBlog } from './argo-rollouts';
 import { kubernetesAutoscalingBlog } from './kubernetes-autoscaling';
 import { kubernetesSecurityBasicsBlog } from './kubernetes-security-basics';
 import { kubernetesStorageBlog } from './kubernetes-storage';
+import { kubernetesUpgradesBlog } from './kubernetes-upgrades';
 
 export const blogPosts = [
+  kubernetesUpgradesBlog,
   kubernetesStorageBlog,
   kubernetesSecurityBasicsBlog,
   kubernetesAutoscalingBlog,

@@ -42,7 +42,7 @@ export default function Hero() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             <div className="bg-gradient-to-br from-charcoal/80 to-rich-black/80 backdrop-blur-sm border border-gold/20 rounded-xl p-6 shadow-xl hover:shadow-2xl hover:shadow-gold/20 transition-all hover:border-gold/50 group">
-              <div className="text-3xl font-bold bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">32</div>
+              <div className="text-3xl font-bold bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent mb-2 group-hover:scale-110 transition-transform">33</div>
               <div className="text-warm-white/70 group-hover:text-warm-white transition-colors">In-Depth Tutorials</div>
             </div>
             <div className="bg-gradient-to-br from-charcoal/80 to-rich-black/80 backdrop-blur-sm border border-gold/20 rounded-xl p-6 shadow-xl hover:shadow-2xl hover:shadow-gold/20 transition-all hover:border-gold/50 group">
