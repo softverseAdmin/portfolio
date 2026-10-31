@@ -225,7 +225,7 @@ The list will age — tools rise, get acquired, change licences, and occasionall
   category: "DevOps",
   tags: ["DevOps", "Tools", "CI/CD", "Automation", "2026", "GitHub Actions", "Terraform", "Kubernetes", "Docker", "AI"],
   author: "DevOps Enginer",
-  publishDate: "2025-10-20",
+  publishDate: "2026-10-30",
   lastModified: "2026-10-30",
   readTime: "27 min read",
   seo: {
