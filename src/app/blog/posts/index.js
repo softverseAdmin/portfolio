@@ -32,8 +32,10 @@ import { kubernetesAutoscalingBlog } from './kubernetes-autoscaling';
 import { kubernetesSecurityBasicsBlog } from './kubernetes-security-basics';
 import { kubernetesStorageBlog } from './kubernetes-storage';
 import { kubernetesUpgradesBlog } from './kubernetes-upgrades';
+import { kubernetesConfigmapsSecretsBlog } from './kubernetes-configmaps-secrets';
 
 export const blogPosts = [
+  kubernetesConfigmapsSecretsBlog,
   kubernetesUpgradesBlog,
   kubernetesStorageBlog,
   kubernetesSecurityBasicsBlog,
