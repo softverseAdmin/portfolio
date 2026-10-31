@@ -19,8 +19,10 @@ import { argoCdTutorialBlog } from './argo-cd-tutorial';
 import { kubernetesTroubleshootingBlog } from './kubernetes-troubleshooting';
 import { kubernetesRequestsLimitsBlog } from './kubernetes-requests-limits';
 import { terraformStateManagementBlog } from './terraform-state-management';
+import { githubActionsReusableWorkflowsBlog } from './github-actions-reusable-workflows';
 
 export const blogPosts = [
+  githubActionsReusableWorkflowsBlog,
   terraformStateManagementBlog,
   kubernetesRequestsLimitsBlog,
   kubernetesTroubleshootingBlog,
