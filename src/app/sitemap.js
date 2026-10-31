@@ -37,6 +37,12 @@ export default function sitemap() {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/devops-production-pack`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
       url: `${baseUrl}/resources`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
