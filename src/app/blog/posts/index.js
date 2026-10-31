@@ -25,8 +25,10 @@ import { kubernetesIngressNetworkingBlog } from './kubernetes-ingress-networking
 import { helmChartsTutorialBlog } from './helm-charts-tutorial';
 import { kubernetesCostOptimizationBlog } from './kubernetes-cost-optimization';
 import { cicdMonoreposBlog } from './cicd-monorepos';
+import { platformEngineeringPracticeBlog } from './platform-engineering-practice';
 
 export const blogPosts = [
+  platformEngineeringPracticeBlog,
   cicdMonoreposBlog,
   kubernetesCostOptimizationBlog,
   helmChartsTutorialBlog,
