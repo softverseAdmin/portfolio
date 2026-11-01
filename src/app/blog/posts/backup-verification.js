@@ -104,8 +104,8 @@ restic check --read-data-subset=5%
 
 Understand the caveat before you rely on it: \`--read-data-subset=5%\` reads and verifies **5% of the data packs**, not 5% of each file. It is sampling. A corrupt pack outside the sample will not be found tonight. Two practices make sampling honest:
 
-- **Rotate the subset.** restic picks the subset deterministically from the percentage, so vary the percentage across runs (5%, 10%, 15%…) or accept that a fixed sample has fixed blind spots.
-- **Run a full read periodically.** \`restic check --read-data\` (100%) on a monthly cadence closes the gaps the sampling leaves.
+- **Rotate with the n/t form, not the percentage.** \`--read-data-subset=5%\` picks a *random* subset on every run, so runs can overlap and some packs may never get sampled at all. The \`n/t\` form is the deterministic one: restic splits the packs into t groups and checks group n. Pin it to the calendar — \`--read-data-subset=$(date +%u)/7\` checks a different seventh each night and guarantees every pack is read within a week, for the same total I/O as one full check spread out.
+- **Run a full read periodically.** \`restic check --read-data\` (100%) on a monthly cadence closes any remaining gaps.
 
 Also add a content spot-check at this level: restore a handful of known files to a temp directory and diff them, or query the snapshot for a file you know changed yesterday. Existence of *expected content* is a much stronger signal than existence of *an artifact*.
 
@@ -172,7 +172,7 @@ Verification fails as a practice when it depends on someone remembering. Put it 
 
 | Cadence | Scope | Levels |
 |---|---|---|
-| Nightly (automated) | Every backup, right after it lands | 1–3, with rotating read-data subsets |
+| Nightly (automated) | Every backup, right after it lands | 1–3, with n/t-rotated read-data subsets |
 | Weekly (automated) | Partial level-4: restore one database or one snapshot subset to a scratch environment; run content checks | 4 (partial) |
 | Monthly (automated + reviewed) | Full restore of **one** production system on rotation, timed end to end | 4 (full) |
 | Quarterly | Full restore drill treated like a game day: restore, verify, record duration and surprises, update the runbook | 4 (full, measured) |
@@ -186,7 +186,7 @@ Cloud snapshots deserve a specific warning here: a snapshot of a disk or databas
 - Every backup has a **separate verification job** with its own pass/fail, running after the backup completes
 - Level 1: freshness and size-band checks on every artifact, every cycle
 - Level 2: checksums verified for plain archives; \`restic check\` (or your tool's equivalent) nightly
-- Level 3: read-back tests — \`pg_restore --list\`, \`tar -t\`, \`restic check --read-data-subset\` with **rotating** percentages, plus expected-content spot checks
+- Level 3: read-back tests — \`pg_restore --list\`, \`tar -t\`, \`restic check --read-data-subset\` rotated with the **n/t** form, plus expected-content spot checks
 - Level 4: automated partial restores weekly; full restores monthly on rotation; quarterly timed drill
 - Monitoring pages on **verification failure** and on **missing verification success** (~30h for nightly cycles)
 - "Age of newest level-4-verified backup" is a visible metric, not a surprise
