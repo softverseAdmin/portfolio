@@ -46,9 +46,11 @@ import { kubernetesRbacBlog } from './kubernetes-rbac';
 import { kubernetesJobsCronjobsBlog } from './kubernetes-jobs-cronjobs';
 import { prometheusMonitoringBlog } from './prometheus-monitoring';
 import { backupVerificationBlog } from './backup-verification';
+import { restoreDrillFingerprintBlog } from './restore-drill-fingerprint';
 
 export const blogPosts = [
   backupVerificationBlog,
+  restoreDrillFingerprintBlog,
   prometheusMonitoringBlog,
   kubernetesJobsCronjobsBlog,
   kubernetesRbacBlog,
