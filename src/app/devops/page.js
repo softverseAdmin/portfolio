@@ -17,15 +17,30 @@ const devopsRoadmap = {
     items: [
       { name: "Programming Languages", tools: ["Python", "JavaScript", "Go", "Bash"], level: "essential" },
       { name: "Operating Systems", tools: ["Linux", "Windows", "macOS"], level: "essential" },
-      { name: "Networking", tools: ["TCP/IP", "DNS", "HTTP/HTTPS", "Load Balancing"], level: "essential" },
+      { name: "Networking", tools: ["TCP/IP", "DNS", "HTTP/HTTPS", "Load Balancing"], level: "essential",
+        links: [
+          { label: "Kubernetes Networking & Ingress Basics", href: "/blog/kubernetes-ingress-networking-basics-2026" },
+          { label: "AWS VPC", href: "/blog/aws-vpc-guide-2026" },
+          { label: "Kubernetes Network Policies", href: "/blog/kubernetes-network-policies-guide-2026" }
+        ] },
       { name: "Version Control", tools: ["Git", "GitHub", "GitLab"], level: "essential" }
     ]
   },
   infrastructure: {
     title: "Infrastructure & Cloud",
     items: [
-      { name: "Cloud Providers", tools: ["AWS", "Azure", "GCP", "DigitalOcean"], level: "critical" },
-      { name: "Infrastructure as Code", tools: ["Terraform", "CloudFormation", "Pulumi", "CDK"], level: "critical" },
+      { name: "Cloud Providers", tools: ["AWS", "Azure", "GCP", "DigitalOcean"], level: "critical",
+        links: [
+          { label: "Multi-Cloud Strategy", href: "/blog/multi-cloud-strategy-2025" },
+          { label: "AWS Cost Optimization", href: "/blog/aws-cost-optimization-15-tactics-saved-50k-month" }
+        ] },
+      { name: "Infrastructure as Code", tools: ["Terraform", "CloudFormation", "Pulumi", "CDK"], level: "critical",
+        links: [
+          { label: "Terraform vs Pulumi vs CloudFormation", href: "/blog/terraform-vs-pulumi-cloudformation-2025-iac-comparison" },
+          { label: "Terraform State Management", href: "/blog/terraform-state-management-guide-2026" },
+          { label: "Terraform Modules", href: "/blog/terraform-modules-guide-2026" },
+          { label: "Terraform Testing", href: "/blog/terraform-testing-guide-2026" }
+        ] },
       { name: "Configuration Management", tools: ["Ansible", "Chef", "Puppet", "SaltStack"], level: "important" },
       { name: "Web Servers", tools: ["Nginx", "Apache", "HAProxy", "Traefik"], level: "important" }
     ]
@@ -33,8 +48,21 @@ const devopsRoadmap = {
   containers: {
     title: "Containerization & Orchestration",
     items: [
-      { name: "Container Technology", tools: ["Docker", "Podman", "containerd"], level: "critical" },
-      { name: "Container Orchestration", tools: ["Kubernetes", "Docker Swarm", "Nomad"], level: "critical" },
+      { name: "Container Technology", tools: ["Docker", "Podman", "containerd"], level: "critical",
+        links: [
+          { label: "Optimize Docker Images for Production", href: "/blog/how-to-optimize-docker-images-production-2025" },
+          { label: "Serverless vs Containers", href: "/blog/serverless-vs-containers-2025" }
+        ] },
+      { name: "Container Orchestration", tools: ["Kubernetes", "Docker Swarm", "Nomad"], level: "critical",
+        links: [
+          { label: "kubectl Commands Cheat Sheet", href: "/blog/kubectl-commands-cheat-sheet-2026" },
+          { label: "Kubernetes Resource Requests & Limits", href: "/blog/kubernetes-resource-requests-limits-guide-2026" },
+          { label: "Kubernetes Networking & Ingress Basics", href: "/blog/kubernetes-ingress-networking-basics-2026" },
+          { label: "Helm Charts Tutorial", href: "/blog/helm-charts-tutorial-2026" },
+          { label: "Kubernetes Deployment Strategies", href: "/blog/kubernetes-deployment-strategies-2025-complete-guide" },
+          { label: "Kubernetes Troubleshooting Guide", href: "/blog/kubernetes-troubleshooting-guide-2026" },
+          { label: "Amazon EKS", href: "/blog/amazon-eks-guide-2026" }
+        ] },
       { name: "Service Mesh", tools: ["Istio", "Linkerd", "Consul Connect"], level: "advanced" },
       { name: "Container Registries", tools: ["Docker Hub", "ECR", "ACR", "Harbor"], level: "important" }
     ]
@@ -42,28 +70,64 @@ const devopsRoadmap = {
   cicd: {
     title: "CI/CD & Automation",
     items: [
-      { name: "CI/CD Platforms", tools: ["GitHub Actions", "GitLab CI", "Jenkins", "Azure DevOps"], level: "critical" },
+      { name: "CI/CD Platforms", tools: ["GitHub Actions", "GitLab CI", "Jenkins", "Azure DevOps"], level: "critical",
+        links: [
+          { label: "Build a CI/CD Pipeline with GitHub Actions", href: "/blog/how-to-build-cicd-pipeline-github-actions-2025" },
+          { label: "GitHub Actions vs GitLab CI vs Jenkins", href: "/blog/github-actions-vs-gitlab-ci-vs-jenkins-2025-comparison" },
+          { label: "GitHub Actions Reusable Workflows", href: "/blog/github-actions-reusable-workflows-guide-2026" },
+          { label: "CI/CD for Monorepos", href: "/blog/cicd-monorepos-guide-2026" },
+          { label: "GitHub Actions to AWS with OIDC", href: "/blog/github-actions-aws-oidc-guide-2026" }
+        ] },
       { name: "Build Tools", tools: ["Maven", "Gradle", "npm", "pip"], level: "important" },
       { name: "Code Quality", tools: ["SonarQube", "CodeClimate", "ESLint", "Black"], level: "important" },
-      { name: "Testing", tools: ["Jest", "Pytest", "Selenium", "JUnit"], level: "important" }
+      { name: "Testing", tools: ["Jest", "Pytest", "Selenium", "JUnit"], level: "important",
+        links: [
+          { label: "Terraform Testing", href: "/blog/terraform-testing-guide-2026" }
+        ] }
     ]
   },
   monitoring: {
     title: "Monitoring & Observability",
     items: [
-      { name: "Metrics & Monitoring", tools: ["Prometheus", "Grafana", "Datadog", "New Relic"], level: "critical" },
-      { name: "Logging", tools: ["ELK Stack", "Fluentd", "Loki", "Splunk"], level: "critical" },
-      { name: "Tracing", tools: ["Jaeger", "Zipkin", "OpenTelemetry"], level: "advanced" },
+      { name: "Metrics & Monitoring", tools: ["Prometheus", "Grafana", "Datadog", "New Relic"], level: "critical",
+        links: [
+          { label: "Prometheus Monitoring", href: "/blog/prometheus-monitoring-guide-2026" },
+          { label: "Kubernetes Observability", href: "/blog/kubernetes-observability-guide-2026" }
+        ] },
+      { name: "Logging", tools: ["ELK Stack", "Fluentd", "Loki", "Splunk"], level: "critical",
+        links: [
+          { label: "Kubernetes Logging", href: "/blog/kubernetes-logging-guide-2026" },
+          { label: "Kubernetes Observability", href: "/blog/kubernetes-observability-guide-2026" }
+        ] },
+      { name: "Tracing", tools: ["Jaeger", "Zipkin", "OpenTelemetry"], level: "advanced",
+        links: [
+          { label: "Kubernetes Observability", href: "/blog/kubernetes-observability-guide-2026" }
+        ] },
       { name: "APM", tools: ["Datadog APM", "New Relic", "AppDynamics"], level: "important" }
     ]
   },
   security: {
     title: "Security & Compliance",
     items: [
-      { name: "Container Security", tools: ["Trivy", "Clair", "Anchore", "Snyk"], level: "critical" },
-      { name: "Secrets Management", tools: ["HashiCorp Vault", "AWS Secrets Manager", "Azure Key Vault"], level: "critical" },
-      { name: "Security Scanning", tools: ["OWASP ZAP", "SonarQube", "Checkmarx"], level: "important" },
-      { name: "Compliance", tools: ["Open Policy Agent", "Falco", "Admission Controllers"], level: "advanced" }
+      { name: "Container Security", tools: ["Trivy", "Clair", "Anchore", "Snyk"], level: "critical",
+        links: [
+          { label: "Kubernetes Security Basics", href: "/blog/kubernetes-security-basics-guide-2026" },
+          { label: "DevSecOps Checklist", href: "/blog/devsecops-checklist-securing-pipeline-2025" },
+          { label: "Optimize Docker Images for Production", href: "/blog/how-to-optimize-docker-images-production-2025" }
+        ] },
+      { name: "Secrets Management", tools: ["HashiCorp Vault", "AWS Secrets Manager", "Azure Key Vault"], level: "critical",
+        links: [
+          { label: "Kubernetes ConfigMaps & Secrets", href: "/blog/kubernetes-configmaps-secrets-guide-2026" },
+          { label: "GitHub Actions to AWS with OIDC", href: "/blog/github-actions-aws-oidc-guide-2026" }
+        ] },
+      { name: "Security Scanning", tools: ["OWASP ZAP", "SonarQube", "Checkmarx"], level: "important",
+        links: [
+          { label: "DevSecOps Checklist", href: "/blog/devsecops-checklist-securing-pipeline-2025" }
+        ] },
+      { name: "Compliance", tools: ["Open Policy Agent", "Falco", "Admission Controllers"], level: "advanced",
+        links: [
+          { label: "Kubernetes Security Basics", href: "/blog/kubernetes-security-basics-guide-2026" }
+        ] }
     ]
   },
   databases: {
@@ -72,15 +136,30 @@ const devopsRoadmap = {
       { name: "Relational Databases", tools: ["PostgreSQL", "MySQL", "SQL Server"], level: "important" },
       { name: "NoSQL Databases", tools: ["MongoDB", "Redis", "Cassandra", "DynamoDB"], level: "important" },
       { name: "Database Tools", tools: ["pgAdmin", "MongoDB Compass", "Redis CLI"], level: "useful" },
-      { name: "Backup & Recovery", tools: ["pg_dump", "mongodump", "AWS RDS Snapshots"], level: "important" }
+      { name: "Backup & Recovery", tools: ["pg_dump", "mongodump", "AWS RDS Snapshots"], level: "important",
+        links: [
+          { label: "Backup Verification", href: "/blog/backup-verification-in-2026-exit-code-0-is-not-a-backup" },
+          { label: "Restore Drills", href: "/blog/restore-drills-in-2026-you-cant-automate-the-declaration" },
+          { label: "Declared, Not Derived", href: "/blog/declared-not-derived-backup-checks" },
+          { label: "Kubernetes Backup & Disaster Recovery", href: "/blog/kubernetes-backup-disaster-recovery-guide-2026" }
+        ] }
     ]
   },
   advanced: {
     title: "Advanced Topics",
     items: [
-      { name: "GitOps", tools: ["ArgoCD", "Flux", "Jenkins X"], level: "advanced" },
+      { name: "GitOps", tools: ["ArgoCD", "Flux", "Jenkins X"], level: "advanced",
+        links: [
+          { label: "GitOps vs Traditional CI/CD", href: "/blog/gitops-vs-traditional-cicd-2025-comparison" },
+          { label: "Argo CD Tutorial", href: "/blog/argo-cd-tutorial-gitops-2026" },
+          { label: "Argo Rollouts Progressive Delivery", href: "/blog/argo-rollouts-progressive-delivery-2026" },
+          { label: "Self-Healing Infrastructure", href: "/blog/self-healing-infrastructure-2025" }
+        ] },
       { name: "Chaos Engineering", tools: ["Chaos Monkey", "Litmus", "Gremlin"], level: "advanced" },
-      { name: "ML/AI Operations", tools: ["MLflow", "Kubeflow", "TensorFlow Serving"], level: "specialized" },
+      { name: "ML/AI Operations", tools: ["MLflow", "Kubeflow", "TensorFlow Serving"], level: "specialized",
+        links: [
+          { label: "AI for DevOps", href: "/blog/ai-for-devops-practical-guide-2026" }
+        ] },
       { name: "Edge Computing", tools: ["K3s", "KubeEdge", "AWS IoT Greengrass"], level: "specialized" }
     ]
   }
@@ -141,6 +220,22 @@ function DevOpsSection({ section, title }) {
                 </span>
               ))}
             </div>
+            {item.links && item.links.length > 0 ? (
+              <div className="mt-3 pt-3 border-t border-charcoal/40">
+                <span className="text-xs uppercase tracking-wide text-gold/80 font-semibold">Start here →</span>
+                <ul className="mt-2 space-y-1">
+                  {item.links.map((link, linkIndex) => (
+                    <li key={linkIndex}>
+                      <Link href={link.href} className="text-sm text-warm-white/85 hover:text-gold underline decoration-gold/40 underline-offset-2 transition-all">
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="mt-3 pt-3 border-t border-charcoal/40 text-sm text-warm-white/40 italic">Coming soon</p>
+            )}
           </div>
         ))}
       </div>
