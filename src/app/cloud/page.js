@@ -62,12 +62,37 @@ const cloudProviders = {
   }
 };
 
+const providerCategoryLinks = {
+  aws: {
+    compute: [
+      { label: "Amazon EKS", href: "/blog/amazon-eks-guide-2026" },
+      { label: "Serverless vs Containers", href: "/blog/serverless-vs-containers-2025" }
+    ],
+    networking: [
+      { label: "AWS VPC", href: "/blog/aws-vpc-guide-2026" }
+    ],
+    security: [
+      { label: "AWS IAM Least Privilege", href: "/blog/aws-iam-least-privilege-guide-2026" },
+      { label: "GitHub Actions to AWS with OIDC", href: "/blog/github-actions-aws-oidc-guide-2026" }
+    ],
+    devops: [
+      { label: "GitHub Actions to AWS with OIDC", href: "/blog/github-actions-aws-oidc-guide-2026" },
+      { label: "Build a CI/CD Pipeline with GitHub Actions", href: "/blog/how-to-build-cicd-pipeline-github-actions-2025" }
+    ]
+  }
+};
+
 const cloudArchitecturePatterns = [
   {
     name: "Microservices Architecture",
     description: "Break applications into small, independent services",
     benefits: ["Scalability", "Resilience", "Technology Diversity", "Team Independence"],
     tools: ["Kubernetes", "Service Mesh", "API Gateway", "Container Registry"],
+    links: [
+      { label: "Kubernetes Networking & Ingress Basics", href: "/blog/kubernetes-ingress-networking-basics-2026" },
+      { label: "Kubernetes Deployment Strategies", href: "/blog/kubernetes-deployment-strategies-2025-complete-guide" },
+      { label: "Platform Engineering in Practice", href: "/blog/platform-engineering-in-practice-2026" }
+    ],
     difficulty: "Advanced"
   },
   {
@@ -75,6 +100,9 @@ const cloudArchitecturePatterns = [
     description: "Event-driven, function-based computing model",
     benefits: ["Cost Efficiency", "Auto Scaling", "No Server Management", "Fast Deployment"],
     tools: ["AWS Lambda", "Azure Functions", "Google Cloud Functions", "API Gateway"],
+    links: [
+      { label: "Serverless vs Containers", href: "/blog/serverless-vs-containers-2025" }
+    ],
     difficulty: "Intermediate"
   },
   {
@@ -89,6 +117,10 @@ const cloudArchitecturePatterns = [
     description: "Use multiple cloud providers for redundancy and optimization",
     benefits: ["Avoid Vendor Lock-in", "Best-of-Breed", "Risk Mitigation", "Global Reach"],
     tools: ["Terraform", "Kubernetes", "HashiCorp Consul", "Istio"],
+    links: [
+      { label: "Multi-Cloud Strategy", href: "/blog/multi-cloud-strategy-2025" },
+      { label: "Terraform vs Pulumi vs CloudFormation", href: "/blog/terraform-vs-pulumi-cloudformation-2025-iac-comparison" }
+    ],
     difficulty: "Expert"
   },
   {
@@ -146,6 +178,10 @@ const cloudBestPractices = [
       "Encrypt data at rest and in transit",
       "Regular security audits and monitoring",
       "Use managed identity services"
+    ],
+    links: [
+      { label: "AWS IAM Least Privilege", href: "/blog/aws-iam-least-privilege-guide-2026" },
+      { label: "DevSecOps Checklist", href: "/blog/devsecops-checklist-securing-pipeline-2025" }
     ]
   },
   {
@@ -156,6 +192,10 @@ const cloudBestPractices = [
       "Implement auto-scaling",
       "Monitor and analyze costs regularly",
       "Use spot instances for fault-tolerant workloads"
+    ],
+    links: [
+      { label: "AWS Cost Optimization", href: "/blog/aws-cost-optimization-15-tactics-saved-50k-month" },
+      { label: "Kubernetes Cost Optimization", href: "/blog/kubernetes-cost-optimization-guide-2026" }
     ]
   },
   {
@@ -166,6 +206,10 @@ const cloudBestPractices = [
       "Implement caching strategies",
       "Optimize database queries",
       "Monitor application performance"
+    ],
+    links: [
+      { label: "Kubernetes Resource Requests & Limits", href: "/blog/kubernetes-resource-requests-limits-guide-2026" },
+      { label: "Kubernetes Autoscaling", href: "/blog/kubernetes-autoscaling-guide-2026" }
     ]
   },
   {
@@ -176,6 +220,11 @@ const cloudBestPractices = [
       "Use multiple availability zones",
       "Regular backup and disaster recovery testing",
       "Implement circuit breaker patterns"
+    ],
+    links: [
+      { label: "Kubernetes Backup & Disaster Recovery", href: "/blog/kubernetes-backup-disaster-recovery-guide-2026" },
+      { label: "Kubernetes Pod Disruption Budgets", href: "/blog/kubernetes-pod-disruption-budgets-guide-2026" },
+      { label: "Backup Verification", href: "/blog/backup-verification-in-2026-exit-code-0-is-not-a-backup" }
     ]
   }
 ];
@@ -206,6 +255,22 @@ function CloudProviderCard({ provider, data }) {
                 </span>
               ))}
             </div>
+            {providerCategoryLinks[provider] && providerCategoryLinks[provider][category] ? (
+              <div className="mt-3">
+                <span className="text-xs uppercase tracking-wide text-gold/80 font-semibold">Start here →</span>
+                <ul className="mt-1 space-y-1">
+                  {providerCategoryLinks[provider][category].map((link, linkIndex) => (
+                    <li key={linkIndex}>
+                      <Link href={link.href} className="text-sm text-warm-white/85 hover:text-gold underline decoration-gold/40 underline-offset-2 transition-all">
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="mt-3 text-sm text-warm-white/40 italic">Coming soon</p>
+            )}
           </div>
         ))}
       </div>
@@ -260,6 +325,23 @@ function ArchitecturePatternCard({ pattern }) {
           ))}
         </div>
       </div>
+
+      {pattern.links && pattern.links.length > 0 ? (
+        <div className="mt-4">
+          <span className="text-xs uppercase tracking-wide text-gold/80 font-semibold">Start here →</span>
+          <ul className="mt-2 space-y-1">
+            {pattern.links.map((link, linkIndex) => (
+              <li key={linkIndex}>
+                <Link href={link.href} className="text-sm text-warm-white/85 hover:text-gold underline decoration-gold/40 underline-offset-2 transition-all">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <p className="mt-4 text-sm text-warm-white/40 italic">Coming soon</p>
+      )}
     </div>
   );
 }
@@ -298,7 +380,7 @@ function CertificationSection({ provider }) {
   );
 }
 
-function BestPracticesCard({ category, practices }) {
+function BestPracticesCard({ category, practices, links }) {
   return (
     <div className="bg-gradient-to-br from-charcoal/40 to-rich-black border border-gold/20 rounded-lg p-6">
       <h4 className="font-bold text-gold mb-4">{category}</h4>
@@ -310,6 +392,22 @@ function BestPracticesCard({ category, practices }) {
           </li>
         ))}
       </ul>
+      {links && links.length > 0 ? (
+        <div className="mt-4">
+          <span className="text-xs uppercase tracking-wide text-gold/80 font-semibold">Start here →</span>
+          <ul className="mt-2 space-y-1">
+            {links.map((link, linkIndex) => (
+              <li key={linkIndex}>
+                <Link href={link.href} className="text-sm text-warm-white/85 hover:text-gold underline decoration-gold/40 underline-offset-2 transition-all">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ) : (
+        <p className="mt-4 text-sm text-warm-white/40 italic">Coming soon</p>
+      )}
     </div>
   );
 }
@@ -409,7 +507,7 @@ export default function CloudPage() {
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {cloudBestPractices.map((category, index) => (
-              <BestPracticesCard key={index} category={category.category} practices={category.practices} />
+              <BestPracticesCard key={index} category={category.category} practices={category.practices} links={category.links} />
             ))}
           </div>
         </div>
@@ -426,6 +524,7 @@ export default function CloudPage() {
               </div>
               <h3 className="font-semibold text-warm-white mb-2">Assessment & Planning</h3>
               <p className="text-warm-white/70 text-sm">Evaluate current infrastructure, dependencies, and migration readiness.</p>
+              <p className="text-warm-white/40 text-xs italic mt-2">Coming soon</p>
             </div>
             <div className="text-center">
               <div className="bg-blue-400/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -433,6 +532,7 @@ export default function CloudPage() {
               </div>
               <h3 className="font-semibold text-warm-white mb-2">Pilot Migration</h3>
               <p className="text-warm-white/70 text-sm">Start with non-critical applications to validate approach and tooling.</p>
+              <p className="text-warm-white/40 text-xs italic mt-2">Coming soon</p>
             </div>
             <div className="text-center">
               <div className="bg-blue-400/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -440,6 +540,7 @@ export default function CloudPage() {
               </div>
               <h3 className="font-semibold text-warm-white mb-2">Full Migration</h3>
               <p className="text-warm-white/70 text-sm">Execute phased migration with proper testing and rollback procedures.</p>
+              <p className="text-warm-white/40 text-xs italic mt-2">Coming soon</p>
             </div>
           </div>
         </div>
