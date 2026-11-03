@@ -1,12 +1,12 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'DevOps, Cloud & Cybersecurity Resources | DevOps Enginer',
-  description: 'Comprehensive collection of DevOps tools, cloud platforms, cybersecurity frameworks, certifications, learning materials, and expert guides for modern IT professionals.',
+  title: 'DevOps Resources: Tools, Templates & Free Learning Materials',
+  description: 'Curated DevOps resources for 2026: essential tools, free hands-on labs, Terraform and Kubernetes templates, certification paths and learning platforms.',
   keywords: 'devops resources, cloud computing tools, cybersecurity frameworks, AWS resources, Azure tools, GCP guides, kubernetes, docker, terraform, ansible, jenkins, security tools',
   openGraph: {
-    title: 'DevOps, Cloud & Cybersecurity Resources | DevOps Enginer',
-    description: 'Comprehensive collection of DevOps tools, cloud platforms, cybersecurity frameworks, certifications, learning materials, and expert guides for modern IT professionals.',
+    title: 'DevOps Resources: Tools, Templates & Free Learning Materials | DevOps Enginer',
+    description: 'Curated DevOps resources for 2026: essential tools, free hands-on labs, Terraform and Kubernetes templates, certification paths and learning platforms.',
     type: 'website',
   }
 };
@@ -88,7 +88,7 @@ const resourceCategories = {
         tools: [
           { name: "Snyk", description: "Developer security platform", link: "https://snyk.io", type: "Security" },
           { name: "OWASP ZAP", description: "Web application security scanner", link: "https://owasp.org/www-project-zap/", type: "Testing" },
-          { name: "Vault", description: "Secrets management", link: "https://vaultproject.io", type: "Secrets" },
+          { name: "Vault", description: "Secrets management", link: "https://www.hashicorp.com/en/products/vault", type: "Secrets" },
           { name: "Trivy", description: "Container vulnerability scanner", link: "https://trivy.dev", type: "Scanning" }
         ]
       }
@@ -160,16 +160,13 @@ const resourceCategories = {
       {
         category: "Online Learning Platforms",
         resources: [
-          { name: "A Cloud Guru", description: "Cloud-focused training platform", link: "https://acloudguru.com", type: "Platform", pricing: "Subscription" },
-          { name: "Linux Academy", description: "Now part of A Cloud Guru", link: "https://linuxacademy.com", type: "Platform", pricing: "Subscription" },
-          { name: "Pluralsight", description: "Technology skills platform", link: "https://pluralsight.com", type: "Platform", pricing: "Subscription" },
+          { name: "Pluralsight", description: "Technology skills platform (includes the former A Cloud Guru and Linux Academy catalogues)", link: "https://pluralsight.com", type: "Platform", pricing: "Subscription" },
           { name: "Udemy", description: "Individual course marketplace", link: "https://udemy.com", type: "Marketplace", pricing: "Per Course" }
         ]
       },
       {
         category: "Hands-on Practice",
         resources: [
-          { name: "Katacoda", description: "Interactive learning scenarios", link: "https://katacoda.com", type: "Interactive", pricing: "Free" },
           { name: "Play with Docker", description: "Docker playground", link: "https://labs.play-with-docker.com", type: "Lab", pricing: "Free" },
           { name: "Kubernetes Playground", description: "K8s hands-on environment", link: "https://labs.play-with-k8s.com", type: "Lab", pricing: "Free" },
           { name: "AWS Free Tier", description: "Free AWS services for learning", link: "https://aws.amazon.com/free/", type: "Cloud Lab", pricing: "Free Tier" }
@@ -178,7 +175,7 @@ const resourceCategories = {
       {
         category: "Documentation & References",
         resources: [
-          { name: "DevOps Roadmap", description: "Community-driven learning paths", link: "https://roadmap.sh", type: "Roadmap", pricing: "Free" },
+          { name: "DevOps Enginer Roadmaps", description: "Our free DevOps, cloud and cybersecurity roadmaps — every step linked to a tutorial", link: "/roadmaps", type: "Roadmap", pricing: "Free" },
           { name: "AWS Documentation", description: "Official AWS guides and references", link: "https://docs.aws.amazon.com", type: "Docs", pricing: "Free" },
           { name: "Kubernetes Documentation", description: "Official K8s documentation", link: "https://kubernetes.io/docs/", type: "Docs", pricing: "Free" },
           { name: "DevOps Toolkit", description: "Tools and best practices", link: "https://github.com/DevOps-Toolkit", type: "GitHub", pricing: "Free" }
@@ -195,8 +192,8 @@ const resourceCategories = {
       {
         category: "Infrastructure Templates",
         templates: [
-          { name: "Terraform AWS VPC", description: "Production-ready VPC setup", type: "Terraform", complexity: "Intermediate" },
-          { name: "Kubernetes Cluster Setup", description: "Multi-node K8s cluster", type: "K8s", complexity: "Advanced" },
+          { name: "Terraform AWS VPC", description: "Production-ready VPC setup", type: "Terraform", complexity: "Intermediate", link: "/blog/aws-vpc-guide-2026" },
+          { name: "Kubernetes Cluster Setup", description: "Multi-node K8s cluster", type: "K8s", complexity: "Advanced", link: "/blog/kubectl-commands-cheat-sheet-2026" },
           { name: "Docker Compose Stack", description: "Multi-service application", type: "Docker", complexity: "Beginner" },
           { name: "Ansible Playbooks", description: "Server configuration automation", type: "Ansible", complexity: "Intermediate" }
         ]
@@ -204,7 +201,7 @@ const resourceCategories = {
       {
         category: "CI/CD Pipelines",
         templates: [
-          { name: "GitHub Actions Workflow", description: "Complete CI/CD pipeline", type: "GitHub", complexity: "Intermediate" },
+          { name: "GitHub Actions Workflow", description: "Complete CI/CD pipeline", type: "GitHub", complexity: "Intermediate", link: "/blog/how-to-build-cicd-pipeline-github-actions-2025" },
           { name: "GitLab CI Pipeline", description: "Multi-stage deployment", type: "GitLab", complexity: "Intermediate" },
           { name: "Jenkins Pipeline", description: "Declarative pipeline script", type: "Jenkins", complexity: "Advanced" },
           { name: "Azure DevOps Pipeline", description: "YAML-based pipeline", type: "Azure", complexity: "Intermediate" }
@@ -213,7 +210,7 @@ const resourceCategories = {
       {
         category: "Monitoring & Security",
         templates: [
-          { name: "Prometheus Config", description: "Monitoring setup", type: "Prometheus", complexity: "Intermediate" },
+          { name: "Prometheus Config", description: "Monitoring setup", type: "Prometheus", complexity: "Intermediate", link: "/blog/prometheus-monitoring-guide-2026" },
           { name: "Grafana Dashboards", description: "Visualization templates", type: "Grafana", complexity: "Beginner" },
           { name: "Security Scanning", description: "Automated security checks", type: "Security", complexity: "Advanced" },
           { name: "Logging Stack", description: "ELK/EFK configuration", type: "Logging", complexity: "Advanced" }
@@ -427,14 +424,23 @@ function ResourceSection({ title, description, icon, color, items, type = "defau
                         {resource.type}
                       </span>
                       {resource.link && (
-                        <a 
-                          href={resource.link} 
-                          target="_blank" 
-                          rel="noopener noreferrer"
-                          className="text-orange-400 text-sm hover:text-orange-300 transition-colors"
-                        >
-                          Visit →
-                        </a>
+                        resource.link.startsWith('/') ? (
+                          <Link
+                            href={resource.link}
+                            className="text-orange-400 text-sm hover:text-orange-300 transition-colors"
+                          >
+                            View →
+                          </Link>
+                        ) : (
+                          <a
+                            href={resource.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-orange-400 text-sm hover:text-orange-300 transition-colors"
+                          >
+                            Visit →
+                          </a>
+                        )
                       )}
                     </div>
                   </div>
@@ -461,6 +467,14 @@ function ResourceSection({ title, description, icon, color, items, type = "defau
                       </span>
                       <span className="text-warm-white/60 text-xs">{template.complexity}</span>
                     </div>
+                    {template.link && (
+                      <Link
+                        href={template.link}
+                        className="text-indigo-300 text-sm hover:text-indigo-200 transition-colors inline-block mt-3"
+                      >
+                        View the tutorial →
+                      </Link>
+                    )}
                   </div>
                 ))}
               </div>

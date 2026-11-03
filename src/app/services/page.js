@@ -2,12 +2,12 @@ import Link from 'next/link';
 import EnquiryForm from '../../components/sections/EnquiryForm';
 
 export const metadata = {
-  title: 'Mentoring & Career Services for Engineers | DevOps Enginer',
-  description: '1:1 mentoring, resume reviews and Japan career guidance from a DevOps engineer turned project manager in Tokyo — plus practical training for junior and freelance development teams.',
-  keywords: 'DevOps mentoring, engineering career coaching, resume review Japan, DevOps career Japan, freelance developer training',
+  title: 'DevOps Mentoring, Resume Review & Japan Career Guidance',
+  description: 'DevOps career mentoring, resume and LinkedIn reviews, and Japan tech-career guidance from an engineer who made the move. Free 15-minute intro call.',
+  keywords: 'DevOps mentoring, resume review, LinkedIn review, engineering career coaching, resume review Japan, DevOps career Japan, freelance developer training',
   openGraph: {
-    title: 'Mentoring & Career Services for Engineers',
-    description: 'Career mentoring, resume reviews and Japan-market guidance from an engineer who made the Nepal-to-Tokyo journey himself.',
+    title: 'DevOps Mentoring, Resume Review & Japan Career Guidance | DevOps Enginer',
+    description: 'DevOps career mentoring, resume and LinkedIn reviews, and Japan tech-career guidance from an engineer who made the move. Free 15-minute intro call.',
     type: 'website',
   }
 };
@@ -48,6 +48,14 @@ const faqs = [
     q: 'Why no prices on this page?',
     a: 'Because the right scope depends on your situation, and I would rather price the actual help than sell a generic package. The intro call is free; if we are not a fit, I will say so on that call.',
   },
+  {
+    q: 'Can sessions be held in Japanese?',
+    a: 'Yes. Sessions run in English, Japanese, Nepali or Hindi — whichever lets you explain your situation most precisely. For Japan-market guidance especially, working in Japanese is often the point.',
+  },
+  {
+    q: 'I am outside Japan — can I still book mentoring?',
+    a: 'Yes. Everything is online, and the DevOps mentoring and resume review work the same from anywhere. The Japan career guidance is, by definition, for people aiming at Japan — wherever they currently live.',
+  },
 ];
 
 export default function ServicesPage() {
@@ -61,6 +69,9 @@ export default function ServicesPage() {
           <h1 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-gold via-amber to-soft-gold bg-clip-text text-transparent">
             Work With Me
           </h1>
+          <p className="text-base md:text-lg text-gold/90 font-medium mb-4">
+            1:1 DevOps mentoring, resume reviews and Japan career guidance — from a working engineer and project manager in Tokyo.
+          </p>
           <p className="text-lg md:text-xl text-warm-white/70 mb-10 leading-relaxed max-w-3xl mx-auto">
             The guides on this site are free. If you want the same experience applied directly to
             your career, your resume, or your team — this is where that happens.
@@ -85,6 +96,13 @@ export default function ServicesPage() {
               </div>
             ))}
           </div>
+          <p className="text-center text-warm-white/60 mt-10">
+            New to DevOps? Most mentoring starts from your position on the{' '}
+            <Link href="/devops" className="text-gold underline decoration-gold/40 underline-offset-2 hover:text-amber transition-all">
+              DevOps roadmap
+            </Link>{' '}
+            — follow it first, and bring me the step you are stuck on.
+          </p>
         </div>
       </section>
 
@@ -116,11 +134,11 @@ export default function ServicesPage() {
             <Link href="/blog/how-to-become-devops-engineer-japan-2025-career-guide" className="px-6 py-3 rounded-lg border border-gold/30 text-gold hover:bg-gold/10 transition-all">
               DevOps Career in Japan
             </Link>
-            <Link href="/blog/kubernetes-troubleshooting-guide-2026" className="px-6 py-3 rounded-lg border border-gold/30 text-gold hover:bg-gold/10 transition-all">
-              Kubernetes Troubleshooting
+            <Link href="/devops" className="px-6 py-3 rounded-lg border border-gold/30 text-gold hover:bg-gold/10 transition-all">
+              The DevOps Roadmap
             </Link>
-            <Link href="/blog/ai-for-devops-practical-guide-2026" className="px-6 py-3 rounded-lg border border-gold/30 text-gold hover:bg-gold/10 transition-all">
-              AI for DevOps
+            <Link href="/blog/top-10-devops-tools-2025" className="px-6 py-3 rounded-lg border border-gold/30 text-gold hover:bg-gold/10 transition-all">
+              DevOps Tools in Learning Order
             </Link>
           </div>
         </div>

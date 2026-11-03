@@ -1,10 +1,82 @@
+import Link from 'next/link'
 import AdSense from '@/components/ads/AdSense'
 
 export const metadata = {
-  title: 'About Us - DevOps Engineer | Learn DevOps, Cloud & Cybersecurity',
-  description: 'Learn about DevOps Engineer - your trusted source for DevOps tutorials, cloud architecture guides, and cybersecurity best practices. Our mission is to empower engineers worldwide.',
-  keywords: 'about devops engineer, devops learning platform, cloud computing education, cybersecurity training',
+  title: { absolute: 'About Rabin Adhikari, Author of DevOps Enginer' },
+  description: 'DevOps Enginer is written by Rabin Adhikari — a DevOps engineer and project manager in Japan. 49 free tutorials on DevOps, Kubernetes, AWS and security.',
+  keywords: 'about rabin adhikari, devops enginer, devops learning platform, cloud computing education, cybersecurity training',
+  openGraph: {
+    title: 'About Rabin Adhikari, Author of DevOps Enginer',
+    description: 'DevOps Enginer is written by Rabin Adhikari — a DevOps engineer and project manager in Japan. 49 free tutorials on DevOps, Kubernetes, AWS and security.',
+    type: 'website',
+  }
 }
+
+const offerCards = [
+  {
+    icon: '🚀',
+    gradient: 'from-gold to-amber',
+    title: 'DevOps Tutorials',
+    text: 'Comprehensive guides covering CI/CD, containerization, orchestration, infrastructure as code, and automation tools like Jenkins, GitLab, Docker, Kubernetes, Terraform, and Ansible.',
+    link: '/devops',
+    linkLabel: 'Follow the DevOps roadmap →',
+  },
+  {
+    icon: '☁️',
+    gradient: 'from-amber to-soft-gold',
+    title: 'Cloud Architecture',
+    text: 'In-depth tutorials for AWS, Azure, and Google Cloud Platform. Learn cloud computing fundamentals, serverless architectures, microservices, and multi-cloud strategies.',
+    link: '/cloud',
+    linkLabel: 'Follow the cloud roadmap →',
+  },
+  {
+    icon: '🔒',
+    gradient: 'from-dark-gold to-gold',
+    title: 'Cybersecurity',
+    text: 'Security best practices, vulnerability assessment, secure coding, compliance frameworks, and DevSecOps implementation — strongest where it meets cloud and Kubernetes.',
+    link: '/cybersecurity',
+    linkLabel: 'Follow the cybersecurity roadmap →',
+  },
+  {
+    icon: '📚',
+    gradient: 'from-soft-gold to-amber',
+    title: 'Comprehensive Resources',
+    text: 'Curated tools, cheat sheets, templates, and best practices to accelerate your learning and implementation.',
+    link: '/resources',
+    linkLabel: 'Browse the resources →',
+  },
+  {
+    icon: '💼',
+    gradient: 'from-gold via-amber to-soft-gold',
+    title: 'Real-World Projects',
+    text: 'Hands-on guides drawn from actual project work — including the backup-verification series that grew out of a reader\'s hard questions — to help you build production-ready skills.',
+    link: '/blog',
+    linkLabel: 'Read the tutorials →',
+  },
+  {
+    icon: '🎓',
+    gradient: 'from-amber to-dark-gold',
+    title: 'Career Guidance',
+    text: 'Certification guides, resume advice, and career path roadmaps for DevOps, Cloud, and Security roles — plus 1:1 mentoring and Japan career guidance.',
+    link: '/services',
+    linkLabel: 'See mentoring & services →',
+  },
+]
+
+const faqs = [
+  {
+    q: 'Who writes DevOps Enginer?',
+    a: 'One person: Rabin Adhikari, a software and DevOps engineer with about 7 years of experience in Japan, now working as a project manager in healthcare software. Every tutorial is written and tested by him.',
+  },
+  {
+    q: 'Is DevOps Enginer free to read?',
+    a: 'Yes. All 49 tutorials and every roadmap are free, with no signup wall. The site is supported by ads and by optional paid mentoring.',
+  },
+  {
+    q: 'Can I hire or be mentored by the author?',
+    a: 'Yes — mentoring, resume reviews, Japan career guidance and team training are offered on the Services page, starting with a free 15-minute intro call.',
+  },
+]
 
 export default function AboutPage() {
   return (
@@ -13,10 +85,11 @@ export default function AboutPage() {
         {/* Header */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-warm-white mb-6">
-            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-amber to-soft-gold">DevOps Engineer</span>
+            About <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-amber to-soft-gold">DevOps Enginer</span> — and the Engineer Behind It
           </h1>
           <p className="text-xl text-warm-white/70 max-w-3xl mx-auto">
-            Empowering the next generation of technology professionals with world-class DevOps, Cloud, and Security education.
+            DevOps Enginer is written by one engineer — Rabin Adhikari, a DevOps engineer and project manager in
+            Japan. These are his 49 free tutorials on DevOps, Kubernetes, AWS and security, drawn from real project work.
           </p>
         </div>
 
@@ -24,101 +97,80 @@ export default function AboutPage() {
         <section className="mb-16 bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-2xl p-8 md:p-12 hover:border-gold/40 transition-all shadow-2xl hover:shadow-gold/20">
           <h2 className="text-3xl font-bold text-warm-white mb-6 flex items-center">
             <span className="text-4xl mr-4">🎯</span>
-            <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">Our Mission</span>
+            <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">The Mission</span>
           </h2>
           <p className="text-lg text-warm-white/80 leading-relaxed mb-4">
-            At DevOps Engineer, our mission is to democratize access to high-quality technical education. We believe that everyone, regardless of their background or location, should have access to expert-level knowledge in DevOps, Cloud Computing, and Cybersecurity.
+            I started DevOps Enginer to make the path into DevOps, cloud and security work clearer than it was for
+            me. When I was learning, the knowledge existed — but it was scattered, out of order, and written for
+            people who already knew the answers. The roadmaps on this site exist to fix the order; the tutorials
+            exist to fix the depth.
           </p>
           <p className="text-lg text-warm-white/80 leading-relaxed">
-            We strive to create comprehensive, practical, and up-to-date content that helps engineers at all levels—from beginners taking their first steps to seasoned professionals looking to master advanced concepts—achieve their career goals and build production-ready skills.
+            Everything here is free, practical and tested before it is published — written for engineers at every
+            level, from beginners taking their first steps to professionals hardening production systems.
           </p>
         </section>
 
         {/* Ad Placement */}
         <div className="my-12">
-          <AdSense 
+          <AdSense
             adSlot="2234567890"
             adFormat="horizontal"
             className="text-center"
           />
         </div>
 
-        {/* What We Offer */}
+        {/* What You'll Find Here */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-warm-white mb-8 text-center">
-            What We <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">Offer</span>
+            What You&apos;ll <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">Find Here</span>
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20 group transform hover:-translate-y-1">
-              <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">🚀</div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent mb-3">DevOps Tutorials</h3>
-              <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">
-                Comprehensive guides covering CI/CD, containerization, orchestration, infrastructure as code, and automation tools like Jenkins, GitLab, Docker, Kubernetes, Terraform, and Ansible.
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20 group transform hover:-translate-y-1">
-              <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">☁️</div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-amber to-soft-gold bg-clip-text text-transparent mb-3">Cloud Architecture</h3>
-              <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">
-                In-depth tutorials for AWS, Azure, and Google Cloud Platform. Learn cloud computing fundamentals, serverless architectures, microservices, and multi-cloud strategies.
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20 group transform hover:-translate-y-1">
-              <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">🔒</div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-dark-gold to-gold bg-clip-text text-transparent mb-3">Cybersecurity</h3>
-              <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">
-                Security best practices, vulnerability assessment, penetration testing, secure coding, compliance frameworks (ISO 27001, SOC 2), and DevSecOps implementation.
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20 group transform hover:-translate-y-1">
-              <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">📚</div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-soft-gold to-amber bg-clip-text text-transparent mb-3">Comprehensive Resources</h3>
-              <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">
-                Curated tools, cheat sheets, templates, code repositories, and best practices to accelerate your learning and implementation.
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20 group transform hover:-translate-y-1">
-              <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">💼</div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-gold via-amber to-soft-gold bg-clip-text text-transparent mb-3">Real-World Projects</h3>
-              <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">
-                Hands-on projects and case studies from actual production environments to help you build a portfolio and gain practical experience.
-              </p>
-            </div>
-
-            <div className="bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20 group transform hover:-translate-y-1">
-              <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">🎓</div>
-              <h3 className="text-xl font-bold bg-gradient-to-r from-amber to-dark-gold bg-clip-text text-transparent mb-3">Career Guidance</h3>
-              <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">
-                Interview preparation, certification guides, resume tips, and career path roadmaps for DevOps, Cloud, and Security roles.
-              </p>
-            </div>
+            {offerCards.map((card) => (
+              <div key={card.title} className="bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20 group transform hover:-translate-y-1">
+                <div className="text-5xl mb-4 group-hover:scale-110 transition-transform">{card.icon}</div>
+                <h3 className={`text-xl font-bold bg-gradient-to-r ${card.gradient} bg-clip-text text-transparent mb-3`}>{card.title}</h3>
+                <p className="text-warm-white/70 group-hover:text-warm-white transition-colors mb-4">
+                  {card.text}
+                </p>
+                <Link href={card.link} className="text-gold text-sm font-semibold hover:text-amber transition-colors">
+                  {card.linkLabel}
+                </Link>
+              </div>
+            ))}
           </div>
         </section>
 
-        {/* Our Story */}
+        {/* My Story */}
         <section className="mb-16 bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-2xl p-8 md:p-12 hover:border-gold/40 transition-all shadow-2xl hover:shadow-gold/20">
           <h2 className="text-3xl font-bold text-warm-white mb-6 flex items-center">
             <span className="text-4xl mr-4">📖</span>
-            <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">Our Story</span>
+            <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">My Story</span>
           </h2>
           <p className="text-lg text-warm-white/80 leading-relaxed mb-4">
-            DevOps Engineer was founded by a team of experienced DevOps engineers, cloud architects, and security professionals who recognized a gap in the market for truly comprehensive, practical technical education. Having worked at leading tech companies and startups, we understand what skills employers are looking for and what real-world challenges engineers face daily.
+            I came to Japan from Kathmandu, Nepal, and built my career here in a second language: a Japanese
+            language programme and a technical college, studied alongside my first jobs. Early on I coordinated
+            and trained freelance developers back in Nepal — my first experience of the work I still love most,
+            turning juniors into engineers who ship.
           </p>
           <p className="text-lg text-warm-white/80 leading-relaxed mb-4">
-            Since our launch, we've helped thousands of engineers level up their skills, transition into DevOps and Cloud roles, and implement best practices in their organizations. Our content is continuously updated to reflect the latest industry trends, tools, and methodologies.
+            Across about 7 years in software development and DevOps engineering, I have worked on web applications,
+            systems engineering and DevOps roles in Japan, specialising in Kubernetes, GitOps, CI/CD and
+            cloud-native architecture. Today I work as a project manager in healthcare software — the role changed
+            my core question from &ldquo;is it built right?&rdquo; to &ldquo;will anyone actually use it?&rdquo;, and both
+            questions run through every guide on this site.
           </p>
           <p className="text-lg text-warm-white/80 leading-relaxed">
-            We're committed to maintaining the highest standards of quality, accuracy, and relevance in everything we publish. Every tutorial is thoroughly tested, every guide is peer-reviewed, and every resource is validated against current industry standards.
+            DevOps Enginer is where I write down what the work teaches me. Every guide is tested on a real rig
+            before publication — commands are run, configurations are applied, and numbers are measured, not
+            assumed. When readers push back with better evidence, the guides get corrected; that exchange is the
+            quality process.
           </p>
         </section>
 
         {/* Ad Placement */}
         <div className="my-12">
-          <AdSense 
+          <AdSense
             adSlot="3234567890"
             adFormat="rectangle"
             className="text-center"
@@ -128,97 +180,142 @@ export default function AboutPage() {
         {/* Core Values */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-warm-white mb-8 text-center">
-            Our <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">Core Values</span>
+            Core <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">Values</span>
           </h2>
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20 group">
               <h3 className="text-xl font-bold text-gold mb-3 group-hover:text-amber transition-colors">🎯 Quality First</h3>
               <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">
-                We never compromise on quality. Every piece of content is meticulously researched, tested, and verified to ensure accuracy and practical applicability.
+                No claim goes into a guide untested. Commands are run and results measured before anything is published under my name.
               </p>
             </div>
 
             <div className="bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20 group">
               <h3 className="text-xl font-bold text-amber mb-3 group-hover:text-gold transition-colors">🌍 Accessibility</h3>
               <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">
-                Knowledge should be freely accessible. We provide comprehensive free content to ensure everyone can learn, regardless of their financial situation.
+                Knowledge should be freely accessible. The tutorials are comprehensive and free, so anyone can learn regardless of their financial situation — the way I had to.
               </p>
             </div>
 
             <div className="bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20 group">
               <h3 className="text-xl font-bold text-soft-gold mb-3 group-hover:text-amber transition-colors">💡 Continuous Learning</h3>
               <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">
-                Technology evolves rapidly. We stay current with the latest tools, trends, and best practices to provide you with relevant, cutting-edge content.
+                Technology evolves rapidly. I stay current with the latest tools and practices — and correct the guides when the evidence changes.
               </p>
             </div>
 
             <div className="bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20 group">
-              <h3 className="text-xl font-bold text-dark-gold mb-3 group-hover:text-gold transition-colors">🤝 Community Driven</h3>
+              <h3 className="text-xl font-bold text-dark-gold mb-3 group-hover:text-gold transition-colors">🤝 Reader Driven</h3>
               <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">
-                We listen to our community and adapt our content based on feedback, questions, and emerging needs in the DevOps and Cloud ecosystem.
+                Reader questions and corrections shape what gets written next. Some of the best series on this site started as a commenter&apos;s hard question.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Why Choose Us */}
+        {/* Why Read */}
         <section className="mb-16 bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-2xl p-8 md:p-12 hover:border-gold/40 transition-all shadow-2xl hover:shadow-gold/20">
           <h2 className="text-3xl font-bold text-warm-white mb-6">
-            Why Choose <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">DevOps Engineer</span>?
+            Why Read <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">DevOps Enginer</span>?
           </h2>
           <div className="space-y-6">
             <div className="flex items-start group">
               <span className="text-2xl mr-4 text-gold group-hover:scale-110 transition-transform">✅</span>
               <div>
-                <h3 className="text-lg font-semibold text-warm-white mb-1 group-hover:text-gold transition-colors">Expert-Created Content</h3>
-                <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">All our tutorials and guides are created by industry professionals with years of hands-on experience.</p>
+                <h3 className="text-lg font-semibold text-warm-white mb-1 group-hover:text-gold transition-colors">Written by a Working Engineer</h3>
+                <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">Every tutorial is written by Rabin Adhikari from his own project work — about 7 years of software development and DevOps in Japan, now in a project manager role.</p>
               </div>
             </div>
             <div className="flex items-start group">
               <span className="text-2xl mr-4 text-amber group-hover:scale-110 transition-transform">✅</span>
               <div>
-                <h3 className="text-lg font-semibold text-warm-white mb-1 group-hover:text-amber transition-colors">Practical & Actionable</h3>
-                <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">We focus on real-world applications and provide step-by-step guides you can implement immediately.</p>
+                <h3 className="text-lg font-semibold text-warm-white mb-1 group-hover:text-amber transition-colors">Practical &amp; Actionable</h3>
+                <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">Real-world applications and step-by-step guides you can implement immediately — tested before they are published.</p>
               </div>
             </div>
             <div className="flex items-start group">
               <span className="text-2xl mr-4 text-soft-gold group-hover:scale-110 transition-transform">✅</span>
               <div>
                 <h3 className="text-lg font-semibold text-warm-white mb-1 group-hover:text-soft-gold transition-colors">Regularly Updated</h3>
-                <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">Our content is continuously updated to reflect the latest tools, versions, and best practices.</p>
+                <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">Guides are revisited as tools and versions change, and the roadmap pages carry visible updated dates.</p>
               </div>
             </div>
             <div className="flex items-start group">
               <span className="text-2xl mr-4 text-dark-gold group-hover:scale-110 transition-transform">✅</span>
               <div>
                 <h3 className="text-lg font-semibold text-warm-white mb-1 group-hover:text-dark-gold transition-colors">Beginner to Advanced</h3>
-                <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">Whether you're just starting or looking to master advanced concepts, we have content for every skill level.</p>
+                <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">Whether you&apos;re just starting or mastering advanced concepts, the roadmaps sequence the content for your level.</p>
               </div>
             </div>
             <div className="flex items-start group">
               <span className="text-2xl mr-4 text-gold group-hover:scale-110 transition-transform">✅</span>
               <div>
-                <h3 className="text-lg font-semibold text-warm-white mb-1 group-hover:text-gold transition-colors">Free & Open</h3>
+                <h3 className="text-lg font-semibold text-warm-white mb-1 group-hover:text-gold transition-colors">Free &amp; Open</h3>
                 <p className="text-warm-white/70 group-hover:text-warm-white transition-colors">Core educational content is freely available to everyone. Knowledge should never be gatekept.</p>
               </div>
             </div>
           </div>
         </section>
 
+        {/* Start Learning */}
+        <section className="mb-16">
+          <h2 className="text-3xl font-bold text-warm-white mb-8 text-center">
+            Start <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">Learning</span>
+          </h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            <Link href="/devops" className="block bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20">
+              <h3 className="text-xl font-bold text-gold mb-2">DevOps Roadmap</h3>
+              <p className="text-warm-white/70 text-sm leading-relaxed">Prerequisites to production: Linux, CI/CD, Docker, Kubernetes, Terraform and monitoring in order.</p>
+            </Link>
+            <Link href="/cloud" className="block bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20">
+              <h3 className="text-xl font-bold text-gold mb-2">Cloud Roadmap</h3>
+              <p className="text-warm-white/70 text-sm leading-relaxed">AWS step by step, with Azure and GCP beside it — IAM, VPC, EKS and cost.</p>
+            </Link>
+            <Link href="/cybersecurity" className="block bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/50 transition-all hover:shadow-2xl hover:shadow-gold/20">
+              <h3 className="text-xl font-bold text-gold mb-2">Cybersecurity Roadmap</h3>
+              <p className="text-warm-white/70 text-sm leading-relaxed">Fundamentals, cloud security and DevSecOps — this site&apos;s deepest security ground.</p>
+            </Link>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="mb-16 max-w-4xl mx-auto">
+          <h2 className="text-3xl font-bold text-warm-white mb-10 text-center">
+            About <span className="bg-gradient-to-r from-gold to-amber bg-clip-text text-transparent">FAQ</span>
+          </h2>
+          <div className="space-y-6">
+            {faqs.map((f) => (
+              <div key={f.q} className="border border-gold/20 rounded-xl p-6 bg-rich-black/50">
+                <h3 className="text-lg font-bold text-warm-white mb-2">{f.q}</h3>
+                <p className="text-warm-white/70 leading-relaxed">{f.a}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
         {/* Contact CTA */}
         <section className="text-center bg-gradient-to-r from-charcoal/40 to-rich-black/60 border border-gold/20 rounded-2xl p-12 backdrop-blur-sm hover:border-gold/40 transition-all">
           <h2 className="text-3xl font-bold text-warm-white mb-4 bg-gradient-to-r from-gold via-amber to-soft-gold bg-clip-text text-transparent">
-            Join Our Growing Community
+            Questions, or Want a Mentor?
           </h2>
           <p className="text-lg text-warm-white/70 mb-8 max-w-2xl mx-auto">
-            Have questions, suggestions, or feedback? We'd love to hear from you. Let's build the future of DevOps education together.
+            Corrections, topic requests and feedback are welcome — reader questions have started some of the best
+            series here. For personal help with your career, the Services page is the place to start.
           </p>
-          <a 
-            href="/contact" 
-            className="inline-block bg-gradient-gold hover:shadow-xl hover:shadow-gold/50 text-deep-black px-8 py-4 rounded-lg text-lg font-bold transition-all transform hover:scale-105 shadow-lg"
-          >
-            Get In Touch
-          </a>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <a
+              href="/contact"
+              className="inline-block bg-gradient-gold hover:shadow-xl hover:shadow-gold/50 text-deep-black px-8 py-4 rounded-lg text-lg font-bold transition-all transform hover:scale-105 shadow-lg"
+            >
+              Get In Touch
+            </a>
+            <Link
+              href="/services"
+              className="inline-block border-2 border-gold/50 text-gold hover:bg-gold/10 hover:border-gold px-8 py-4 rounded-lg text-lg font-semibold transition-all"
+            >
+              Mentoring &amp; Services
+            </Link>
+          </div>
         </section>
       </div>
     </main>
