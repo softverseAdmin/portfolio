@@ -5,6 +5,13 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   const footerLinks = {
+    roadmaps: [
+      { name: 'All Roadmaps', href: '/roadmaps' },
+      { name: 'DevOps Roadmap', href: '/devops' },
+      { name: 'Cloud Roadmap', href: '/cloud' },
+      { name: 'Cybersecurity Roadmap', href: '/cybersecurity' },
+      { name: 'Resources', href: '/resources' },
+    ],
     company: [
       { name: 'About Us', href: '/about' },
       { name: 'Contact Us', href: '/contact' },
@@ -29,7 +36,7 @@ export default function Footer() {
     <footer className="bg-rich-black border-t border-gold/20">
       <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
         {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-8 mb-8">
           {/* Brand Section */}
           <div className="col-span-1">
             <Link href="/" className="flex items-center mb-4 group">
@@ -60,6 +67,26 @@ export default function Footer() {
                 <span className="mr-2">📄</span> Sitemap (Page)
               </a>
             </div>
+          </div>
+
+          {/* Roadmaps Links */}
+          <div>
+            <h3 className="text-gold font-semibold text-sm uppercase tracking-wider mb-4 border-b border-gold/30 pb-2">
+              Roadmaps
+            </h3>
+            <ul className="space-y-3">
+              {footerLinks.roadmaps.map((link) => (
+                <li key={link.name}>
+                  <Link
+                    href={link.href}
+                    className="text-warm-white/70 hover:text-gold text-sm transition-colors flex items-center group"
+                  >
+                    <span className="w-0 h-px bg-gold group-hover:w-4 mr-0 group-hover:mr-2 transition-all"></span>
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
 
           {/* Company Links */}

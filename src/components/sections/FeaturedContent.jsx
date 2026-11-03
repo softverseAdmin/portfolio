@@ -28,6 +28,14 @@ export default function FeaturedContent() {
       category: "Security",
       readTime: "22 min read",
       slug: "devsecops-checklist-securing-pipeline-2025"
+    },
+    {
+      title: "Declared, Not Derived: Backup Checks That Can't Grade Their Own Homework",
+      excerpt: "A backup check that derives its standard from the backup itself agrees with the system exactly when the system is wrong. The tested fix: a human-declared floor per database, a rolling median in monitoring, and a restore fingerprint with an append-only history.",
+      category: "DevOps",
+      readTime: "27 min read",
+      slug: "declared-not-derived-backup-checks",
+      badge: "Newest"
     }
   ]
 
@@ -49,10 +57,15 @@ export default function FeaturedContent() {
             <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
               {articles.map((article, index) => (
                 <div key={index} className="bg-gradient-to-br from-rich-black to-deep-black border border-gold/20 p-6 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-gold/20 transition-all group hover:border-gold/50 transform hover:-translate-y-1">
-                  <div className="mb-4">
+                  <div className="mb-4 flex items-center gap-2">
                     <span className="inline-block px-3 py-1 bg-gold/20 text-gold text-xs font-semibold rounded-full">
                       {article.category}
                     </span>
+                    {article.badge && (
+                      <span className="inline-block px-3 py-1 bg-amber text-deep-black text-xs font-bold rounded-full">
+                        {article.badge}
+                      </span>
+                    )}
                   </div>
                   <h3 className="font-bold text-lg mb-3 text-warm-white group-hover:text-gold transition-colors">
                     {article.title}
