@@ -16,7 +16,11 @@ const securityDomains = {
     title: "Security Fundamentals",
     color: "from-red-500 to-orange-500",
     items: [
-      { name: "Networking Basics", tools: ["TCP/IP", "OSI Model", "DNS", "HTTP/HTTPS", "VPN"], level: "essential" },
+      { name: "Networking Basics", tools: ["TCP/IP", "OSI Model", "DNS", "HTTP/HTTPS", "VPN"], level: "essential",
+        links: [
+          { label: "Kubernetes Networking & Ingress Basics", href: "/blog/kubernetes-ingress-networking-basics-2026" },
+          { label: "AWS VPC", href: "/blog/aws-vpc-guide-2026" }
+        ] },
       { name: "Operating Systems", tools: ["Windows Security", "Linux Security", "macOS Security", "Mobile Security"], level: "essential" },
       { name: "Programming & Scripting", tools: ["Python", "PowerShell", "Bash", "JavaScript", "SQL"], level: "essential" },
       { name: "Security Principles", tools: ["CIA Triad", "Risk Management", "Threat Modeling", "Defense in Depth"], level: "essential" }
@@ -41,18 +45,35 @@ const securityDomains = {
       { name: "Incident Response", tools: ["DFIR Tools", "Volatility", "Autopsy", "Wireshark", "YARA"], level: "critical" },
       { name: "Threat Hunting", tools: ["MITRE ATT&CK", "Sigma Rules", "Hunting Queries", "IOCs", "TTPs"], level: "advanced" },
       { name: "Endpoint Security", tools: ["CrowdStrike", "SentinelOne", "Carbon Black", "ESET", "Symantec"], level: "important" },
-      { name: "Network Security", tools: ["Firewall Management", "IDS/IPS", "Network Segmentation", "DLP"], level: "important" }
+      { name: "Network Security", tools: ["Firewall Management", "IDS/IPS", "Network Segmentation", "DLP"], level: "important",
+        links: [
+          { label: "Kubernetes Network Policies", href: "/blog/kubernetes-network-policies-guide-2026" },
+          { label: "AWS VPC", href: "/blog/aws-vpc-guide-2026" }
+        ] }
     ]
   },
   cloudsecurity: {
     title: "Cloud Security",
     color: "from-purple-500 to-blue-500",
     items: [
-      { name: "AWS Security", tools: ["IAM", "GuardDuty", "Security Hub", "CloudTrail", "Config"], level: "critical" },
+      { name: "AWS Security", tools: ["IAM", "GuardDuty", "Security Hub", "CloudTrail", "Config"], level: "critical",
+        links: [
+          { label: "AWS IAM Least Privilege", href: "/blog/aws-iam-least-privilege-guide-2026" },
+          { label: "GitHub Actions to AWS with OIDC", href: "/blog/github-actions-aws-oidc-guide-2026" }
+        ] },
       { name: "Azure Security", tools: ["Security Center", "Sentinel", "Key Vault", "Azure AD", "Defender"], level: "critical" },
       { name: "GCP Security", tools: ["Security Command Center", "Cloud IAM", "Cloud KMS", "VPC Security"], level: "important" },
-      { name: "Container Security", tools: ["Trivy", "Twistlock", "Aqua Security", "Falco", "Sysdig"], level: "advanced" },
-      { name: "DevSecOps", tools: ["SAST", "DAST", "SCA", "Secret Scanning", "Policy as Code"], level: "advanced" }
+      { name: "Container Security", tools: ["Trivy", "Twistlock", "Aqua Security", "Falco", "Sysdig"], level: "advanced",
+        links: [
+          { label: "Kubernetes Security Basics", href: "/blog/kubernetes-security-basics-guide-2026" },
+          { label: "Optimize Docker Images for Production", href: "/blog/how-to-optimize-docker-images-production-2025" }
+        ] },
+      { name: "DevSecOps", tools: ["SAST", "DAST", "SCA", "Secret Scanning", "Policy as Code"], level: "advanced",
+        links: [
+          { label: "DevSecOps Checklist", href: "/blog/devsecops-checklist-securing-pipeline-2025" },
+          { label: "Kubernetes ConfigMaps & Secrets", href: "/blog/kubernetes-configmaps-secrets-guide-2026" },
+          { label: "Kubernetes Security Basics", href: "/blog/kubernetes-security-basics-guide-2026" }
+        ] }
     ]
   },
   governance: {
@@ -217,6 +238,22 @@ function SecurityDomainCard({ domain, data }) {
                 </span>
               ))}
             </div>
+            {item.links && item.links.length > 0 ? (
+              <div className="mt-3 pt-3 border-t border-charcoal/40">
+                <span className="text-xs uppercase tracking-wide text-red-300/80 font-semibold">Start here →</span>
+                <ul className="mt-2 space-y-1">
+                  {item.links.map((link, linkIndex) => (
+                    <li key={linkIndex}>
+                      <Link href={link.href} className="text-sm text-warm-white/85 hover:text-red-300 underline decoration-red-400/40 underline-offset-2 transition-all">
+                        {link.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : (
+              <p className="mt-3 pt-3 border-t border-charcoal/40 text-sm text-warm-white/40 italic">Coming soon</p>
+            )}
           </div>
         ))}
       </div>
