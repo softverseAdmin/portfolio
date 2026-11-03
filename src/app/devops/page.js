@@ -1,12 +1,12 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'DevOps Roadmap & Tools Reference | DevOps Enginer',
-  description: 'Complete DevOps roadmap, tools, and technologies reference guide. Learn the essential skills, tools, and career path for becoming a successful DevOps engineer.',
-  keywords: 'devops roadmap, devops tools, devops engineer, kubernetes, docker, aws, terraform, jenkins, gitlab, monitoring, security, career guide',
+  title: 'DevOps Roadmap: Learn to Become a DevOps Engineer',
+  description: 'Free DevOps roadmap for 2026: Linux, Git, Docker, Kubernetes, CI/CD, Terraform and monitoring in order — every step linked to a hands-on tutorial.',
+  keywords: 'devops roadmap, learn devops, devops engineer, kubernetes, docker, aws, terraform, jenkins, gitlab, monitoring, security, career guide',
   openGraph: {
-    title: 'DevOps Roadmap & Tools Reference | DevOps Enginer',
-    description: 'Complete DevOps roadmap, tools, and technologies reference guide. Learn the essential skills, tools, and career path for becoming a successful DevOps engineer.',
+    title: 'DevOps Roadmap: Learn to Become a DevOps Engineer | DevOps Enginer',
+    description: 'Free DevOps roadmap for 2026: Linux, Git, Docker, Kubernetes, CI/CD, Terraform and monitoring in order — every step linked to a hands-on tutorial.',
     type: 'website',
   }
 };
@@ -295,12 +295,12 @@ export default function DevOpsPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-gold via-amber to-soft-gold mb-8">
-              DevOps Roadmap & Reference
+              DevOps Roadmap: Learn to Become a DevOps Engineer
             </h1>
-            <p className="text-xl text-warm-white/80 max-w-3xl mx-auto leading-relaxed mb-8">
-              Your complete guide to DevOps tools, technologies, and career progression. 
-              Master the essential skills and technologies needed to excel as a DevOps engineer.
+            <p className="text-xl text-warm-white/80 max-w-3xl mx-auto leading-relaxed mb-4">
+              Step-by-step guide to learning DevOps in 2026. Every step links to a free, hands-on tutorial.
             </p>
+            <p className="text-sm text-warm-white/50 mb-8">Updated November 2026</p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/blog"
@@ -315,6 +315,43 @@ export default function DevOpsPage() {
                 Get Consultation
               </Link>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Explainer Section */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="space-y-12">
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gold mb-4">What is a DevOps Engineer?</h2>
+            <p className="text-lg text-warm-white/75 leading-relaxed">
+              A DevOps engineer builds and runs the systems that deliver software: the pipelines that test and
+              deploy code, the infrastructure it runs on, and the monitoring that proves it is healthy. It is an
+              operations role with a software mindset — instead of manual, one-off fixes, a DevOps engineer
+              automates the path from commit to production so releases are fast, repeatable and safe.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gold mb-4">What Does a DevOps Engineer Do Day to Day?</h2>
+            <p className="text-lg text-warm-white/75 leading-relaxed">
+              Typical days mix building and firefighting: improving CI/CD pipelines, writing infrastructure as
+              code, keeping Kubernetes clusters healthy, responding to incidents — and removing the manual steps
+              that caused them. The ratio shifts with seniority, towards more design and prevention and less
+              reaction, but the constant is ownership of how software reaches its users.
+            </p>
+          </div>
+          <div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gold mb-4">How Do You Become a DevOps Engineer?</h2>
+            <p className="text-lg text-warm-white/75 leading-relaxed">
+              Follow the roadmap on this page in order: prerequisites first (Linux, networking, Git and
+              scripting), then infrastructure and containers, then CI/CD and observability, then security and the
+              advanced topics. Every section links to the free tutorials on this site that teach it, in the order
+              to read them — start with the{' '}
+              <Link href="/blog/top-10-devops-tools-2025" className="text-gold underline decoration-gold/40 underline-offset-2 hover:text-amber transition-all">
+                tools and skills overview
+              </Link>
+              , then work through the Prerequisites section just below.
+            </p>
           </div>
         </div>
       </div>
@@ -386,13 +423,16 @@ export default function DevOpsPage() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="bg-gradient-to-br from-gold/10 to-amber/5 border border-gold/20 rounded-2xl p-8">
           <h2 className="text-2xl md:text-3xl font-bold text-gold mb-6 text-center">DevOps Career Tips</h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             <div className="text-center">
               <div className="bg-gold/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
                 <span className="text-gold font-bold">1</span>
               </div>
               <h3 className="font-semibold text-warm-white mb-2">Start with Fundamentals</h3>
               <p className="text-warm-white/70 text-sm">Master Linux, networking, and at least one programming language before moving to DevOps tools.</p>
+              <Link href="/blog/top-10-devops-tools-2025" className="inline-block mt-3 text-sm text-gold underline decoration-gold/40 underline-offset-2 hover:text-amber transition-all">
+                See the tools in learning order →
+              </Link>
             </div>
             <div className="text-center">
               <div className="bg-gold/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -407,6 +447,71 @@ export default function DevOpsPage() {
               </div>
               <h3 className="font-semibold text-warm-white mb-2">Stay Updated</h3>
               <p className="text-warm-white/70 text-sm">DevOps evolves rapidly. Follow industry blogs, join communities, and experiment with new tools.</p>
+            </div>
+            <div className="text-center">
+              <div className="bg-gold/20 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4">
+                <span className="text-gold font-bold">4</span>
+              </div>
+              <h3 className="font-semibold text-warm-white mb-2">Learn From a Real Career Path</h3>
+              <p className="text-warm-white/70 text-sm">See how one engineer moved from development into DevOps — and on into project work — in Japan.</p>
+              <Link href="/blog/how-to-become-devops-engineer-japan-2025-career-guide" className="inline-block mt-3 text-sm text-gold underline decoration-gold/40 underline-offset-2 hover:text-amber transition-all">
+                Read the Japan career guide →
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Related Roadmaps */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gold mb-4">Related Roadmaps</h2>
+          <p className="text-lg text-warm-white/70 max-w-2xl mx-auto">
+            The DevOps path does not stand alone — these are the routes that branch off it.
+          </p>
+        </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          <Link href="/cloud" className="block bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/40 transition-all">
+            <h3 className="text-xl font-bold text-gold mb-2">Cloud Roadmap</h3>
+            <p className="text-warm-white/70 text-sm leading-relaxed">AWS, Azure and GCP step by step — the infrastructure layer underneath every DevOps stack.</p>
+          </Link>
+          <Link href="/cybersecurity" className="block bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/40 transition-all">
+            <h3 className="text-xl font-bold text-gold mb-2">Cybersecurity Roadmap</h3>
+            <p className="text-warm-white/70 text-sm leading-relaxed">Fundamentals through cloud security and DevSecOps — the other half of shipping safely.</p>
+          </Link>
+          <Link href="/roadmaps#kubernetes-in-production" className="block bg-gradient-to-br from-charcoal/60 to-rich-black border border-gold/20 rounded-xl p-6 hover:border-gold/40 transition-all">
+            <h3 className="text-xl font-bold text-gold mb-2">Kubernetes in Production</h3>
+            <p className="text-warm-white/70 text-sm leading-relaxed">This roadmap's deepest section as one ordered run: 22 tutorials, starting with the kubectl Commands Cheat Sheet.</p>
+          </Link>
+        </div>
+      </div>
+
+      {/* FAQ */}
+      <div className="bg-gradient-to-br from-charcoal/40 to-rich-black py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gold mb-4">DevOps Roadmap FAQ</h2>
+          </div>
+          <div className="space-y-6">
+            <div className="border border-gold/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">What skills are required to become a DevOps Engineer?</h3>
+              <p className="text-warm-white/70 leading-relaxed">Linux and networking fundamentals, one scripting language (Python or Bash) and Git — then the delivery stack: CI/CD, Docker, Kubernetes, infrastructure as code with Terraform, and monitoring. The roadmap above orders them the way working engineers actually meet them: start at Prerequisites and move down.</p>
+            </div>
+            <div className="border border-gold/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">Does a DevOps Engineer need to know how to code?</h3>
+              <p className="text-warm-white/70 leading-relaxed">Yes — but not like an application developer. You need to read code, write scripts and automation, and work in YAML and configuration files daily. Fluency in Python or Bash matters more than algorithms: the goal is automating operations, not shipping product features.</p>
+            </div>
+            <div className="border border-gold/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">How long does it take to become a DevOps Engineer?</h3>
+              <p className="text-warm-white/70 leading-relaxed">With an IT or development background, 6–12 months of steady hands-on practice is a realistic range to become ready for a junior DevOps role. Starting from zero takes longer — the fundamentals (Linux, networking, Git) are not optional shortcuts, and skipping them shows up in interviews.</p>
+            </div>
+            <div className="border border-gold/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">Should I learn Docker or Kubernetes first?</h3>
+              <p className="text-warm-white/70 leading-relaxed">Docker first. Kubernetes orchestrates containers, so its core ideas only make sense once images and containers are familiar. The Containerization &amp; Orchestration section follows exactly that order — Docker, then the kubectl cheat sheet and the production Kubernetes guides.</p>
+            </div>
+            <div className="border border-gold/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">What is the first thing to learn in DevOps?</h3>
+              <p className="text-warm-white/70 leading-relaxed">Linux. Almost every tool on this roadmap runs on it, and every interview assumes it. After Linux, learn Git and one scripting language — those three unlock everything below them.</p>
             </div>
           </div>
         </div>
