@@ -1,12 +1,12 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Cloud Computing Guide & Resources | DevOps Enginer',
-  description: 'Complete cloud computing guide covering AWS, Azure, GCP, and multi-cloud strategies. Learn cloud architecture, services, and best practices for modern infrastructure.',
-  keywords: 'cloud computing, AWS, Azure, GCP, cloud architecture, cloud migration, serverless, kubernetes, cloud security, multi-cloud, hybrid cloud',
+  title: 'Cloud Roadmap: Learn AWS, Azure & GCP Step by Step',
+  description: 'Free cloud computing roadmap for 2026: learn AWS step by step — IAM, VPC, EC2, EKS and cost optimization — with a hands-on tutorial for every step.',
+  keywords: 'cloud roadmap, aws roadmap, learn aws, cloud computing, Azure, GCP, cloud architecture, cloud migration, serverless, kubernetes, cloud security, multi-cloud, hybrid cloud',
   openGraph: {
-    title: 'Cloud Computing Guide & Resources | DevOps Enginer',
-    description: 'Complete cloud computing guide covering AWS, Azure, GCP, and multi-cloud strategies. Learn cloud architecture, services, and best practices for modern infrastructure.',
+    title: 'Cloud Roadmap: Learn AWS, Azure & GCP Step by Step | DevOps Enginer',
+    description: 'Free cloud computing roadmap for 2026: learn AWS step by step — IAM, VPC, EC2, EKS and cost optimization — with a hands-on tutorial for every step.',
     type: 'website',
   }
 };
@@ -421,12 +421,12 @@ export default function CloudPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-cyan-400 to-teal-400 mb-8">
-              Cloud Computing Guide
+              Cloud Computing Roadmap: Learn AWS Step by Step in 2026
             </h1>
-            <p className="text-xl text-warm-white/80 max-w-3xl mx-auto leading-relaxed mb-8">
-              Master cloud technologies with comprehensive guides covering AWS, Azure, GCP, and modern cloud architecture patterns. 
-              Build scalable, secure, and cost-effective cloud solutions.
+            <p className="text-xl text-warm-white/80 max-w-3xl mx-auto leading-relaxed mb-4">
+              A free, ordered path from cloud fundamentals to production AWS — every step is a hands-on tutorial.
             </p>
+            <p className="text-sm text-warm-white/50 mb-8">Updated November 2026</p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/blog"
@@ -443,6 +443,58 @@ export default function CloudPage() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* How to Learn Cloud Computing */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-blue-400 mb-6">How to Learn Cloud Computing</h2>
+        <p className="text-lg text-warm-white/75 leading-relaxed mb-6">
+          Cloud is too wide to learn as a catalogue, so learn it as a path. Start with the fundamentals that every
+          provider shares — accounts, identity, networking, storage — then go deep on one provider. AWS is the
+          deepest route on this site: it has the largest job market, and its core services teach concepts that
+          transfer to Azure and GCP afterwards.
+        </p>
+        <p className="text-lg text-warm-white/75 leading-relaxed mb-8">
+          Work through the AWS steps in this order — each one is a free, hands-on tutorial:
+        </p>
+        <ol className="space-y-4">
+          <li className="flex items-start gap-4">
+            <span className="bg-blue-400/20 w-10 h-10 shrink-0 rounded-full flex items-center justify-center"><span className="text-blue-400 font-bold">1</span></span>
+            <div>
+              <Link href="/blog/aws-iam-least-privilege-guide-2026" className="font-semibold text-warm-white hover:text-blue-400 underline decoration-blue-400/40 underline-offset-2 transition-all">AWS IAM Least Privilege</Link>
+              <p className="text-warm-white/70 text-sm leading-relaxed">Identity first: users, roles and policies done properly, before you build anything.</p>
+            </div>
+          </li>
+          <li className="flex items-start gap-4">
+            <span className="bg-blue-400/20 w-10 h-10 shrink-0 rounded-full flex items-center justify-center"><span className="text-blue-400 font-bold">2</span></span>
+            <div>
+              <Link href="/blog/aws-vpc-guide-2026" className="font-semibold text-warm-white hover:text-blue-400 underline decoration-blue-400/40 underline-offset-2 transition-all">AWS VPC</Link>
+              <p className="text-warm-white/70 text-sm leading-relaxed">The network your services live in: subnets, routing and security groups.</p>
+            </div>
+          </li>
+          <li className="flex items-start gap-4">
+            <span className="bg-blue-400/20 w-10 h-10 shrink-0 rounded-full flex items-center justify-center"><span className="text-blue-400 font-bold">3</span></span>
+            <div>
+              <Link href="/blog/amazon-eks-guide-2026" className="font-semibold text-warm-white hover:text-blue-400 underline decoration-blue-400/40 underline-offset-2 transition-all">Amazon EKS</Link>
+              <p className="text-warm-white/70 text-sm leading-relaxed">Containers in production: managed Kubernetes on AWS, end to end.</p>
+            </div>
+          </li>
+          <li className="flex items-start gap-4">
+            <span className="bg-blue-400/20 w-10 h-10 shrink-0 rounded-full flex items-center justify-center"><span className="text-blue-400 font-bold">4</span></span>
+            <div>
+              <Link href="/blog/aws-cost-optimization-15-tactics-saved-50k-month" className="font-semibold text-warm-white hover:text-blue-400 underline decoration-blue-400/40 underline-offset-2 transition-all">AWS Cost Optimization</Link>
+              <p className="text-warm-white/70 text-sm leading-relaxed">The skill that gets cloud engineers noticed: 15 tactics that cut real bills.</p>
+            </div>
+          </li>
+        </ol>
+        <p className="text-lg text-warm-white/75 leading-relaxed mt-8">
+          Two wider questions come after the AWS core. If you are choosing between running functions and running
+          containers, read{' '}
+          <Link href="/blog/serverless-vs-containers-2025" className="text-blue-400 underline decoration-blue-400/40 underline-offset-2 hover:text-cyan-400 transition-all">Serverless vs Containers</Link>
+          ; if your organisation runs — or is considering — more than one provider, read the{' '}
+          <Link href="/blog/multi-cloud-strategy-2025" className="text-blue-400 underline decoration-blue-400/40 underline-offset-2 hover:text-cyan-400 transition-all">Multi-Cloud Strategy</Link>{' '}
+          guide. The full provider catalogue below is your reference for everything beyond the path.
+        </p>
       </div>
 
       {/* Cloud Providers Section */}
@@ -541,6 +593,61 @@ export default function CloudPage() {
               <h3 className="font-semibold text-warm-white mb-2">Full Migration</h3>
               <p className="text-warm-white/70 text-sm">Execute phased migration with proper testing and rollback procedures.</p>
               <p className="text-warm-white/40 text-xs italic mt-2">Coming soon</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Related Roadmaps */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-gold mb-4">Related Roadmaps</h2>
+          <p className="text-lg text-warm-white/70 max-w-2xl mx-auto">
+            Where the cloud path leads next.
+          </p>
+        </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          <Link href="/devops" className="block bg-gradient-to-br from-charcoal/60 to-rich-black border border-blue-500/20 rounded-xl p-6 hover:border-blue-500/40 transition-all">
+            <h3 className="text-xl font-bold text-blue-400 mb-2">DevOps Roadmap</h3>
+            <p className="text-warm-white/70 text-sm leading-relaxed">Where EKS and Kubernetes continue: CI/CD, GitOps, observability and the full production stack.</p>
+          </Link>
+          <Link href="/cybersecurity" className="block bg-gradient-to-br from-charcoal/60 to-rich-black border border-blue-500/20 rounded-xl p-6 hover:border-blue-500/40 transition-all">
+            <h3 className="text-xl font-bold text-blue-400 mb-2">Cybersecurity Roadmap</h3>
+            <p className="text-warm-white/70 text-sm leading-relaxed">The cloud security section in full — IAM, container security and DevSecOps.</p>
+          </Link>
+          <Link href="/resources" className="block bg-gradient-to-br from-charcoal/60 to-rich-black border border-blue-500/20 rounded-xl p-6 hover:border-blue-500/40 transition-all">
+            <h3 className="text-xl font-bold text-blue-400 mb-2">Resources</h3>
+            <p className="text-warm-white/70 text-sm leading-relaxed">The tools, templates and free practice platforms behind the roadmaps.</p>
+          </Link>
+        </div>
+      </div>
+
+      {/* FAQ */}
+      <div className="bg-gradient-to-br from-charcoal/40 to-rich-black py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-blue-400 mb-4">Cloud Roadmap FAQ</h2>
+          </div>
+          <div className="space-y-6">
+            <div className="border border-blue-500/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">Which cloud platform should a beginner learn first — AWS, Azure or GCP?</h3>
+              <p className="text-warm-white/70 leading-relaxed">AWS, unless your target employer runs on another provider. It has the largest share of cloud jobs, and its core concepts — identity, VPC networking, object storage, managed containers — transfer directly to Azure and GCP. Learn one provider deeply before sampling the others.</p>
+            </div>
+            <div className="border border-blue-500/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">How long does it take to learn AWS?</h3>
+              <p className="text-warm-white/70 leading-relaxed">With steady hands-on practice, the fundamentals — IAM, VPC, EC2, S3 and a managed Kubernetes service like EKS — take most people 3–6 months to use confidently. The path on this page is ordered so each step builds on the last; budgets and billing discipline are part of the skill from the start, not an afterthought.</p>
+            </div>
+            <div className="border border-blue-500/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">Do I need a certification to get a cloud job?</h3>
+              <p className="text-warm-white/70 leading-relaxed">No — but an associate-level certification helps your resume pass screening, especially early in your career. Treat it as proof of fundamentals, then back it with hands-on work: the tutorials on this page are designed to give you both the knowledge the exams test and something real to talk about in interviews.</p>
+            </div>
+            <div className="border border-blue-500/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">Is cloud computing hard to learn without an IT background?</h3>
+              <p className="text-warm-white/70 leading-relaxed">It is learnable, but not by skipping the foundations. Basic Linux, networking and one scripting language make cloud concepts click much faster; without them, every service feels like memorisation. The DevOps roadmap's Prerequisites section covers exactly that groundwork.</p>
+            </div>
+            <div className="border border-blue-500/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">What should I learn after AWS basics?</h3>
+              <p className="text-warm-white/70 leading-relaxed">Containers and Kubernetes on EKS, then cost optimization and reliability — the skills that separate people who can launch services from people who can run them. From there, the DevOps roadmap continues the same story: CI/CD, GitOps and observability in production.</p>
             </div>
           </div>
         </div>
