@@ -1,12 +1,12 @@
 import Link from 'next/link';
 
 export const metadata = {
-  title: 'Cybersecurity Roadmap & Expert Guide | DevOps Enginer',
-  description: 'Complete cybersecurity roadmap covering security fundamentals, tools, frameworks, and career paths. Learn ethical hacking, threat hunting, incident response, and security engineering.',
-  keywords: 'cybersecurity roadmap, ethical hacking, penetration testing, security tools, CISSP, CEH, incident response, threat hunting, security frameworks, compliance',
+  title: 'Cybersecurity Roadmap: Learn to Become a Security Engineer',
+  description: 'Free cybersecurity roadmap for 2026: fundamentals, offensive and defensive security, cloud security and DevSecOps — step by step, with tutorials.',
+  keywords: 'cybersecurity roadmap, learn cybersecurity, security engineer, ethical hacking, penetration testing, security tools, CISSP, CEH, incident response, threat hunting, security frameworks, compliance, devsecops',
   openGraph: {
-    title: 'Cybersecurity Roadmap & Expert Guide | DevOps Enginer',
-    description: 'Complete cybersecurity roadmap covering security fundamentals, tools, frameworks, and career paths. Learn ethical hacking, threat hunting, incident response, and security engineering.',
+    title: 'Cybersecurity Roadmap: Learn to Become a Security Engineer | DevOps Enginer',
+    description: 'Free cybersecurity roadmap for 2026: fundamentals, offensive and defensive security, cloud security and DevSecOps — step by step, with tutorials.',
     type: 'website',
   }
 };
@@ -372,12 +372,12 @@ export default function CybersecurityPage() {
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-400 via-orange-400 to-red-500 mb-8">
-              Cybersecurity Expert Guide
+              Cybersecurity Roadmap: Step by Step to a Security Career
             </h1>
-            <p className="text-xl text-warm-white/80 max-w-3xl mx-auto leading-relaxed mb-8">
-              Master cybersecurity with comprehensive guides covering offensive security, defensive operations, 
-              compliance frameworks, and modern threat landscape. Build a career in cybersecurity.
+            <p className="text-xl text-warm-white/80 max-w-3xl mx-auto leading-relaxed mb-4">
+              Step-by-step guide to becoming a cybersecurity professional in 2026 — start with the fundamentals, specialise after.
             </p>
+            <p className="text-sm text-warm-white/50 mb-8">Updated November 2026</p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
                 href="/blog/devsecops-checklist-securing-pipeline-2025"
@@ -394,6 +394,31 @@ export default function CybersecurityPage() {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* How to Start in Cybersecurity */}
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <h2 className="text-3xl md:text-4xl font-bold text-red-400 mb-6">How to Start in Cybersecurity</h2>
+        <p className="text-lg text-warm-white/75 leading-relaxed mb-6">
+          Every security specialisation stands on the same ground: networking, operating systems and how systems
+          actually fail. Learn the fundamentals first — they are the first domain below — then choose a direction:
+          offensive security (finding the holes), defensive security (detecting and stopping attacks) or
+          governance and compliance (the rules organisations must meet). The four-step career path further down
+          this page lays out that sequence.
+        </p>
+        <p className="text-lg text-warm-white/75 leading-relaxed">
+          Be honest with yourself about where this site goes deep. DevOps Enginer's security strength is
+          DevSecOps and cloud-native security — securing pipelines, Kubernetes clusters and cloud accounts — so
+          those nodes carry full tutorials today: start with the{' '}
+          <Link href="/blog/devsecops-checklist-securing-pipeline-2025" className="text-red-400 underline decoration-red-400/40 underline-offset-2 hover:text-orange-400 transition-all">DevSecOps Checklist</Link>,
+          then{' '}
+          <Link href="/blog/kubernetes-security-basics-guide-2026" className="text-red-400 underline decoration-red-400/40 underline-offset-2 hover:text-orange-400 transition-all">Kubernetes Security Basics</Link>,{' '}
+          <Link href="/blog/kubernetes-rbac-guide-2026" className="text-red-400 underline decoration-red-400/40 underline-offset-2 hover:text-orange-400 transition-all">Kubernetes RBAC</Link>,{' '}
+          <Link href="/blog/kubernetes-network-policies-guide-2026" className="text-red-400 underline decoration-red-400/40 underline-offset-2 hover:text-orange-400 transition-all">Kubernetes Network Policies</Link>{' '}
+          and{' '}
+          <Link href="/blog/aws-iam-least-privilege-guide-2026" className="text-red-400 underline decoration-red-400/40 underline-offset-2 hover:text-orange-400 transition-all">AWS IAM Least Privilege</Link>.
+          Domains without a tutorial yet are marked Coming soon — they are the writing queue, not covered ground.
+        </p>
       </div>
 
       {/* Security Domains */}
@@ -516,6 +541,61 @@ export default function CybersecurityPage() {
               </div>
               <h3 className="font-semibold text-warm-white mb-2">Advanced Expertise</h3>
               <p className="text-warm-white/70 text-sm">Pursue advanced certifications and leadership roles in security.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Related Roadmaps */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl md:text-4xl font-bold text-red-400 mb-4">Related Roadmaps</h2>
+          <p className="text-lg text-warm-white/70 max-w-2xl mx-auto">
+            The neighbouring paths this roadmap leans on.
+          </p>
+        </div>
+        <div className="grid gap-6 md:grid-cols-3">
+          <Link href="/devops" className="block bg-gradient-to-br from-charcoal/60 to-rich-black border border-red-500/20 rounded-xl p-6 hover:border-red-500/40 transition-all">
+            <h3 className="text-xl font-bold text-red-400 mb-2">DevOps Roadmap</h3>
+            <p className="text-warm-white/70 text-sm leading-relaxed">The DevSecOps overlap in full: pipelines, Kubernetes and the production systems security protects.</p>
+          </Link>
+          <Link href="/cloud" className="block bg-gradient-to-br from-charcoal/60 to-rich-black border border-red-500/20 rounded-xl p-6 hover:border-red-500/40 transition-all">
+            <h3 className="text-xl font-bold text-red-400 mb-2">Cloud Roadmap</h3>
+            <p className="text-warm-white/70 text-sm leading-relaxed">Cloud security in context — the AWS path the IAM and cloud-security tutorials belong to.</p>
+          </Link>
+          <Link href="/resources" className="block bg-gradient-to-br from-charcoal/60 to-rich-black border border-red-500/20 rounded-xl p-6 hover:border-red-500/40 transition-all">
+            <h3 className="text-xl font-bold text-red-400 mb-2">Resources</h3>
+            <p className="text-warm-white/70 text-sm leading-relaxed">Security tools, scanners and free practice platforms, curated and checked.</p>
+          </Link>
+        </div>
+      </div>
+
+      {/* FAQ */}
+      <div className="bg-gradient-to-br from-charcoal/40 to-rich-black py-16">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-red-400 mb-4">Cybersecurity Roadmap FAQ</h2>
+          </div>
+          <div className="space-y-6">
+            <div className="border border-red-500/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">How do I start a career in cybersecurity with no experience?</h3>
+              <p className="text-warm-white/70 leading-relaxed">Build the fundamentals first — networking, Linux and how web systems work — then practise in labs and CTFs where breaking things is the point. Many security engineers start in IT support, system administration or DevOps and move across; the cloud-security and DevSecOps tutorials on this site are written for exactly that crossing.</p>
+            </div>
+            <div className="border border-red-500/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">Which cybersecurity certification should I get first?</h3>
+              <p className="text-warm-white/70 leading-relaxed">CompTIA Security+ is the standard first certification: vendor-neutral, recognised by employers, and matched to the fundamentals domain on this roadmap. After it, specialise — the certifications section below maps the offensive, defensive and cloud-security ladders.</p>
+            </div>
+            <div className="border border-red-500/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">Do I need to know programming for cybersecurity?</h3>
+              <p className="text-warm-white/70 leading-relaxed">You need scripting more than software engineering: Python and Bash for automation, log analysis and tooling. Some specialisations (application security, exploit development) go deeper, but no security role is well served by zero code — and fundamentals plus scripting is enough to start.</p>
+            </div>
+            <div className="border border-red-500/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">Offensive or defensive security — which path should I choose?</h3>
+              <p className="text-warm-white/70 leading-relaxed">Try both briefly before deciding: offensive work (penetration testing, red teams) suits people who enjoy puzzles and adversarial thinking; defensive work (detection, incident response, security engineering) suits people who enjoy systems and patterns. The fundamentals are identical either way, so the first months of this roadmap are the same for both.</p>
+            </div>
+            <div className="border border-red-500/20 rounded-xl p-6 bg-rich-black/50">
+              <h3 className="text-lg font-bold text-warm-white mb-2">How long does it take to learn cybersecurity?</h3>
+              <p className="text-warm-white/70 leading-relaxed">For a first junior role, plan on 6–18 months of steady study and lab practice, depending on your starting point — someone moving from IT or DevOps work is at the fast end. Security is a field you never finish learning; the roadmap's job is to sequence the first, employable stretch.</p>
             </div>
           </div>
         </div>
