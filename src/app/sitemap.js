@@ -31,6 +31,12 @@ export default function sitemap() {
       priority: 0.9,
     },
     {
+      url: `${baseUrl}/roadmaps`,
+      lastModified: currentDate,
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    {
       url: `${baseUrl}/ai-job-hunting`,
       lastModified: currentDate,
       changeFrequency: 'weekly',
