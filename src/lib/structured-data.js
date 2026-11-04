@@ -1,4 +1,18 @@
 // Static structured data that won't cause hydration issues
+
+// One canonical profile list for the author/brand entity, reused by every
+// schema block below so search and AI engines resolve a single identity.
+const SAME_AS = [
+  "https://www.linkedin.com/in/rabin-adhikari-52573320b/",
+  "https://github.com/softverseAdmin",
+  "https://dev.to/softverseadmin",
+  "https://hashnode.com/@softverse",
+  "https://hackernoon.com/u/rabinadhikari",
+  "https://daily.dev/softverseadmin",
+  "https://www.youtube.com/@sevensleepsleft",
+  "https://www.facebook.com/profile.php?id=61581961413915"
+];
+
 export const structuredData = {
   educational: {
     "@context": "https://schema.org",
@@ -13,10 +27,7 @@ export const structuredData = {
       "height": "512"
     },
     "description": "Expert tutorials and resources for DevOps, Cloud Computing, and Cybersecurity professionals. Learn Docker, Kubernetes, AWS, Azure, and security best practices.",
-    "sameAs": [
-      "https://www.linkedin.com/in/rabin-adhikari-52573320b/",
-      "https://www.facebook.com/profile.php?id=61581961413915"
-    ],
+    "sameAs": SAME_AS,
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "Customer Service",
@@ -69,15 +80,13 @@ export const structuredData = {
   person: {
     "@context": "https://schema.org",
     "@type": "Person",
+    "@id": "https://www.devopsenginer.com/about#rabin-adhikari",
     "name": "Rabin Adhikari",
-    "jobTitle": "DevOps Engineer & Cloud Solutions Architect",
-    "description": "Experienced DevOps engineer specializing in cloud infrastructure, automation, and cybersecurity. Expert in AWS, Azure, GCP, Kubernetes, and DevSecOps practices.",
-    "url": "https://www.devopsenginer.com",
+    "jobTitle": "Project Manager (Medical Systems) & DevOps Engineer",
+    "description": "DevOps engineer turned project manager in Tokyo. Writes practical, tested guides on Kubernetes, GitOps, CI/CD and DevSecOps at devopsenginer.com.",
+    "url": "https://www.devopsenginer.com/about",
     "image": "https://www.devopsenginer.com/images/profile.jpg",
-    "sameAs": [
-      "https://www.linkedin.com/in/rabin-adhikari-52573320b/",
-      "https://www.facebook.com/profile.php?id=61581961413915"
-    ],
+    "sameAs": SAME_AS,
     "email": "softverse4@gmail.com",
     "knowsAbout": [
       "DevOps Engineering",
@@ -129,10 +138,7 @@ export const structuredData = {
       "url": "https://www.devopsenginer.com/contact",
       "availableLanguage": "English"
     },
-    "sameAs": [
-      "https://www.linkedin.com/in/rabin-adhikari-52573320b/",
-      "https://www.facebook.com/profile.php?id=61581961413915"
-    ],
+    "sameAs": SAME_AS,
     "areaServed": "Worldwide",
     "serviceType": [
       "DevOps Consulting",

@@ -1,0 +1,36 @@
+# DevOps Enginer
+
+> Free step-by-step roadmaps and hands-on, tested tutorials for DevOps,
+> Kubernetes, cloud (AWS/Azure/GCP) and cybersecurity, by Rabin Adhikari —
+> a DevOps engineer turned project manager in Tokyo. Every surprising claim
+> in the tutorials is tested before publication.
+
+## Roadmaps
+
+- [DevOps roadmap](https://www.devopsenginer.com/devops): 32 steps from Linux to production
+- [Cloud roadmap](https://www.devopsenginer.com/cloud): AWS, Azure and GCP in learning order
+- [Cybersecurity roadmap](https://www.devopsenginer.com/cybersecurity): security fundamentals to practice
+- [All roadmaps](https://www.devopsenginer.com/roadmaps): the hub, incl. the 22-step Kubernetes in Production path
+
+## Start here (most-referenced tutorials)
+
+- [Linux for DevOps in 2026](https://www.devopsenginer.com/blog/linux-for-devops-2026): commands, permissions, processes and systemd
+- [Declared, Not Derived: backup checks](https://www.devopsenginer.com/blog/declared-not-derived-backup-checks): backup checks that can't grade their own homework
+- [Restore Drills in 2026](https://www.devopsenginer.com/blog/restore-drills-in-2026-you-cant-automate-the-declaration): you can't automate the declaration
+- [Backup Verification in 2026](https://www.devopsenginer.com/blog/backup-verification-in-2026-exit-code-0-is-not-a-backup): exit code 0 is not a backup
+- [Kubernetes Troubleshooting Guide](https://www.devopsenginer.com/blog/kubernetes-troubleshooting-guide-2026): diagnose pods, nodes and networking
+- [Argo CD Tutorial: GitOps in 2026](https://www.devopsenginer.com/blog/argo-cd-tutorial-gitops-2026): GitOps deployment walkthrough
+- [AI for DevOps: a practical guide](https://www.devopsenginer.com/blog/ai-for-devops-practical-guide-2026): where AI actually helps operations teams
+- [AWS Cost Optimization](https://www.devopsenginer.com/blog/aws-cost-optimization-15-tactics-saved-50k-month): 15 tactics that cut real bills
+- [kubectl Commands Cheat Sheet](https://www.devopsenginer.com/blog/kubectl-commands-cheat-sheet-2026): the commands used daily, grouped by task
+- [Build a CI/CD Pipeline with GitHub Actions](https://www.devopsenginer.com/blog/how-to-build-cicd-pipeline-github-actions-2025): pipeline from scratch to deploy
+- [GitOps vs Traditional CI/CD](https://www.devopsenginer.com/blog/gitops-vs-traditional-cicd-2025-comparison): an honest comparison
+
+## All tutorials
+
+- [Blog index](https://www.devopsenginer.com/blog): all 50 tutorials
+
+## About
+
+- [About Rabin Adhikari](https://www.devopsenginer.com/about): the author and his background
+- [Services](https://www.devopsenginer.com/services): mentoring, resume review and team training

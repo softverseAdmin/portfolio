@@ -9,13 +9,15 @@ const TechNiches = dynamic(() => import('@/components/sections/TechNiches'))
 const FeaturedContent = dynamic(() => import('@/components/sections/FeaturedContent'))
 const Newsletter = dynamic(() => import('@/components/sections/Newsletter'))
 
+const HOME_DESCRIPTION = 'Free DevOps, Kubernetes, cloud and cybersecurity roadmaps with hands-on, tested tutorials — learn step by step, in order, from fundamentals to production.'
+
 export const metadata = {
   title: { absolute: 'DevOps Enginer — Free DevOps, Kubernetes & AWS Roadmaps and Tutorials' },
-  description: 'Free step-by-step roadmaps and hands-on tutorials for DevOps, Kubernetes, AWS and cybersecurity. Learn in order — from fundamentals to production.',
+  description: HOME_DESCRIPTION,
   keywords: 'devops roadmap, kubernetes roadmap, aws roadmap, learn devops, devops tutorials, cloud roadmap, cybersecurity roadmap',
   openGraph: {
     title: 'DevOps Enginer — Free DevOps, Kubernetes & AWS Roadmaps and Tutorials',
-    description: 'Free step-by-step roadmaps and hands-on tutorials for DevOps, Kubernetes, AWS and cybersecurity. Learn in order — from fundamentals to production.',
+    description: HOME_DESCRIPTION,
     type: 'website',
   }
 }
@@ -65,8 +67,7 @@ function HowItWorks() {
   )
 }
 
-function HomeFaq() {
-  const faqs = [
+const HOME_FAQS = [
     {
       q: 'Is everything on DevOps Enginer free?',
       a: 'Yes. Every roadmap and all 50 tutorials are free to read, with no signup wall. The site is supported by ads and by optional 1:1 mentoring for people who want personal help — the learning content itself is never paywalled.'
@@ -87,8 +88,25 @@ function HomeFaq() {
       q: 'Do the roadmaps include hands-on tutorials, or just topics?',
       a: 'Both. Each roadmap lists the topics in learning order, and every topic that has a tutorial links to it — commands, configuration and checks included, not just theory. Topics still marked Coming soon are the public writing queue.'
     },
-  ]
+]
 
+// FAQPage schema generated from the same Q&A pairs the section below
+// renders — the homepage FAQ existed as prose only; this gives search and
+// AI answer engines the structured form.
+const homeFaqStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: HOME_FAQS.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: f.a,
+    },
+  })),
+}
+
+function HomeFaq() {
   return (
     <section className="py-20 bg-gradient-to-br from-rich-black to-deep-black">
       <div className="max-w-4xl mx-auto px-4">
@@ -96,7 +114,7 @@ function HomeFaq() {
           Frequently Asked Questions
         </h2>
         <div className="space-y-6">
-          {faqs.map((f) => (
+          {HOME_FAQS.map((f) => (
             <div key={f.q} className="border border-gold/20 rounded-xl p-6 bg-rich-black/50">
               <h3 className="text-lg font-bold text-warm-white mb-2">{f.q}</h3>
               <p className="text-warm-white/70 leading-relaxed">{f.a}</p>
@@ -122,6 +140,11 @@ function HomeFaq() {
 export default function Home() {
   return (
     <main className="min-h-screen bg-gradient-dark">
+      {/* FAQPage Structured Data for SEO / AI answer extraction */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqStructuredData) }}
+      />
       <Hero />
 
       {/* Ad after Hero - High visibility with elegant styling */}

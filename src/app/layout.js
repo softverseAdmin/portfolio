@@ -19,7 +19,7 @@ export const metadata = {
     default: "DevOps Engineer - Master DevOps, Cloud & Cybersecurity",
     template: "%s | DevOps Enginer"
   },
-  description: "Expert tutorials, guides, and resources for DevOps, Cloud Computing, and Cybersecurity professionals. Learn Docker, Kubernetes, AWS, Azure, penetration testing, and more.",
+  description: "Free DevOps, Kubernetes, cloud and cybersecurity roadmaps with hands-on, tested tutorials — learn step by step, in order, from fundamentals to production.",
   keywords: "DevOps, Cloud Computing, Cybersecurity, AWS, Docker, Kubernetes, Security, Azure, GCP, CI/CD, Docker containers, Infrastructure as Code, Penetration testing, DevOps Engineer, DevSecOps, Terraform, Ansible, Jenkins, GitLab, GitHub Actions, Prometheus, Grafana, ELK Stack, Linux, Python, Bash, PowerShell, Monitoring, Observability, Site Reliability Engineering, SRE",
   authors: [{ name: "Rabin Adhikari", url: "https://www.linkedin.com/in/rabin-adhikari-52573320b/" }],
   creator: "Rabin Adhikari",

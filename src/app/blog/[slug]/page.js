@@ -2,6 +2,105 @@ import { notFound } from 'next/navigation';
 import Link from 'next/link';
 import { blogPosts, getBlogPost, getRelatedPosts } from '../blogData';
 
+// Canonical author entity: one Person for the whole site, referenced by @id
+// everywhere (Article schema, meta author, byline) so search and AI engines
+// attribute every post to the same expert instead of splitting credit
+// between the "DevOps Enginer" brand and the named author.
+export const AUTHOR_SAME_AS = [
+  'https://www.linkedin.com/in/rabin-adhikari-52573320b',
+  'https://github.com/softverseAdmin',
+  'https://dev.to/softverseadmin',
+  'https://hashnode.com/@softverse',
+  'https://hackernoon.com/u/rabinadhikari',
+  'https://daily.dev/softverseadmin',
+  'https://www.youtube.com/@sevensleepsleft',
+  'https://www.facebook.com/profile.php?id=61581961413915',
+];
+
+const AUTHOR_PERSON = {
+  '@type': 'Person',
+  '@id': 'https://www.devopsenginer.com/about#rabin-adhikari',
+  name: 'Rabin Adhikari',
+  url: 'https://www.devopsenginer.com/about',
+  sameAs: AUTHOR_SAME_AS,
+};
+
+// Most posts store the brand ("DevOps Enginer") in their author field; those
+// belong to the canonical Person above. A genuinely different named author
+// (a guest post) keeps their own name.
+function resolveAuthorPerson(post) {
+  if (post.author && post.author !== 'DevOps Enginer') {
+    return { '@type': 'Person', name: post.author };
+  }
+  return AUTHOR_PERSON;
+}
+
+function authorDisplayName(post) {
+  return post.author && post.author !== 'DevOps Enginer'
+    ? post.author
+    : 'Rabin Adhikari';
+}
+
+// --- FAQ extraction -------------------------------------------------------
+// Posts already carry a real FAQ section in their markdown content (a
+// "## FAQ" heading, then bold "**Question?**" lines or "### Question"
+// headings, each followed by its answer). Map those existing Q&A pairs to
+// FAQPage schema — no new content, just markup the answers were missing.
+function stripMarkdownForSchema(text) {
+  return text
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/`([^`]*)`/g, '$1')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*([^*]+)\*/g, '$1')
+    .replace(/^#+\s+/gm, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function extractFaqs(content) {
+  if (!content) return [];
+  const lines = content.split('\n');
+  let start = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (/^##\s+(\d+\.\s+)?(FAQ|FAQs|Frequently Asked Questions)\s*$/i.test(lines[i].trim())) {
+      start = i;
+      break;
+    }
+  }
+  if (start < 0) return [];
+  let end = lines.length;
+  for (let i = start + 1; i < lines.length; i++) {
+    if (/^##\s/.test(lines[i])) { end = i; break; }
+  }
+  const items = [];
+  let question = null;
+  let buffer = [];
+  const flush = () => {
+    if (question) {
+      const answer = stripMarkdownForSchema(buffer.join('\n'));
+      if (answer) items.push({ q: stripMarkdownForSchema(question), a: answer });
+    }
+    buffer = [];
+  };
+  for (const raw of lines.slice(start + 1, end)) {
+    const line = raw.trim();
+    const boldQ = line.match(/^\*\*(.+\?)\*\*:?$/);
+    const h3 = line.match(/^###\s+(.+)$/);
+    if (boldQ) {
+      flush();
+      question = boldQ[1].replace(/^Q\d+\.\s*/, '');
+    } else if (h3 && /\?$/.test(h3[1].trim())) {
+      flush();
+      question = h3[1].trim();
+    } else if (question) {
+      buffer.push(raw);
+    }
+  }
+  flush();
+  return items;
+}
+
 // Pre-render every post at build time
 export function generateStaticParams() {
   return blogPosts.map((post) => ({ slug: post.slug }));
@@ -27,8 +126,8 @@ export async function generateMetadata({ params }) {
     title: post.seo.title,
     description: post.seo.description,
     keywords: post.seo.keywords,
-    authors: [{ name: post.author }],
-    creator: post.author,
+    authors: [{ name: authorDisplayName(post), url: 'https://www.devopsenginer.com/about' }],
+    creator: authorDisplayName(post),
     publisher: 'DevOps Enginer',
     robots: {
       index: true,
@@ -61,7 +160,7 @@ export async function generateMetadata({ params }) {
       ],
       publishedTime: post.publishDate,
       modifiedTime: post.lastModified || post.publishDate,
-      authors: [post.author],
+      authors: [authorDisplayName(post)],
       section: post.category,
       tags: post.tags,
     },
@@ -100,11 +199,7 @@ export default async function BlogPost({ params }) {
     image: imageUrl,
     datePublished: post.publishDate,
     dateModified: post.lastModified || post.publishDate,
-    author: {
-      '@type': 'Person',
-      name: post.author,
-      url: 'https://www.devopsenginer.com/about',
-    },
+    author: resolveAuthorPerson(post),
     publisher: {
       '@type': 'Organization',
       name: 'DevOps Enginer',
@@ -123,6 +218,24 @@ export default async function BlogPost({ params }) {
     inLanguage: 'en-US',
   };
   
+  // FAQPage structured data, generated from the FAQ section the post
+  // already carries in its content (see extractFaqs above).
+  const faqItems = extractFaqs(post.content);
+  const faqStructuredData = faqItems.length
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map((item) => ({
+          '@type': 'Question',
+          name: item.q,
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: item.a,
+          },
+        })),
+      }
+    : null;
+
   // Breadcrumb structured data for navigation
   const breadcrumbStructuredData = {
     '@context': 'https://schema.org',
@@ -162,6 +275,14 @@ export default async function BlogPost({ params }) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbStructuredData) }}
       />
+
+      {/* FAQPage Structured Data for SEO / AI answer extraction */}
+      {faqStructuredData && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqStructuredData) }}
+        />
+      )}
       
       <div className="min-h-screen bg-gradient-to-br from-deep-black via-rich-black to-charcoal">
       {/* Hero Section */}
@@ -182,7 +303,7 @@ export default async function BlogPost({ params }) {
               {post.title}
             </h1>
             <div className="flex items-center justify-center space-x-6 text-warm-white/70">
-              <span>By <span className="text-gold">{post.author}</span></span>
+              <span>By <span className="text-gold">{authorDisplayName(post)}</span></span>
               <span>•</span>
               <time dateTime={post.publishDate} className="text-warm-white/60" suppressHydrationWarning>
                 {new Date(post.publishDate).toLocaleDateString('en-US', {
@@ -191,6 +312,21 @@ export default async function BlogPost({ params }) {
                   day: 'numeric'
                 })}
               </time>
+              {post.lastModified && post.lastModified !== post.publishDate && (
+                <>
+                  <span>•</span>
+                  <span className="text-warm-white/60">
+                    Last updated{' '}
+                    <time dateTime={post.lastModified} suppressHydrationWarning>
+                      {new Date(post.lastModified).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      })}
+                    </time>
+                  </span>
+                </>
+              )}
               <span>•</span>
               <span className="text-amber">{post.readTime}</span>
             </div>
