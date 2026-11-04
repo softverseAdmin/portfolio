@@ -11,7 +11,7 @@ Every other step on the DevOps path quietly assumes you can drive a Linux machin
 
 This post is the Operating Systems node of our [DevOps Roadmap](https://www.devopsenginer.com/devops) — if you are following the full path, start there and work through the nodes in order; this is the first deep-dive the prerequisites point at. It is organised as a learning path, not a reference dump: the topics are in the order to learn them, and every section ends with a short **"you know enough when…"** checklist, so you can tell the difference between *having read about it* and *being able to do it*. When a section is genuinely enough for now, it says so — the goal is the Linux a working DevOps engineer uses daily, not a kernel-internals degree.
 
-A note on honesty, because this site's backup series earned its readers the hard way: every command below is standard practice, and the claims that could surprise you — exit codes, permission arithmetic, SSH refusing a badly-permissioned key — were **run on an Ubuntu 24.04 machine before they were written down**. The rig notes are summarised at the end of this post.
+A note on honesty, because this site's backup series earned its readers the hard way: every command below is standard practice, and the claims that could surprise you — exit codes, permission arithmetic, SSH refusing a badly-permissioned key — were **run on an Ubuntu 24.04 machine before they were written down**.
 
 > **TL;DR:** Learn Linux in this order: (1) get a free practice machine — WSL, a free-tier VPS, or a container — and live in it; (2) files and permissions until \`ls -l\` reads like a sentence; (3) processes and signals, because restarting things is the job; (4) shell mechanics — pipes, redirection, exit codes — because every pipeline and CI log speaks them; (5) the networking commands that answer "is it listening, can I reach it, does the name resolve"; (6) systemd and the journal, because services and logs are where servers explain themselves; (7) disk, SSH and package management as the daily-driver finish. Each step has a "you know enough when…" bar. Clear the bar, move on — and know that the next roadmap nodes (scripting, Git, containers, Kubernetes) all stand on this floor.
 
@@ -265,7 +265,7 @@ Every behaviour claim in this post that could be checked was checked first: test
   author: "DevOps Enginer",
   publishDate: "2026-11-04",
   lastModified: "2026-11-04",
-  readTime: "27 min read",
+  readTime: "26 min read",
   seo: {
     title: "Linux for DevOps in 2026: Commands, Permissions, Processes and systemd You Must Know",
     description: "Linux is the floor every other DevOps skill stands on. Learn it in working order: files and permissions, processes and signals, shell mechanics with pipefail, the three networking questions, systemd and the journal, disk, SSH and packages \u2014 every surprising claim run on Ubuntu 24.04 before it was written down.",
