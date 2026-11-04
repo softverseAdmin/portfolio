@@ -3,11 +3,11 @@ import { blogPosts } from './blogData';
 
 export const metadata = {
   title: 'DevOps Tutorials & Guides: Kubernetes, CI/CD, AWS',
-  description: '49 free DevOps tutorials for 2026: Kubernetes in production, CI/CD, AWS, Terraform, backup and DevSecOps — in-depth guides from real project work.',
+  description: '50 free DevOps tutorials for 2026: Kubernetes in production, CI/CD, AWS, Terraform, backup and DevSecOps — in-depth guides from real project work.',
   keywords: 'devops tutorials, kubernetes tutorials, cicd guides, aws guides, terraform, devsecops, DevOps, Cloud Computing, Automation, Infrastructure',
   openGraph: {
     title: 'DevOps Tutorials & Guides: Kubernetes, CI/CD, AWS | DevOps Enginer',
-    description: '49 free DevOps tutorials for 2026: Kubernetes in production, CI/CD, AWS, Terraform, backup and DevSecOps — in-depth guides from real project work.',
+    description: '50 free DevOps tutorials for 2026: Kubernetes in production, CI/CD, AWS, Terraform, backup and DevSecOps — in-depth guides from real project work.',
     type: 'website',
   }
 };
@@ -73,7 +73,7 @@ const faqs = [
   },
   {
     q: 'I am a beginner — where do I start?',
-    a: 'With the DevOps roadmap, not with this list. It starts at the prerequisites (Linux, networking, Git, scripting) and sequences everything else after them, linking each step to its tutorial. Scrolling a 49-post index is for returning readers; the roadmap is for starting.',
+    a: 'With the DevOps roadmap, not with this list. It starts at the prerequisites (Linux, networking, Git, scripting) and sequences everything else after them, linking each step to its tutorial. Scrolling a 50-post index is for returning readers; the roadmap is for starting.',
   },
 ];
 
@@ -95,7 +95,7 @@ export default async function BlogPage({ searchParams }) {
             DevOps <span className="text-transparent bg-clip-text bg-gradient-to-r from-gold via-amber to-soft-gold">Tutorials &amp; Guides</span>
           </h1>
           <p className="text-xl text-warm-white/70 max-w-3xl mx-auto">
-            49 in-depth, free tutorials. New here? Don&apos;t scroll — follow a roadmap and read them in order.
+            50 in-depth, free tutorials. New here? Don&apos;t scroll — follow a roadmap and read them in order.
           </p>
         </div>
 
@@ -149,7 +149,7 @@ export default async function BlogPage({ searchParams }) {
             <p className="text-center text-warm-white/60 text-sm mt-4">
               Showing {visiblePosts.length} tutorials in {activeLabel}.{' '}
               <Link href="/blog" className="text-gold underline decoration-gold/40 underline-offset-2 hover:text-amber transition-all">
-                Show all 49
+                Show all 50
               </Link>
             </p>
           )}
@@ -227,7 +227,7 @@ export default async function BlogPage({ searchParams }) {
           <div className="text-center py-20">
             <div className="text-6xl mb-4">📝</div>
             <h3 className="text-2xl font-bold text-warm-white mb-4">No Tutorials in This Cluster Yet</h3>
-            <p className="text-warm-white/70">Try another cluster — or browse all 49 from the All Tutorials view.</p>
+            <p className="text-warm-white/70">Try another cluster — or browse all 50 from the All Tutorials view.</p>
           </div>
         )}
 

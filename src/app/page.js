@@ -69,7 +69,7 @@ function HomeFaq() {
   const faqs = [
     {
       q: 'Is everything on DevOps Enginer free?',
-      a: 'Yes. Every roadmap and all 49 tutorials are free to read, with no signup wall. The site is supported by ads and by optional 1:1 mentoring for people who want personal help — the learning content itself is never paywalled.'
+      a: 'Yes. Every roadmap and all 50 tutorials are free to read, with no signup wall. The site is supported by ads and by optional 1:1 mentoring for people who want personal help — the learning content itself is never paywalled.'
     },
     {
       q: 'Which roadmap should I start with — DevOps, Kubernetes, cloud or cybersecurity?',

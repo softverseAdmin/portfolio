@@ -111,7 +111,7 @@ export default function ServicesSection() {
             Ready to Transform Your DevOps Journey?
           </h3>
           <p className="text-lg text-warm-white/70 mb-8 max-w-2xl mx-auto">
-            Start with the free roadmaps and 49 in-depth tutorials — no signup, no cost, everything in learning order.
+            Start with the free roadmaps and 50 in-depth tutorials — no signup, no cost, everything in learning order.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/blog">

@@ -30,11 +30,11 @@ export default function FeaturedContent() {
       slug: "devsecops-checklist-securing-pipeline-2025"
     },
     {
-      title: "Declared, Not Derived: Backup Checks That Can't Grade Their Own Homework",
-      excerpt: "A backup check that derives its standard from the backup itself agrees with the system exactly when the system is wrong. The tested fix: a human-declared floor per database, a rolling median in monitoring, and a restore fingerprint with an append-only history.",
+      title: "Linux for DevOps in 2026: Commands, Permissions, Processes and systemd You Must Know",
+      excerpt: "Linux is the floor every other DevOps skill stands on: files and permissions, processes and signals, shell mechanics with pipefail, systemd and the journal, disk, SSH and packages — every surprising claim run on Ubuntu 24.04 before it was written down.",
       category: "DevOps",
-      readTime: "27 min read",
-      slug: "declared-not-derived-backup-checks",
+      readTime: "26 min read",
+      slug: "linux-for-devops-2026",
       badge: "Newest"
     }
   ]
