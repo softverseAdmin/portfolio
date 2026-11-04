@@ -16,7 +16,10 @@ const devopsRoadmap = {
     title: "Prerequisites",
     items: [
       { name: "Programming Languages", tools: ["Python", "JavaScript", "Go", "Bash"], level: "essential" },
-      { name: "Operating Systems", tools: ["Linux", "Windows", "macOS"], level: "essential" },
+      { name: "Operating Systems", tools: ["Linux", "Windows", "macOS"], level: "essential",
+        links: [
+          { label: "Linux for DevOps in 2026", href: "/blog/linux-for-devops-2026" }
+        ] },
       { name: "Networking", tools: ["TCP/IP", "DNS", "HTTP/HTTPS", "Load Balancing"], level: "essential",
         links: [
           { label: "Kubernetes Networking & Ingress Basics", href: "/blog/kubernetes-ingress-networking-basics-2026" },

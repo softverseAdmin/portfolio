@@ -48,11 +48,13 @@ import { prometheusMonitoringBlog } from './prometheus-monitoring';
 import { backupVerificationBlog } from './backup-verification';
 import { restoreDrillFingerprintBlog } from './restore-drill-fingerprint';
 import { declaredNotDerivedBlog } from './declared-not-derived';
+import { linuxForDevopsBlog } from './linux-for-devops-2026';
 
 export const blogPosts = [
   backupVerificationBlog,
   restoreDrillFingerprintBlog,
   declaredNotDerivedBlog,
+  linuxForDevopsBlog,
   prometheusMonitoringBlog,
   kubernetesJobsCronjobsBlog,
   kubernetesRbacBlog,
