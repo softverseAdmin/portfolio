@@ -49,12 +49,14 @@ import { backupVerificationBlog } from './backup-verification';
 import { restoreDrillFingerprintBlog } from './restore-drill-fingerprint';
 import { declaredNotDerivedBlog } from './declared-not-derived';
 import { linuxForDevopsBlog } from './linux-for-devops-2026';
+import { iBuiltABackupVerificationKitBlog } from './i-built-a-backup-verification-kit';
 
 export const blogPosts = [
   backupVerificationBlog,
   restoreDrillFingerprintBlog,
   declaredNotDerivedBlog,
   linuxForDevopsBlog,
+  iBuiltABackupVerificationKitBlog,
   prometheusMonitoringBlog,
   kubernetesJobsCronjobsBlog,
   kubernetesRbacBlog,
